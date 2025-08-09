@@ -1,17 +1,32 @@
-import { Button } from '@/components/ui/button';
+"use client";
+import { useEffect } from "react";
+import Hero from "@/components/pages/Hero";
+import AboutUs from "@/components/pages/AboutUs";
 
 export default function HomePage() {
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      setTimeout(() => {
+        const element = document.getElementById(hash.substring(1));
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100); // Delay of 100ms
+    }
+  }, []);
+
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-gray-50 text-gray-900 p-8">
-      <h1 className="text-4xl font-bold mb-6 text-blue-600">Tensor Club</h1>
-      <div className="max-w-lg w-full text-center mx-auto bg-white rounded-xl shadow-lg border border-gray-200 p-8">
-        <p className="mb-6 text-lg text-gray-700">
-          Premium Tech Community of Amrita Vishwa Vidyapeetham, Coimbatore
-        </p>
-        <Button size="lg" className="mt-4">
-          Get Started
-        </Button>
+    <>
+      <div
+        className="min-h-screen"
+        style={{
+          boxShadow: "0px 4px 6px rgba(28, 25, 23, 0.2), 0px 1px 3px rgba(28, 25, 23, 0.1)",
+        }}
+      >
+        <Hero />
       </div>
-    </main>
+      <AboutUs />
+    </>
   );
 }

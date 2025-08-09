@@ -30,6 +30,8 @@ The Tensor Club website serves as the digital hub for one of Amrita Vishwa Vidya
 - **Performance Optimized**: Next.js App Router for optimal loading speeds
 - **Type-Safe**: Built with TypeScript for robust development
 - **Accessible**: WCAG compliant components with proper ARIA attributes
+- **Animations**: GSAP-powered animations for engaging user experience
+- **Responsive Components**: Fully responsive layout for all device sizes
 
 ---
 
@@ -97,6 +99,52 @@ You can start editing the page by modifying `src/app/page.tsx`. The page auto-up
   ```bash
   npm run lint
   ```
+
+---
+
+## Components
+
+The website is built with a modular component architecture for maintainability and reusability.
+
+### Page Components
+
+- **Hero.tsx**: Animated landing section with GSAP animations
+- **Navbar.tsx**: Responsive navigation with mobile menu
+- **Footer.tsx**: Site footer with links and contact information
+- **AboutUs.tsx**: Information about the organization and team members
+- **Projects.tsx**: Showcase of projects with filterable categories
+- **Events.tsx**: Upcoming and past events listing
+- **Blog.tsx**: Blog articles and featured posts
+- **Testimonials.tsx**: Carousel of user testimonials
+- **Leaderboard.tsx**: Community contributor rankings
+
+### UI Components
+
+The project uses a comprehensive UI component library built with Radix UI primitives and styled with Tailwind CSS. These components provide consistent styling and accessibility across the application.
+
+### Customization
+
+#### Images
+
+Replace the placeholder images in the `public/images` directory with your own:
+
+- `public/images/team/` - Team member photos
+- `public/images/projects/` - Project screenshots
+- `public/images/events/` - Event images
+- `public/images/blog/` - Blog post thumbnails
+- `public/images/testimonials/` - Testimonial author photos
+- `public/images/about/` - About section images
+
+#### Content
+
+Update the sample content in each component file to match your organization's information:
+
+- Team members in `AboutUs.tsx`
+- Projects in `Projects.tsx`
+- Events in `Events.tsx`
+- Blog posts in `Blog.tsx`
+- Testimonials in `Testimonials.tsx`
+- Leaderboard data in `Leaderboard.tsx`
 
 ---
 
