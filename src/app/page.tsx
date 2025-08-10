@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import Hero from "@/components/pages/Hero";
 import AboutUs from "@/components/pages/AboutUs";
+import Testimonials from "@/components/pages/Testimonials";
 
 export default function HomePage() {
   useEffect(() => {
@@ -27,6 +28,7 @@ export default function HomePage() {
         <Hero />
       </div>
       <AboutUs />
+      <Testimonials />
     </>
   );
 }
