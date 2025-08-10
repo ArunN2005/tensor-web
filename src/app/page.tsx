@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import Hero from "@/components/pages/Hero";
 import AboutUs from "@/components/pages/AboutUs";
 import Testimonials from "@/components/pages/Testimonials";
+import Promotions from "@/components/pages/Promotions";
 
 export default function HomePage() {
   useEffect(() => {
@@ -29,6 +30,15 @@ export default function HomePage() {
       </div>
       <AboutUs />
       <Testimonials />
+      <Promotions promotions={[
+        {
+          title: "AI Workshop",
+          subtitle: "Learn the core concepts of AI and Machine Learning in this beginner-friendly workshop. Understand data, algorithms, and model training through simple, practical examples.",
+          ctaText: "Register Now",
+          ctaLink: "/register",
+          imageUrl: "/Promotions/AI_Workshop.jpg"
+        }
+      ]} />
     </>
   );
 }
