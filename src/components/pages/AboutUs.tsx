@@ -185,7 +185,7 @@ export default function AboutUs() {
               Tensor Club was founded by a group of passionate AI enthusiasts who wanted to create a community where students could learn, collaborate, and innovate together.
             </p>
             <p className="text-lg text-[hsl(var(--foreground))] opacity-80" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
-              Starting with just a handful of members, we've grown into a vibrant community of researchers, developers, and AI enthusiasts all working together to push the boundaries of what's possible with artificial intelligence.
+              Starting with just a handful of members, we&apos;ve grown into a vibrant community of researchers, developers, and AI enthusiasts all working together to push the boundaries of what&apos;s possible with artificial intelligence.
             </p>
             <p className="text-lg mt-6 text-[hsl(var(--foreground))] opacity-80" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
               Join us as we continue to explore the endless possibilities of AI and make a positive impact on the world through technology.
