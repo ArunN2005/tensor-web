@@ -84,7 +84,11 @@ export default function LeaderboardPage() {
             <span ref={asciiBarRef}>[░░░░░]</span>
           </p>
           {showGenerating && (
-            <p className="opacity-0" ref={el => el && gsap.to(el, { opacity: 1, duration: 0.3 })}>
+            <p className="opacity-0" ref={el => {
+              if (el) {
+                gsap.to(el, { opacity: 1, duration: 0.3 });
+              }
+            }}>
               {'>> Generating leaderboard view...'}
             </p>
           )}
