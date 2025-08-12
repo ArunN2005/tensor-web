@@ -286,21 +286,21 @@ const Footer = () => {
               <div className="flex items-center gap-4" style={{ fontFamily: 'var(--font-geist-mono)' }}>
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-[hsl(var(--electric-cyan))] rounded-full animate-pulse"></div>
-                  <span>500+ Members</span>
+                  <span>70+ Members</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-[hsl(var(--digital-purple))] rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                  <span>50+ Projects</span>
+                  <span>10+ Projects</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-[hsl(var(--magenta))] rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
-                  <span>24/7 Active</span>
+                  <span>Always Active</span>
                 </div>
               </div>
               <div className="flex items-center gap-4">
                 <span>© {new Date().getFullYear()} Tensor Club.</span>
                 <span className="hidden lg:block">•</span>
-                <span>Crafted with ⚡ & 🤖</span>
+                <span>Crafted with ⚡</span>
                 <span className="hidden lg:block">•</span>
                 <span className="text-[hsl(var(--electric-cyan))] font-medium">All rights reserved.</span>
               </div>
@@ -310,20 +310,11 @@ const Footer = () => {
           {/* Tech stack indicator */}
           <div className="mt-8 pt-6 border-t border-[hsla(var(--border),0.1)]">
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-[hsl(var(--muted-foreground))]" style={{ fontFamily: 'var(--font-geist-mono)' }}>
-              <div className="flex items-center gap-4">
-                <span>Built with:</span>
-                <div className="flex items-center gap-2">
-                  <span className="px-2 py-1 bg-[hsla(var(--card),0.5)] rounded border border-[hsla(var(--border),0.3)]">Next.js</span>
-                  <span className="px-2 py-1 bg-[hsla(var(--card),0.5)] rounded border border-[hsla(var(--border),0.3)]">TypeScript</span>
-                  <span className="px-2 py-1 bg-[hsla(var(--card),0.5)] rounded border border-[hsla(var(--border),0.3)]">Tailwind</span>
-                  <span className="px-2 py-1 bg-[hsla(var(--card),0.5)] rounded border border-[hsla(var(--border),0.3)]">Framer Motion</span>
-                </div>
-              </div>
               <div className="flex items-center gap-2">
                 <span>Status:</span>
                 <span className="text-green-400">● Online</span>
                 <span>•</span>
-                <span>Version 2.0.1</span>
+                <span>Beta v0.1</span>
               </div>
             </div>
           </div>
