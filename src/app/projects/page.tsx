@@ -1,184 +1,224 @@
-'use client';
-import { useEffect, useRef } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { gsap } from 'gsap';
+"use client";
 
-interface ProjectTag {
-  name: string;
-  color?: string;
-}
+import { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import { ChevronUp, ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  projectsData,
+  getFeaturedProjects,
+  getProjectsByCategory,
+  type Project,
+} from "@/app/data/projects";
+import FeaturedProjectsView from "@/components/pages/FeaturedProjectsView";
+import AllProjectsView from "@/components/pages/AllProjectsView";
 
-interface Project {
-  title: string;
-  description: string;
-  imageName: string;
-  tags: ProjectTag[];
-  githubLink: string;
-  projectLink: string;
-}
 
 export default function ProjectsPage() {
-  const projectsRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const expandedSectionRef = useRef<HTMLDivElement>(null);
+  const filtersRef = useRef<HTMLDivElement>(null);
 
-  const projects: Project[] = [
-    {
-      title: 'Tensor ML Framework',
-      description: 'An open-source machine learning framework focused on tensor computations and deep learning algorithms.',
-      imageName: 'tensor-ml',
-      tags: [
-        { name: 'Python' },
-        { name: 'PyTorch' },
-        { name: 'TensorFlow' },
-        { name: 'CUDA' }
-      ],
-      githubLink: 'https://github.com',
-      projectLink: '#'
-    },
-    {
-      title: 'Web Development Platform',
-      description: 'A comprehensive platform for learning and practicing modern web development technologies.',
-      imageName: 'web-dev',
-      tags: [
-        { name: 'React' },
-        { name: 'TypeScript' },
-        { name: 'Next.js' },
-        { name: 'Tailwind CSS' }
-      ],
-      githubLink: 'https://github.com',
-      projectLink: '#'
-    },
-    {
-      title: 'Quantum Computing Simulator',
-      description: 'A simulator for quantum computing algorithms and visualizations of quantum phenomena.',
-      imageName: 'quantum-sim',
-      tags: [
-        { name: 'Python' },
-        { name: 'Qiskit' },
-        { name: 'React' },
-        { name: 'WebGL' }
-      ],
-      githubLink: 'https://github.com',
-      projectLink: '#'
-    },
-    {
-      title: 'Blockchain Explorer',
-      description: 'A tool for exploring and analyzing blockchain transactions and smart contracts.',
-      imageName: 'blockchain',
-      tags: [
-        { name: 'JavaScript' },
-        { name: 'Solidity' },
-        { name: 'Ethereum' },
-        { name: 'Web3.js' }
-      ],
-      githubLink: 'https://github.com',
-      projectLink: '#'
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  //  This state controls which VIEW to show (not which PAGE)
+  const [isExpanded, setIsExpanded] = useState(false); // false = Featured View, true = All Projects View
+
+  const [categoryFilter, setCategoryFilter] = useState<string>("all");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
+
+  // Get unique categories and statuses
+  const categories = Array.from(
+    new Set(projectsData.map((p) => p.category).filter(Boolean))
+  );
+  const statuses = Array.from(
+    new Set(projectsData.map((p) => p.status).filter(Boolean))
+  );
+
+  const goToTop = () => {
+    if (window.scrollY > 0) {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     }
-  ];
+  };
+
+  //  EXPAND FUNCTION - No navigation, just state change
+  const handleViewAll = () => {
+    setIsExpanded(true); // Show All Projects View component
+    setFilteredProjects(projectsData);
+
+    // Small delay to ensure DOM is updated
+    setTimeout(() => {
+     
+      if (expandedSectionRef.current && filtersRef.current) {
+        gsap.fromTo(
+          [filtersRef.current, expandedSectionRef.current],
+          { opacity: 0, y: -20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power3.out",
+            onComplete: () => {
+           
+              const newCards = expandedSectionRef.current?.querySelectorAll(
+                ".expanded-project-card"
+              );
+              if (newCards) {
+                gsap.fromTo(
+                  newCards,
+                  { opacity: 0, y: 30 },
+                  {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.5,
+                    stagger: 0.05,
+                    ease: "power3.out",
+                  }
+                );
+              }
+            },
+          }
+        );
+      }
+    }, 50);
+  };
+
+
+  const handleCollapse = () => {
+   
+    if (expandedSectionRef.current && filtersRef.current) {
+      gsap.to([filtersRef.current, expandedSectionRef.current], {
+        opacity: 0,
+        y: -20,
+        duration: 0.4,
+        ease: "power3.in",
+        onComplete: () => {
+          setIsExpanded(false); // Show Featured Projects View component
+          setCategoryFilter("all");
+          setStatusFilter("all");
+          goToTop();
+        },
+      });
+    }
+  };
 
   useEffect(() => {
-    // Animate title
-    gsap.fromTo(
-      titleRef.current,
-      { opacity: 0, y: -50 },
-      { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
-    );
+  
+    const featuredProjects = getFeaturedProjects();
+    const displayProjects =
+      featuredProjects.length > 0 ? featuredProjects : projectsData.slice(0, 6);
 
-    // Animate project cards
-    if (projectsRef.current) {
-      const projectCards = projectsRef.current.querySelectorAll('.project-card');
-      gsap.fromTo(
-        projectCards, 
-        { opacity: 0, y: 50 },
-        { 
-          opacity: 1, 
-          y: 0, 
-          duration: 0.8, 
-          stagger: 0.2, 
-          ease: "power3.out",
-          delay: 0.3
-        }
-      );
-    }
+    setProjects(displayProjects);
+    setFilteredProjects(projectsData);
+    setLoading(false);
+    goToTop();
   }, []);
 
-  return (
-    <div className="container mx-auto px-4 py-20">
-      <div className="text-center mb-16">
-        <h1 ref={titleRef} className="text-4xl md:text-5xl font-bold text-white mb-4">Our Projects</h1>
-        <div className="w-20 h-1 bg-[hsl(var(--electric-cyan))] mx-auto"></div>
-        <p className="mt-6 text-[hsl(var(--muted-foreground))] max-w-2xl mx-auto">
-          Explore some of our innovative projects that demonstrate our technical expertise and creative problem-solving.
-        </p>
-      </div>
+  useEffect(() => {
+    if (isExpanded) {
+      let filtered = projectsData;
 
-      <div ref={projectsRef} className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {projects.map((project, index) => (
-          <div 
-            key={index} 
-            className="project-card bg-[hsla(var(--card),0.5)] rounded-xl overflow-hidden border border-[hsla(var(--border),0.2)] hover:border-[hsla(var(--electric-cyan),0.5)] transition-colors duration-300 group"
+      if (categoryFilter !== "all") {
+        filtered = getProjectsByCategory(categoryFilter);
+      }
+
+      if (statusFilter !== "all") {
+        filtered = filtered.filter(
+          (project) => project.status === statusFilter
+        );
+      }
+
+      setFilteredProjects(filtered);
+    }
+  }, [categoryFilter, statusFilter, isExpanded]);
+
+  useEffect(() => {
+    if (!loading && projects.length > 0 && !isExpanded) {
+     
+      gsap.fromTo(
+        titleRef.current,
+        { opacity: 0, y: -50 },
+        { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
+      );
+    }
+  }, [loading, projects, isExpanded]);
+
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-20">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-4 text-muted-foreground">Loading projects...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+
+    <section className="py-20 bg-gradient-to-b from-background to-background/50">
+      <div className="container mx-auto px-4">
+     
+        <div className="text-center mb-16">
+          <h1
+            ref={titleRef}
+            className="text-4xl md:text-5xl font-bold text-foreground mb-4 font-sans"
           >
-            <div className="relative h-60 w-full overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-t from-[hsla(var(--background),0.8)] to-transparent z-10"></div>
-              <Image
-                src={`/images/projects/${project.imageName}.jpg`}
-                alt={project.title}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.src = "/grid-pattern.svg"; // Fallback image
-                }}
-              />
-            </div>
-            <div className="p-6">
-              <h3 className="text-2xl font-bold text-white mb-3">{project.title}</h3>
-              <p className="text-[hsl(var(--muted-foreground))] mb-4">{project.description}</p>
-              
-              <div className="flex flex-wrap gap-2 mb-6">
-                {project.tags.map((tag, i) => (
-                  <span 
-                    key={i} 
-                    className="px-3 py-1 text-xs rounded-full bg-[hsla(var(--electric-cyan),0.1)] text-[hsl(var(--electric-cyan))] border border-[hsla(var(--electric-cyan),0.2)]"
-                  >
-                    {tag.name}
-                  </span>
-                ))}
-              </div>
-              
-              <div className="flex items-center justify-between mt-4">
-                <Link 
-                  href={project.githubLink} 
-                  className="flex items-center gap-2 text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--electric-cyan))] transition-colors"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                  </svg>
-                  GitHub
-                </Link>
-                <Link 
-                  href={project.projectLink} 
-                  className="px-4 py-2 rounded-lg bg-[hsla(var(--electric-cyan),0.1)] text-[hsl(var(--electric-cyan))] border border-[hsla(var(--electric-cyan),0.3)] hover:bg-[hsla(var(--electric-cyan),0.2)] transition-colors"
-                >
-                  View Project
-                </Link>
-              </div>
-            </div>
-          </div>
-        ))}
+            {isExpanded ? "All Projects" : "Featured Projects"}
+          </h1>
+          <div className="w-20 h-1 bg-primary mx-auto mb-6"></div>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            {isExpanded
+              ? `Browse our complete collection of ${projectsData.length} innovative projects across various technologies and domains.`
+              : "Explore our most innovative projects that showcase cutting-edge technology and creative problem-solving."}
+          </p>
+        </div>
+
+
+        {!isExpanded && <FeaturedProjectsView projects={projects} />}
+
+   
+        {isExpanded && (
+          <AllProjectsView
+            filteredProjects={filteredProjects}
+            categories={categories}
+            statuses={statuses}
+            categoryFilter={categoryFilter}
+            statusFilter={statusFilter}
+            setCategoryFilter={setCategoryFilter}
+            setStatusFilter={setStatusFilter}
+            filtersRef={filtersRef}
+            expandedSectionRef={expandedSectionRef}
+          />
+        )}
+
+
+        <div className="text-center mt-12">
+          {!isExpanded ? (
+            <Button
+              onClick={handleViewAll} 
+              className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors shadow-lg hover:shadow-primary/25"
+            >
+              <ChevronDown className="mr-2 h-4 w-4" />
+              View All Projects ({projectsData.length})
+            </Button>
+          ) : (
+            <Button
+              onClick={handleCollapse} 
+              variant="outline"
+              className="px-6 py-3 rounded-lg font-medium hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-colors bg-transparent"
+            >
+              <ChevronUp className="mr-2 h-4 w-4" />
+              Show Less
+            </Button>
+          )}
+        </div>
       </div>
-      
-      <div className="text-center mt-12">
-        <Link 
-          href="/projects/all" 
-          className="px-6 py-3 bg-[hsl(var(--electric-cyan))] text-[hsl(var(--background))] rounded-lg font-medium hover:bg-[hsla(var(--electric-cyan),0.8)] transition-colors"
-        >
-          View All Projects
-        </Link>
-      </div>
-    </div>
+    </section>
   );
 }
