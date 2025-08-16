@@ -79,10 +79,10 @@ export default function AllProjectsView({
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Status</SelectItem>
-              {statuses.map((status) => (
-                <SelectItem key={status} value={status!}>
-                  {status?.charAt(0).toUpperCase() +
-                    status?.slice(1).replace("-", " ")}
+              {statuses.filter((status): status is string => typeof status === "string").map((status) => (
+                <SelectItem key={status} value={status}>
+                  {status.charAt(0).toUpperCase() +
+                    status.slice(1).replace("-", " ")}
                 </SelectItem>
               ))}
             </SelectContent>
