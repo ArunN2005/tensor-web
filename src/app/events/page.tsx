@@ -1,26 +1,26 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { gsap } from "gsap";
+import { motion } from "framer-motion";
 
-// Updated Event interface — added imageName and learnMoreLink
+// Updated Event interface
 interface UpcomingEvent {
   id: string;
   title: string;
-  date: string; // YYYY-MM-DD format
+  date: string; // YYYY-MM-DD
   time: string; // e.g., "10:00 AM"
-  description: string; // brief event summary
-  location: string; // city or "Online"
-  isOnline: boolean; // determines badge color
-  imageUrl?: string; // fallback image if missing
-  imageName: string; // new: base image name without extension
-  learnMoreLink: string; // new: link to event details or learn more
+  description: string;
+  location: string;
+  isOnline: boolean;
+  imageUrl?: string;
+  imageName: string;
+  learnMoreLink: string;
 }
 
-// Updated sample events with new fields and example values
-const upcomingEvents: UpcomingEvent[] = [
+// Sample events
+const events: UpcomingEvent[] = [
   {
     id: "1",
     title: "AI Innovations 2025",
@@ -31,7 +31,7 @@ const upcomingEvents: UpcomingEvent[] = [
     isOnline: false,
     imageUrl: "/event1.jpg",
     imageName: "ai-innovations-2025",
-    learnMoreLink: "/events/ai-innovations-2025"
+    learnMoreLink: "/events/ai-innovations-2025",
   },
   {
     id: "2",
@@ -42,7 +42,7 @@ const upcomingEvents: UpcomingEvent[] = [
     location: "Online",
     isOnline: true,
     imageName: "global-web-summit",
-    learnMoreLink: "/events/global-web-summit"
+    learnMoreLink: "/events/global-web-summit",
   },
   {
     id: "3",
@@ -54,195 +54,138 @@ const upcomingEvents: UpcomingEvent[] = [
     isOnline: false,
     imageUrl: "/event3.jpg",
     imageName: "nextjs-dev-meetup",
-    learnMoreLink: "/events/nextjs-dev-meetup"
+    learnMoreLink: "/events/nextjs-dev-meetup",
   },
 ];
 
-// Sort events by date
-const sortedEvents = [...upcomingEvents].sort(
-  (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-);
 const FALLBACK_EVENT_IMAGE = "/placeholder-event.jpg";
-function EventCard({ event, index }: { event: UpcomingEvent; index: number }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!cardRef.current) return;
-
-    gsap.fromTo(
-      cardRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        delay: index * 0.2,
-        duration: 0.6,
-        ease: "power1.out",
-      }
-    );
-  }, [index]);
-
-  // Determine image src: use imageUrl if provided, else fallback to /images/${imageName}.jpg
-  const imgSrc = event.imageUrl
-    ? event.imageUrl
-    : `/images/${event.imageName}.jpg`; // fallback path convention
-
-  return (
-    <div
-      ref={cardRef}
-      className="bg-[hsla(var(--background),0.5)] rounded-lg border border-[hsla(var(--border),0.3)] hover:border-[hsla(var(--electric-cyan),0.3)] transition-colors duration-300 overflow-hidden flex flex-col"
-    >
-      {/* Event Image */}
-      <div className="relative w-full h-48">
-        <Image
-          src={imgSrc}
-          alt={event.title}
-          fill
-          className="object-cover"
-          // Optional: you can add onError to handle missing images if needed
-          onError={(e) => {
-            // If image fails to load, fallback to a placeholder image
-            (e.currentTarget as HTMLImageElement).src = FALLBACK_EVENT_IMAGE;
-
-          }}
-        />
-      </div>
-
-      {/* Event Details */}
-      <div className="p-6 flex flex-col justify-center">
-        {/* Online/Offline Badge */}
-        <span
-          className="px-3 py-1 text-sm font-medium border rounded-full mb-3 self-start"
-          style={{
-            backgroundColor: "transparent",
-            borderColor: event.isOnline
-              ? "rgba(56, 189, 248, 0.5)"
-              : "rgba(248, 113, 113, 0.5)",
-            color: event.isOnline
-              ? "rgba(56, 189, 248, 1)"
-              : "rgba(248, 113, 113, 1)",
-          }}
-        >
-          {event.isOnline ? "Online" : "Offline"}
-        </span>
-
-        {/* Title */}
-        <h3
-          className="text-lg font-semibold mb-2"
-          style={{ fontFamily: "var(--font-unbounded)" }}
-        >
-          {event.title}
-        </h3>
-
-        {/* Description */}
-        <p
-          className="text-[hsl(var(--foreground))] opacity-90 mb-4"
-          style={{ fontFamily: "var(--font-space-grotesk)" }}
-        >
-          {event.description}
-        </p>
-
-        {/* Date & Time */}
-        <p
-          className="text-sm text-[hsl(var(--muted-foreground))] mb-2"
-          style={{ fontFamily: "var(--font-space-grotesk)" }}
-        >
-          {new Date(event.date).toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-          })}{" "}
-          • {event.time}
-        </p>
-
-        {/* Location */}
-        <p
-          className="text-sm text-[hsl(var(--muted-foreground))] mb-4"
-          style={{ fontFamily: "var(--font-space-grotesk)" }}
-        >
-          Location: {event.location}
-        </p>
-
-        {/* Learn More Link */}
-        <Link
-          href={event.learnMoreLink}
-          className="text-sm text-white font-semibold hover:underline"
-          style={{ fontFamily: "var(--font-space-grotesk)" }}
-        >
-          Learn More →
-        </Link>
-      </div>
-    </div>
-  );
-}
 
 export default function UpcomingEventsPage() {
-  // Added refs as requested
-  const eventsRef = useRef<HTMLDivElement>(null);
-  
-
-  const headingRef = useRef<HTMLHeadingElement>(null);
-  const subheadingRef = useRef<HTMLParagraphElement>(null);
+  const [cardOrder, setCardOrder] = useState(events);
+  const [animate, setAnimate] = useState(false);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    const tl = gsap.timeline();
-
-    if (headingRef.current && subheadingRef.current) {
-      tl.fromTo(
-        headingRef.current,
-        { y: -50, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: "power1.out" }
-      ).fromTo(
-        subheadingRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.8, ease: "power1.out" },
-        "-=0.4"
-      );
-    }
+    setTimeout(() => setAnimate(true), 100);
   }, []);
 
+  const handleCardClick = (index: number) => {
+    const cardElement = cardRefs.current[index];
+    if (cardElement) {
+      cardElement.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    setTimeout(() => {
+      const [first, ...rest] = cardOrder;
+      setCardOrder([...rest, first]);
+    }, 600);
+  };
+
   return (
-    <section
-      ref={eventsRef}
-      className="relative py-24 overflow-hidden bg-[hsla(var(--background),1)]"
-    >
-      <div className="container mx-auto px-6 lg:px-8">
-        {/* Heading */}
-       <h2
-  ref={headingRef} 
-  className="text-4xl md:text-5xl font-bold text-center gradient-text -mt-10"
-  style={{ fontFamily: "var(--font-unbounded)" }}
->
-  Upcoming Events
-</h2>
-
-
-        {/* Subheading */}
-        <p
-          ref={subheadingRef}
-          className="mt-4 text-center text-[hsl(var(--muted-foreground))] max-w-2xl mx-auto mb-12"
+    <div className="min-h-screen bg-gradient-to-b from-gray-950 to-gray-900 flex flex-col items-center justify-start py-16 px-6 overflow-hidden">
+      
+      {/* Section Title */}
+      <div className="relative mb-20 text-center">
+        <h2
+          className={`text-5xl font-extrabold text-white transition-all duration-1000 ${
+            animate ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
         >
-          Join us for these exciting opportunities to learn, connect, <br />
-          and grow with the Tensor community.
-        </p>
-
-        {/* Event Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {sortedEvents.map((event, index) => (
-            <EventCard key={event.id} event={event} index={index} />
-          ))}
-        </div>
-
-        {/* View All Events Button */}
-        <div className="text-center mt-12">
-          <Link
-            href="/events/all"
-            className="px-6 py-3 bg-[hsl(var(--electric-cyan))] text-[hsl(var(--background))] rounded-lg font-medium hover:bg-[hsla(var(--electric-cyan),0.8)] transition-colors"
-          >
-            View All Events
-          </Link>
-        </div>
+          Upcoming Events
+        </h2>
+        <span className="absolute left-1/2 -bottom-2 w-20 h-1 bg-cyan-400 transform -translate-x-1/2"></span>
       </div>
-    </section>
+
+      {/* Cards Stack */}
+      <div className="relative w-full max-w-2xl h-[650px] perspective-1000">
+        {cardOrder.map((event, index) => {
+          const isTopCard = index === 0;
+          const rotation = (index - 1) * 2;
+
+          const imgSrc = event.imageUrl
+            ? event.imageUrl
+            : `/images/${event.imageName}.jpg`;
+
+          return (
+            <motion.div
+              ref={(el) => {
+                cardRefs.current[index] = el;
+              }}
+              key={event.id}
+              className="absolute w-full h-[550px] bg-[#111827] border border-cyan-500 rounded-2xl shadow-2xl flex flex-col overflow-hidden cursor-pointer"
+              style={{
+                transform: `translate(${index * 20}px, ${index * 20}px) rotate(${rotation}deg) scale(${1 - index * 0.06})`,
+                zIndex: cardOrder.length - index,
+                opacity: index === 0 ? 1 : 0.85,
+              }}
+              initial={{ opacity: 0, y: 50, rotate: 0 }}
+              animate={{ opacity: index === 0 ? 1 : 0.85, y: 0, rotate: rotation }}
+              transition={{ duration: 0.6, delay: index * 0.15, type: "spring", stiffness: 120 }}
+              whileHover={
+                isTopCard
+                  ? {
+                      scale: 1.05,
+                      rotate: 0,
+                      borderColor: "#00e6e6",
+                      boxShadow: "0px 20px 40px rgba(0, 255, 255, 0.5)",
+                    }
+                  : {}
+              }
+              whileTap={isTopCard ? { scale: 0.97 } : {}}
+              onClick={isTopCard ? () => handleCardClick(index) : undefined}
+            >
+              {/* Event Image */}
+              <div className="relative w-full h-48">
+                <Image
+                  src={imgSrc}
+                  alt={event.title}
+                  fill
+                  className="object-cover"
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).src = FALLBACK_EVENT_IMAGE;
+                  }}
+                />
+              </div>
+
+              {/* Event Details */}
+              <div className="p-6 flex flex-col justify-center flex-1">
+                {/* Badge */}
+                <span
+                  className="px-3 py-1 text-sm font-medium border rounded-full mb-3 self-start"
+                  style={{
+                    backgroundColor: "transparent",
+                    borderColor: event.isOnline
+                      ? "rgba(56, 189, 248, 0.5)"
+                      : "rgba(248, 113, 113, 0.5)",
+                    color: event.isOnline
+                      ? "rgba(56, 189, 248, 1)"
+                      : "rgba(248, 113, 113, 1)",
+                  }}
+                >
+                  {event.isOnline ? "Online" : "Offline"}
+                </span>
+
+                <h3 className="text-2xl font-bold mb-2 text-white">{event.title}</h3>
+                <p className="text-gray-300 mb-2">{event.description}</p>
+                <p className="text-gray-400 text-sm mb-1">
+                  {new Date(event.date).toLocaleDateString("en-US", {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                  })} • {event.time}
+                </p>
+                <p className="text-gray-400 text-sm mb-4">Location: {event.location}</p>
+                <Link
+                  href={event.learnMoreLink}
+                  className="text-cyan-400 font-semibold hover:underline"
+                >
+                  Learn More →
+                </Link>
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+    </div>
   );
 }
