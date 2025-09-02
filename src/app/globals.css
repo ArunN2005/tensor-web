@@ -7,6 +7,12 @@ html {
   font-size: 105%; /* Slightly increase base font size for better readability */
 }
 
+html, body, #__next {
+  overscroll-behavior-x: none;
+  overscroll-behavior: none;
+  touch-action: pan-y;
+}
+
 @media (min-width: 1024px) {
   html {
     font-size: 110%;
