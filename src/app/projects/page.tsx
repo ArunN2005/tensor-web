@@ -160,10 +160,8 @@ export default function ProjectsPage() {
   }
 
   return (
-
     <section className="py-20 bg-gradient-to-b from-background to-background/50">
       <div className="container mx-auto px-4">
-     
         <div className="text-center mb-16">
           <h1
             ref={titleRef}
@@ -179,45 +177,50 @@ export default function ProjectsPage() {
           </p>
         </div>
 
+        {/* Featured View */}
+        {!isExpanded && (
+          <>
+            <FeaturedProjectsView projects={projects} />
 
-        {!isExpanded && <FeaturedProjectsView projects={projects} />}
-
-   
-        {isExpanded && (
-          <AllProjectsView
-            filteredProjects={filteredProjects}
-            categories={categories}
-            statuses={statuses}
-            categoryFilter={categoryFilter}
-            statusFilter={statusFilter}
-            setCategoryFilter={setCategoryFilter}
-            setStatusFilter={setStatusFilter}
-            filtersRef={filtersRef}
-            expandedSectionRef={expandedSectionRef}
-          />
+            <div className="text-center mt-12">
+              <Button
+                onClick={handleViewAll}
+                className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors shadow-lg hover:shadow-primary/25"
+              >
+                <ChevronDown className="mr-2 h-4 w-4" />
+                View All Projects ({projectsData.length})
+              </Button>
+            </div>
+          </>
         )}
 
+        {/* Expanded View */}
+        {isExpanded && (
+          <>
+            <AllProjectsView
+              filteredProjects={filteredProjects}
+              categories={categories}
+              statuses={statuses}
+              categoryFilter={categoryFilter}
+              statusFilter={statusFilter}
+              setCategoryFilter={setCategoryFilter}
+              setStatusFilter={setStatusFilter}
+              filtersRef={filtersRef}
+              expandedSectionRef={expandedSectionRef}
+            />
 
-        <div className="text-center mt-12">
-          {!isExpanded ? (
-            <Button
-              onClick={handleViewAll} 
-              className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors shadow-lg hover:shadow-primary/25"
-            >
-              <ChevronDown className="mr-2 h-4 w-4" />
-              View All Projects ({projectsData.length})
-            </Button>
-          ) : (
-            <Button
-              onClick={handleCollapse} 
-              variant="outline"
-              className="px-6 py-3 rounded-lg font-medium hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-colors bg-transparent"
-            >
-              <ChevronUp className="mr-2 h-4 w-4" />
-              Show Less
-            </Button>
-          )}
-        </div>
+            <div className="text-center mt-12">
+              <Button
+                onClick={handleCollapse}
+                variant="outline"
+                className="px-6 py-3 rounded-lg font-medium hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-colors bg-transparent"
+              >
+                <ChevronUp className="mr-2 h-4 w-4" />
+                Show Less
+              </Button>
+            </div>
+          </>
+        )}
       </div>
     </section>
   );

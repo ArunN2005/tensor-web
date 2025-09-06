@@ -35,7 +35,6 @@ interface AllProjectsViewProps {
   expandedSectionRef: RefObject<HTMLDivElement>;
 }
 
-
 export default function AllProjectsView({
   filteredProjects,
   categories,
@@ -79,12 +78,16 @@ export default function AllProjectsView({
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Status</SelectItem>
-              {statuses.filter((status): status is string => typeof status === "string").map((status) => (
-                <SelectItem key={status} value={status}>
-                  {status.charAt(0).toUpperCase() +
-                    status.slice(1).replace("-", " ")}
-                </SelectItem>
-              ))}
+              {statuses
+                .filter(
+                  (status): status is string => typeof status === "string"
+                )
+                .map((status) => (
+                  <SelectItem key={status} value={status}>
+                    {status.charAt(0).toUpperCase() +
+                      status.slice(1).replace("-", " ")}
+                  </SelectItem>
+                ))}
             </SelectContent>
           </Select>
         </div>
