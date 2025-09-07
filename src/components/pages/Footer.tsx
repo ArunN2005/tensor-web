@@ -1,12 +1,36 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, MapPin, Users, Github, Instagram, Linkedin, MessageCircle } from 'lucide-react';
 import Image from 'next/image';
 
+// FooterUsageIndicator Component (matches navbar style but for bottom)
+function FooterUsageIndicator({ isVisible }: { isVisible: boolean }) {
+  return (
+    <div className={`fixed bottom-4 right-6 transition-all duration-700 z-30 ${
+      isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+    }`}>
+      <div className="bg-slate-900/90 backdrop-blur-md border border-blue-400/20 rounded-lg px-4 py-2 shadow-lg">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1">
+            <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
+            <span className="text-blue-400 text-xs font-mono">GUIDE</span>
+          </div>
+          <div className="text-slate-300 text-xs">
+            <span className="text-blue-400 font-mono">Hover</span> bottom edge to access footer
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const Footer = () => {
   const [currentTime, setCurrentTime] = useState<Date | null>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [showIndicator, setShowIndicator] = useState(true);
+  const indicatorTimeoutRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
     setCurrentTime(new Date());
@@ -15,6 +39,37 @@ const Footer = () => {
     }, 1000);
     return () => clearInterval(timer);
   }, []);
+
+  // Scroll detection for glow color change (matches navbar)
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 50;
+      setScrolled(isScrolled);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Hide indicator after 5 seconds (matches navbar timeout)
+  useEffect(() => {
+    indicatorTimeoutRef.current = setTimeout(() => {
+      setShowIndicator(false);
+    }, 5000);
+
+    return () => {
+      if (indicatorTimeoutRef.current) {
+        clearTimeout(indicatorTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  // Hide indicator when footer is hovered
+  useEffect(() => {
+    if (isHovered) {
+      setShowIndicator(false);
+    }
+  }, [isHovered]);
 
   const socialLinks = [
     { name: 'GitHub', href: 'https://github.com/Tensor-Amrita-Coimbatore', icon: Github },
@@ -33,14 +88,47 @@ const Footer = () => {
 
   return (
     <>
-      {/* Bottom Hover Trigger Zone */}
+      {/* Styles for Neon Glow (matches navbar exactly) */}
+      <style jsx>{`
+        @keyframes neonGlow {
+          0%, 100% { 
+            box-shadow: 0 0 12px ${scrolled ? 'rgba(59, 130, 246, 0.7)' : 'rgba(147, 51, 234, 0.7)'}, 0 0 24px ${scrolled ? 'rgba(59, 130, 246, 0.4)' : 'rgba(147, 51, 234, 0.4)'};
+            background: linear-gradient(90deg, transparent, ${scrolled ? 'rgba(59, 130, 246, 0.8)' : 'rgba(147, 51, 234, 0.8)'}, transparent);
+          }
+          50% { 
+            box-shadow: 0 0 16px ${scrolled ? 'rgba(59, 130, 246, 0.9)' : 'rgba(147, 51, 234, 0.9)'}, 0 0 32px ${scrolled ? 'rgba(59, 130, 246, 0.6)' : 'rgba(147, 51, 234, 0.6)'}, 0 0 48px ${scrolled ? 'rgba(59, 130, 246, 0.4)' : 'rgba(147, 51, 234, 0.4)'};
+            background: linear-gradient(90deg, transparent, ${scrolled ? 'rgba(59, 130, 246, 1)' : 'rgba(147, 51, 234, 1)'}, transparent);
+          }
+        }
+        .neon-trigger {
+          animation: neonGlow 4s ease-in-out infinite;
+          transition: all 0.3s ease;
+        }
+        @keyframes float {
+          0%, 100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0.4; }
+          33% { transform: translateY(-8px) scale(1.1) rotate(2deg); opacity: 0.7; }
+          66% { transform: translateY(-4px) scale(0.95) rotate(-1deg); opacity: 0.5; }
+        }
+      `}</style>
+
+      {/* Footer Usage Indicator (pops up for 5s on first load, blue theme to match navbar) */}
+      <FooterUsageIndicator isVisible={showIndicator && !isHovered} />
+
+      {/* Enhanced Neon Trigger Line at Bottom (exact match to navbar glow) */}
       <div 
-        className="fixed bottom-0 left-0 w-full h-4 z-[9998] bg-transparent"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        className="fixed bottom-0 left-0 w-full h-1 neon-trigger cursor-pointer z-50 transition-all duration-500 hover:h-2"
+        onMouseEnter={() => {
+          setIsHovered(true);
+          setShowIndicator(false);
+        }}
+        style={{
+          background: scrolled 
+            ? 'linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.9), transparent)'
+            : 'linear-gradient(90deg, transparent, rgba(147, 51, 234, 0.9), transparent)',
+        }}
       />
 
-      {/* Footer with Slide-up Animation */}
+      {/* Footer with Slide-up Animation (appears on hover) */}
       <AnimatePresence>
         {isHovered && (
           <motion.footer 
@@ -57,8 +145,7 @@ const Footer = () => {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
-            
-            {/* Enhanced wave animation */}
+            {/* Enhanced wave animation (matches footer style but with glow colors) */}
             <div className="absolute -top-1 left-0 w-full h-4">
               <svg className="w-full h-full" viewBox="0 0 1200 20" preserveAspectRatio="none">
                 <defs>
@@ -95,6 +182,30 @@ const Footer = () => {
               >
                 TENSOR
               </motion.h1>
+            </div>
+
+            {/* Enhanced Background Effects (floating orbs like navbar) */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              {/* Animated floating elements */}
+              {Array.from({ length: 6 }, (_, i) => (
+                <div
+                  key={i}
+                  className={`absolute rounded-full blur-xl float-orb`}
+                  style={{
+                    width: `${80 + i * 20}px`,
+                    height: `${80 + i * 20}px`,
+                    left: `${10 + i * 15}%`,
+                    top: `${15 + i * 12}%`,
+                    background: i % 3 === 0 
+                      ? 'linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.08))'
+                      : i % 3 === 1
+                      ? 'linear-gradient(135deg, rgba(147, 51, 234, 0.1), rgba(6, 182, 212, 0.08))'
+                      : 'linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.08))',
+                    animationDelay: `${i * 0.8}s`,
+                    animationDuration: `${4 + i * 0.5}s`,
+                  }}
+                />
+              ))}
             </div>
 
             {/* Container */}
