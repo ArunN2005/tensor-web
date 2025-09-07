@@ -46,12 +46,13 @@ function Logo({ isOverlay = false }: { isOverlay?: boolean }) {
         <div className="flex items-center gap-1.5">
           <div className="w-0.5 h-0.5 bg-purple-400/60 rounded-full" />
           <span
-            className={`text-purple-400/70 font-mono uppercase tracking-widest ${
+            className={`text-purple-300 font-mono uppercase tracking-widest ${
               isOverlay ? 'text-[10px]' : 'text-[9px]'
             }`}
           >
             Build Future
           </span>
+
           <div className="w-0.5 h-0.5 bg-purple-400/60 rounded-full" />
         </div>
       </div>
@@ -127,11 +128,14 @@ function FullPageNavigation({
           >
             <button
               onClick={(e) => handleNavClick(e, item.path)}
+              
               className={`relative w-full py-4 px-6 transition-all duration-300 overflow-hidden rounded-xl border text-left block group ${
                 isActive 
-                  ? 'text-white border-blue-400/30 bg-gradient-to-r from-blue-500/10 via-purple-500/5 to-cyan-500/10 shadow-lg' 
-                  : 'text-slate-400 hover:text-white border-transparent hover:border-white/20 hover:bg-gradient-to-r hover:from-white/5 hover:via-purple-500/5 hover:to-cyan-500/5'
+                  ? 'text-cyan-400 font-semibold border-cyan-400/40 bg-gradient-to-r from-blue-500/10 via-purple-500/5 to-cyan-500/10 shadow-lg' 
+                  : 'text-white hover:text-cyan-300 border-transparent hover:border-cyan-300/40 hover:bg-gradient-to-r hover:from-white/5 hover:via-purple-500/10 hover:to-cyan-500/10'
               }`}
+
+
               onMouseEnter={() => setHoveredItem(item.path)}
               onMouseLeave={() => setHoveredItem(null)}
             >
@@ -149,20 +153,22 @@ function FullPageNavigation({
                 <div className="flex items-center gap-4">
                   <div className={`text-lg transition-all duration-300 ${
                     isHovered 
-                      ? 'text-blue-400 scale-125 rotate-12' 
+                      ? 'text-cyan-400 scale-125 rotate-12' 
                       : isActive 
-                      ? 'text-blue-400 scale-110' 
-                      : 'text-slate-500'
+                      ? 'text-cyan-400 scale-110' 
+                      : 'text-slate-400'
                   }`}>
                     {item.icon}
                   </div>
+
                   <div>
                     <span className="font-semibold tracking-wide text-base block" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
                       {item.text}
                     </span>
-                    <span className="text-xs text-slate-500 font-mono tracking-wider">
+                    <span className="text-xs text-slate-400 font-mono tracking-wider">
                       {item.description}
                     </span>
+
                   </div>
                 </div>
                 

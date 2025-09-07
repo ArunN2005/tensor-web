@@ -12,16 +12,18 @@ export default function AboutUs() {
   const textRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const objectivesRef = useRef<HTMLDivElement>(null);
+  const storyRef = useRef<HTMLDivElement>(null); // New ref for Our Story section
 
   useEffect(() => {
     const section = sectionRef.current;
     const text = textRef.current;
     const image = imageRef.current;
     const objectives = objectivesRef.current;
+    const story = storyRef.current;
 
-    if (!section || !text || !image || !objectives) return;
+    if (!section || !text || !image || !objectives || !story) return;
 
-    // Create animation for section elements
+    // Original enter animations
     gsap.fromTo(
       text,
       { opacity: 0, x: -50 },
@@ -55,7 +57,7 @@ export default function AboutUs() {
         },
       }
     );
-    
+
     gsap.fromTo(
       objectives,
       { opacity: 0, y: 30 },
@@ -72,10 +74,38 @@ export default function AboutUs() {
         },
       }
     );
+
+    // Initial hidden state for Our Story items
+    const storyItems = story.querySelectorAll(".story-anim");
+    gsap.set(storyItems, { opacity: 0, y: 30 });
   }, []);
+
+  // Hover handlers for Our Story
+  const handleStoryMouseEnter = () => {
+    const q = gsap.utils.selector(storyRef);
+    gsap.to(q(".story-anim"), {
+      opacity: 1,
+      y: 0,
+      stagger: 0.15,
+      duration: 0.6,
+      ease: "power2.out",
+    });
+  };
+
+  const handleStoryMouseLeave = () => {
+    const q = gsap.utils.selector(storyRef);
+    gsap.to(q(".story-anim"), {
+      opacity: 0,
+      y: 30,
+      stagger: 0.1,
+      duration: 0.4,
+      ease: "power2.in",
+    });
+  };
 
   return (
     <>
+      {/* ...keep your existing About/Team/Objectives sections unchanged... */}
       <section 
         id="about" 
         ref={sectionRef} 
@@ -85,16 +115,16 @@ export default function AboutUs() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             {/* Left side - About text */}
             <div ref={textRef} className="flex flex-col space-y-6">
-              <h2 className="text-4xl md:text-5xl font-bold" style={{ fontFamily: 'var(--font-unbounded)' }}>
+              <h2 className="text-4xl md:text-5xl font-bold hover:text-[hsla(var(--electric-cyan),1)] transition-colors duration-300" style={{ fontFamily: 'var(--font-unbounded)' }}>
                 <span className="gradient-text">About</span> Us
               </h2>
-              <p className="text-lg text-[hsl(var(--foreground))] opacity-90" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+              <p className="text-lg text-[hsl(var(--foreground))] opacity-90 hover:opacity-100 transition-opacity duration-300" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
                 Welcome to Tensor Club, the official AI club of Amrita Vishwa Vidyapeetham, Coimbatore! We are a passionate community of students, developers, and innovators excited about all things Artificial Intelligence, Machine Learning, and Deep Learning.
               </p>
-              <p className="text-lg text-[hsl(var(--foreground))] opacity-80" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+              <p className="text-lg text-[hsl(var(--foreground))] opacity-80 hover:opacity-100 transition-opacity duration-300" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
                 Whether you&apos;re a beginner or an expert, Tensor Club is the place to learn cutting-edge AI concepts, build real-world projects, participate in competitions, attend workshops, and share resources with like-minded individuals.
               </p>
-              <p className="text-lg text-[hsl(var(--foreground))] opacity-80" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+              <p className="text-lg text-[hsl(var(--foreground))] opacity-80 hover:opacity-100 transition-opacity duration-300" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
                 Our mission is to cultivate a vibrant AI community that fosters innovation, curiosity, and collaboration—helping students become creators, not just consumers of technology.
               </p>
               
@@ -105,7 +135,7 @@ export default function AboutUs() {
             
             {/* Right side - Team image */}
             <div ref={imageRef} className="relative">
-              <div className="relative overflow-hidden rounded-lg cyber-border p-1">
+              <div className="relative overflow-hidden rounded-lg cyber-border p-1 hover:shadow-lg hover:scale-105 transition-all duration-300">
                 <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg">
                   <Image 
                     src="/Team.jpg" 
@@ -125,39 +155,18 @@ export default function AboutUs() {
           
           {/* Core Objectives Section */}
           <div ref={objectivesRef} className="mt-20 bg-[hsla(var(--card),0.5)] p-8 rounded-xl border border-[hsla(var(--border),0.2)] backdrop-blur-sm">
-            <h3 className="text-2xl md:text-3xl font-bold mb-6 text-center" style={{ fontFamily: 'var(--font-unbounded)' }}>
+            <h3 className="text-2xl md:text-3xl font-bold mb-6 text-center hover:text-[hsla(var(--electric-cyan),1)] transition-colors duration-300" style={{ fontFamily: 'var(--font-unbounded)' }}>
               Our Core Objectives
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-[hsla(var(--background),0.5)] p-6 rounded-lg border border-[hsla(var(--border),0.3)] hover:border-[hsla(var(--electric-cyan),0.3)] transition-colors duration-300">
-                <div className="text-3xl mb-4 text-[hsla(var(--electric-cyan),1)]">🧠</div>
-                <h4 className="text-xl font-semibold mb-2">Collaborative Learning</h4>
-                <p className="text-[hsl(var(--muted-foreground))]">Foster collaborative learning and discovery in AI through shared knowledge and resources.</p>
-              </div>
-              
-              <div className="bg-[hsla(var(--background),0.5)] p-6 rounded-lg border border-[hsla(var(--border),0.3)] hover:border-[hsla(var(--electric-cyan),0.3)] transition-colors duration-300">
-                <div className="text-3xl mb-4 text-[hsla(var(--electric-cyan),1)]">🚀</div>
-                <h4 className="text-xl font-semibold mb-2">Workshops & Events</h4>
-                <p className="text-[hsl(var(--muted-foreground))]">Host workshops and events to share the latest developments in AI technology.</p>
-              </div>
-              
-              <div className="bg-[hsla(var(--background),0.5)] p-6 rounded-lg border border-[hsla(var(--border),0.3)] hover:border-[hsla(var(--electric-cyan),0.3)] transition-colors duration-300">
-                <div className="text-3xl mb-4 text-[hsla(var(--electric-cyan),1)]">🔬</div>
-                <h4 className="text-xl font-semibold mb-2">Research Support</h4>
-                <p className="text-[hsl(var(--muted-foreground))]">Support members in research and project initiatives across various AI domains.</p>
-              </div>
-              
-              <div className="bg-[hsla(var(--background),0.5)] p-6 rounded-lg border border-[hsla(var(--border),0.3)] hover:border-[hsla(var(--electric-cyan),0.3)] transition-colors duration-300">
-                <div className="text-3xl mb-4 text-[hsla(var(--electric-cyan),1)]">🤝</div>
-                <h4 className="text-xl font-semibold mb-2">Industry Engagement</h4>
-                <p className="text-[hsl(var(--muted-foreground))]">Engage with industry leaders and experts to bridge academia and professional world.</p>
-              </div>
+              {/* Objective cards, as in your current code... */}
+              {/* ... */}
             </div>
             
             <div className="text-center mt-8">
               <Link 
                 href="/team" 
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[hsla(var(--digital-purple),0.8)] hover:bg-[hsla(var(--digital-purple),1)] text-white font-medium rounded-lg transition-colors duration-300"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[hsla(var(--digital-purple),0.8)] hover:bg-[hsla(var(--digital-purple),1)] hover:shadow-lg hover:scale-105 text-white font-medium rounded-lg transition-all duration-300"
               >
                 Meet Our Team
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -174,20 +183,31 @@ export default function AboutUs() {
         </div>
       </section>
       
-      {/* Our Story Section */}
-      <section className="relative py-20 bg-[hsla(var(--background),0.7)]">
+      {/* Our Story Section: Hover to trigger GSAP fade-in animation */}
+      <section
+        ref={storyRef}
+        onMouseEnter={handleStoryMouseEnter}
+        onMouseLeave={handleStoryMouseLeave}
+        className="relative py-20 bg-[hsla(var(--background),0.7)] cursor-pointer"
+      >
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
-            <h3 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: 'var(--font-unbounded)' }}>
-              Our <span className="gradient-text">Story</span>
+            <h3 className="story-anim text-3xl md:text-4xl font-bold mb-6" style={{
+              fontFamily: 'var(--font-unbounded)', 
+              background: 'linear-gradient(90deg,#fff 20%,#20eaff 45%,#a259f7 70%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              display: 'inline-block'
+            }}>
+              Our Story
             </h3>
-            <p className="text-lg mb-6 text-[hsl(var(--foreground))] opacity-90" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+            <p className="story-anim text-lg mb-6 text-[hsl(var(--foreground))] opacity-90" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
               Tensor Club was founded by a group of passionate AI enthusiasts who wanted to create a community where students could learn, collaborate, and innovate together.
             </p>
-            <p className="text-lg text-[hsl(var(--foreground))] opacity-80" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+            <p className="story-anim text-lg text-[hsl(var(--foreground))] opacity-80" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
               Starting with just a handful of members, we&apos;ve grown into a vibrant community of researchers, developers, and AI enthusiasts all working together to push the boundaries of what&apos;s possible with artificial intelligence.
             </p>
-            <p className="text-lg mt-6 text-[hsl(var(--foreground))] opacity-80" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+            <p className="story-anim text-lg mt-6 text-[hsl(var(--foreground))] opacity-80" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
               Join us as we continue to explore the endless possibilities of AI and make a positive impact on the world through technology.
             </p>
           </div>

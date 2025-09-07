@@ -1,36 +1,26 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Mail, MapPin, Users, Zap, Github, Instagram, Linkedin, MessageCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Mail, MapPin, Users, Github, Instagram, Linkedin, MessageCircle } from 'lucide-react';
+import Image from 'next/image';
 
 const Footer = () => {
-  // To this (initialize with null)
   const [currentTime, setCurrentTime] = useState<Date | null>(null);
-  const [email, setEmail] = useState('');
-  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
+    setCurrentTime(new Date());
     const timer = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
     return () => clearInterval(timer);
   }, []);
 
-  const handleSubscribe = () => {
-    if (email.trim()) {
-      setIsSubscribed(true);
-      setTimeout(() => {
-        setIsSubscribed(false);
-        setEmail('');
-      }, 3000);
-    }
-  };
-
   const socialLinks = [
-    { name: 'GitHub', href: 'https://github.com/Tensor-Amrita-Coimbatore', icon: Github, color: 'from-cyan-500 to-blue-700' },
-    { name: 'Instagram', href: 'https://www.instagram.com/tensor_club/', icon: Instagram, color: 'from-pink-500 to-red-700' },
-    { name: 'LinkedIn', href: 'https://linkedin.com/company/tensor-club', icon: Linkedin, color: 'from-blue-500 to-cyan-900' },
-    { name: 'Discord', href: '#', icon: MessageCircle, color: 'from-purple-400 to-indigo-700' }
+    { name: 'GitHub', href: 'https://github.com/Tensor-Amrita-Coimbatore', icon: Github },
+    { name: 'Instagram', href: 'https://www.instagram.com/tensor_club/', icon: Instagram },
+    { name: 'LinkedIn', href: 'https://linkedin.com/company/tensor-club', icon: Linkedin },
+    { name: 'Discord', href: '#', icon: MessageCircle }
   ];
 
   const quickLinks = [
@@ -41,256 +31,281 @@ const Footer = () => {
     { name: 'Leaderboard', href: '/#leaderboard' },
   ];
 
-  const resources = [
-    { name: 'Documentation', href: '#' },
-    { name: 'AI Tutorials', href: '#' },
-    { name: 'Research Papers', href: '#' },
-    { name: 'Open Source', href: '#' },
-    { name: 'Community Forum', href: '#' },
-  ];
-
   return (
-    <footer className="relative w-full bg-gradient-to-t from-black to-transparent overflow-hidden z-10">
-      
-      <svg
-        className="absolute -top-1 left-0 w-full h-8"
-        viewBox="0 0 1440 40"
-        xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="none"
-      >
-      <defs>
-          <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#6b3d9dff" />   {/* purple-300 */}
-            <stop offset="50%" stopColor="#99f6e4" />  {/* teal-200 */}
-            <stop offset="100%" stopColor="#f099f6ff" /> {/* keep teal-200 at end */}
-          </linearGradient>
-      </defs>
-        <path
-          d="M0,20 C360,0 1080,40 1440,20"
-          stroke="url(#waveGradient)"
-          strokeWidth="1"
-          fill="transparent"
-        >
-          <animate
-              attributeName="d"
-              dur="7s"
-              repeatCount="indefinite"
-              values="
-                M0,10 C360,0 1080,40 1440,30;
-                M0,30 C360,40 1080,0 1440,10;
-                M0,10 C360,0 1080,40 1440,30"
-            />
-        </path>
-      </svg>
+    <>
+      {/* Bottom Hover Trigger Zone */}
+      <div 
+        className="fixed bottom-0 left-0 w-full h-4 z-[9998] bg-transparent"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      />
 
-      {/* Background grid effect (tech blue tint) */}
-      <div className="absolute inset-0 opacity-[0.035] pointer-events-none">
-        <div
-          className="w-full h-full"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(14,165,233,0.15) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(14,165,233,0.15) 1px, transparent 1px)
-            `,
-            backgroundSize: '80px 80px'
-          }}
-        />
-      </div>
-
-      {/* Huge translucent background text at bottom */}
-      <div className="absolute -bottom-12 inset-x-0 flex items-end justify-center pointer-events-none">
-        <motion.h1
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 0.08, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2 }}
-          className="text-[6rem] md:text-[10rem] lg:text-[13rem] font-extrabold tracking-tight text-sky-500 select-none leading-none"
-        >
-          TENSOR
-        </motion.h1>
-      </div>
-
-      <div className="relative z-50 max-w-7xl mx-auto px-10 py-50 pt-12">
-        {/* Main Grid */}
-        <motion.div 
-          className="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-12"
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-          variants={{
-            hidden: { opacity: 0, y: 40 },
-            show: { opacity: 1, y: 0, transition: { staggerChildren: 0.15, duration: 0.6 } }
-          }}
-        >
-
-          {/* Brand */}
-          <motion.div variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}>
-            <div className="flex items-center space-x-3 mb-4">
-              <motion.div 
-                className="p-2 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-lg"
-                whileHover={{ scale: 1.05, rotate: 5 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <Zap className="w-6 h-6 text-white" />
-              </motion.div>
-              <div>
-                <h2 className="text-2xl font-bold text-white tracking-tight mb-[-1px]">Tensor Club</h2>
-                <p className="text-sky-400 text-xs font-mono">AI Community</p>
-              </div>
-            </div>
-            <p className="text-slate-400 text-sm mb-6">
-              Join our community of AI enthusiasts and developers building the future.
-            </p>
-
-            {/* Live Status */}
-            <div className="flex items-center space-x-3 p-3 bg-slate-900/50 rounded-lg border border-slate-800 backdrop-blur-sm">
-              <div className="flex items-center space-x-2">
-                <motion.div 
-                  className="w-2 h-2 bg-green-500 rounded-full"
-                  animate={{ opacity: [0.5, 1, 0.5] }}
-                  transition={{ duration: 2, repeat: Infinity }}
+      {/* Footer with Slide-up Animation */}
+      <AnimatePresence>
+        {isHovered && (
+          <motion.footer 
+            className="fixed bottom-0 left-0 w-full z-[9999] bg-gradient-to-t from-slate-950 via-slate-900/95 to-slate-800/90 backdrop-blur-md border-t border-slate-700/50"
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "100%" }}
+            transition={{ 
+              type: "spring", 
+              damping: 25, 
+              stiffness: 200,
+              duration: 0.3 
+            }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            
+            {/* Enhanced wave animation */}
+            <div className="absolute -top-1 left-0 w-full h-4">
+              <svg className="w-full h-full" viewBox="0 0 1200 20" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="wave" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.6" />
+                    <stop offset="50%" stopColor="#8b5cf6" stopOpacity="0.6" />
+                    <stop offset="100%" stopColor="#0ea5e9" stopOpacity="0.6" />
+                  </linearGradient>
+                </defs>
+                <motion.path
+                  d="M0,10 Q300,0 600,10 T1200,10"
+                  stroke="url(#wave)"
+                  strokeWidth="3"
+                  fill="none"
+                  animate={{
+                    d: [
+                      "M0,10 Q300,0 600,10 T1200,10",
+                      "M0,8 Q300,15 600,8 T1200,8", 
+                      "M0,10 Q300,0 600,10 T1200,10"
+                    ]
+                  }}
+                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                 />
-                <span className="text-green-400 text-xs font-semibold">Live</span>
-              </div>
-             <div className="text-slate-400 text-xs font-mono">
-                {/* Conditionally render based on state */}
-                {currentTime ? (
-                  <>
-                    {currentTime.toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata' })} IST
-                  </>
-                ) : (
-                  // Render a static placeholder or nothing on the server
-                  <span className="opacity-0">Loading...</span> 
-                )}
-              </div>
+              </svg>
             </div>
-          </motion.div>
 
-          {/* Quick Links */}
-          <motion.div variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}className="pl-7">
-            <h3 className="text-lg font-bold text-white uppercase tracking-wider text-sm mb-4">Explore</h3>
-            <nav className="space-y-3">
-              {quickLinks.map((link, i) => (
-                <motion.a 
-                  key={i} href={link.href}
-                  whileHover={{ x: 6, color: "#22d3ee" }}
-                  className="block text-slate-400 transition-colors duration-100 text-sm"
+            {/* TENSOR Background Text */}
+            <div className="absolute -bottom-4 inset-x-0 flex items-end justify-center pointer-events-none">
+              <motion.h1
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 0.06, y: 0 }}
+                transition={{ duration: 1.2 }}
+                className="text-[2.5rem] md:text-[3.5rem] lg:text-[4.5rem] font-extrabold tracking-tight text-sky-500 select-none leading-none"
+              >
+                TENSOR
+              </motion.h1>
+            </div>
+
+            {/* Container */}
+            <div className="relative z-10 max-w-3xl mx-auto px-4 py-6 text-left">
+              
+              {/* Main Content - 3-Column Layout */}
+              <motion.div 
+                className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start mb-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.4 }}
+              >
+                
+                {/* Left Column - Brand Section */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  className="space-y-3"
                 >
-                  {link.name}
-                </motion.a>
-              ))}
-            </nav>
-          </motion.div>
+                  {/* Enhanced Tensor Logo Container */}
+                  <div className="flex justify-start mb-2">
+                    <motion.div 
+                      className="relative p-3 bg-gradient-to-br from-slate-800/60 via-slate-700/40 to-slate-800/60 rounded-2xl shadow-2xl border-2 border-cyan-500/60 backdrop-blur-md"
+                      whileHover={{ scale: 1.02, boxShadow: "0 25px 50px -12px rgba(6, 182, 212, 0.4)" }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400/20 via-purple-400/20 to-blue-400/20 blur-sm"></div>
+                      <Image 
+                        src="/tensor-horizontal.png"
+                        alt="Tensor Club"
+                        width={220}
+                        height={60}
+                        className="relative z-10 object-contain opacity-100 transition-opacity duration-300 outline-none border-none"
+                      />
+                    </motion.div>
+                  </div>
+                  
+                  <p className="text-cyan-400 text-sm font-mono text-left font-semibold">AI Community</p>
+                  
+                  <p className="text-slate-300 text-sm leading-relaxed text-left">
+                    Join our community of AI enthusiasts building the future.
+                  </p>
 
-          {/* Resources */}
-          <motion.div variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}>
-            <h3 className="text-lg font-bold text-white uppercase tracking-wider text-sm mb-4">Resources</h3>
-            <nav className="space-y-3">
-              {resources.map((link, i) => (
-                <motion.a 
-                  key={i} href={link.href}
-                  whileHover={{ x: 6, color: "#a855f7" }}
-                  className="block text-slate-400 transition-colors duration-300 text-sm"
+                  {/* Enhanced Live Status Badge */}
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-slate-800/70 to-slate-700/70 rounded-xl border-2 border-emerald-500/50 shadow-lg backdrop-blur-md">
+                    <motion.div 
+                      className="w-2 h-2 bg-emerald-400 rounded-full shadow-lg shadow-emerald-400/50"
+                      animate={{ scale: [1, 1.4, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                    <span className="text-emerald-400 text-sm font-semibold">Live</span>
+                    <span className="text-slate-300 text-sm font-mono">
+                      {currentTime?.toLocaleTimeString('en-IN', { 
+                        timeZone: 'Asia/Kolkata',
+                        hour12: false 
+                      })} IST
+                    </span>
+                  </div>
+                </motion.div>
+
+                {/* Center Column - Explore Links - Centered */}
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="flex flex-col items-center space-y-3"
                 >
-                  {link.name}
-                </motion.a>
-              ))}
-            </nav>
-          </motion.div>
+                  <h3 className="text-sm font-bold text-white uppercase tracking-wider text-center">
+                    Explore
+                  </h3>
+                  
+                  <nav className="space-y-2 text-center">
+                    {quickLinks.map((item) => (
+                      <motion.a
+                        key={item.name}
+                        href={item.href}
+                        className="block text-slate-400 hover:text-cyan-400 text-sm transition-all duration-200"
+                        whileHover={{ x: 4, color: "#22d3ee" }}
+                      >
+                        {item.name}
+                      </motion.a>
+                    ))}
+                  </nav>
+                </motion.div>
 
-          {/* Contact */}
-          <motion.div variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}>
-            <h3 className="text-lg font-bold text-white uppercase tracking-wider text-sm mb-4">Connect</h3>
-            <div className="space-y-4">
-              <a href="mailto:tensorclub@cb.amrita.edu" className="flex items-start space-x-3 text-slate-400 hover:text-pink-400 transition-colors duration-300 group">
-                <Mail className="w-5 h-5 mt-0.5 group-hover:scale-110 transition-transform duration-300" />
-                <span className="text-sm break-all">tensorclub@cb.amrita.edu</span>
-              </a>
-              <div className="flex items-start space-x-3 text-slate-400">
-                <MapPin className="w-5 h-5 mt-0.5" />
-                <div className="text-sm">
-                  <p>Amrita Vishwa Vidyapeetham</p>
-                  <p>Coimbatore, Tamil Nadu</p>
-                  <p>India 🇮🇳</p>
+                {/* Right Column - Connect Section */}
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                  className="space-y-4"
+                >
+                  {/* Clickable Amrita Logo */}
+                  <div className="flex justify-start">
+                    <motion.a 
+                      href="https://amrita.edu"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block"
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <Image 
+                        src="/images/amrita_logo.png"
+                        alt="Amrita Vishwa Vidyapeetham"
+                        width={200}
+                        height={120}
+                        className="opacity-90 hover:opacity-100 transition-opacity duration-300 object-contain outline-none border-none cursor-pointer"
+                      />
+                    </motion.a>
+                  </div>
+                  
+                  <h3 className="text-sm font-bold text-white uppercase tracking-wider text-left">
+                    Connect
+                  </h3>
+
+                  {/* Contact Information */}
+                  <div className="space-y-2">
+                    <motion.div 
+                      className="flex items-center gap-3 text-slate-300 text-left p-2 rounded-lg hover:bg-slate-800/30 transition-colors"
+                      whileHover={{ x: 2 }}
+                    >
+                      <Mail className="w-4 h-4 text-cyan-400 flex-shrink-0" />
+                      <a 
+                        href="mailto:tensorclub@cb.amrita.edu" 
+                        className="hover:text-cyan-400 transition-colors text-xs"
+                      >
+                        tensorclub@cb.amrita.edu
+                      </a>
+                    </motion.div>
+                    
+                    <motion.div 
+                      className="flex items-center gap-3 text-slate-300 text-left p-2 rounded-lg hover:bg-slate-800/30 transition-colors"
+                      whileHover={{ x: 2 }}
+                    >
+                      <MapPin className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                      <span className="text-xs">Coimbatore, Tamil Nadu</span>
+                    </motion.div>
+                    
+                    <motion.div 
+                      className="flex items-center gap-3 text-slate-300 text-left p-2 rounded-lg hover:bg-slate-800/30 transition-colors"
+                      whileHover={{ x: 2 }}
+                    >
+                      <Users className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                      <span className="text-xs">70+ Active Members</span>
+                    </motion.div>
+                  </div>
+                </motion.div>
+              </motion.div>
+
+              {/* Bottom Section */}
+              <motion.div 
+                className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 py-4 border-t-2 border-slate-700/50"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.4 }}
+              >
+                
+                {/* Social Media Links */}
+                <div className="flex items-center gap-3">
+                  <span className="text-slate-400 text-sm font-medium">Follow us</span>
+                  <div className="flex gap-2">
+                    {socialLinks.map((social, i) => (
+                      <motion.a
+                        key={i}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2.5 rounded-xl bg-gradient-to-br from-slate-800/60 to-slate-700/60 border-2 border-slate-600/50 text-slate-400 hover:text-white hover:border-cyan-400/60 transition-all duration-300 outline-none shadow-lg backdrop-blur-sm"
+                        whileHover={{ 
+                          scale: 1.1, 
+                          y: -3,
+                          boxShadow: "0 10px 25px -5px rgba(6, 182, 212, 0.3)"
+                        }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <social.icon className="w-4 h-4" />
+                      </motion.a>
+                    ))}
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center space-x-3 text-slate-400">
-                <Users className="w-5 h-5" />
-                <span className="text-sm">70+ Active Members</span>
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
 
-        {/* Social Icons + Stats */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-6 py-8 border-t border-slate-800">
-          <div className="flex items-center space-x-6">
-            <span className="text-slate-400 text-sm">Follow us</span>
-            <div className="flex space-x-4">
-              {socialLinks.map((s, i) => (
-                <motion.a
-                  key={i}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.2, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="p-3 rounded-lg text-slate-400 border border-slate-800 bg-slate-900/40 relative overflow-hidden group backdrop-blur-sm"
-                >
-                  <span className={`absolute inset-0 bg-gradient-to-r ${s.color} opacity-0 group-hover:opacity-20 blur-lg transition-all duration-500`} />
-                  <s.icon className="w-5 h-5 relative z-10" />
-                </motion.a>
-              ))}
+                {/* Statistics & Copyright */}
+                <div className="flex items-center gap-4 text-xs font-mono text-slate-400">
+                  <div className="flex items-center gap-1.5">
+                    <motion.div 
+                      className="w-1.5 h-1.5 bg-cyan-400 rounded-full shadow-sm shadow-cyan-400/50"
+                      animate={{ opacity: [0.5, 1, 0.5], scale: [1, 1.2, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                    <span>70+ Members</span>
+                  </div>
+                  <span className="text-slate-600">•</span>
+                  <div className="flex items-center gap-1.5">
+                    <motion.div 
+                      className="w-1.5 h-1.5 bg-purple-400 rounded-full shadow-sm shadow-purple-400/50"
+                      animate={{ opacity: [0.5, 1, 0.5], scale: [1, 1.2, 1] }}
+                      transition={{ duration: 2.5, repeat: Infinity }}
+                    />
+                    <span>15+ Projects</span>
+                  </div>
+                  <span className="text-slate-600">•</span>
+                  <span>© 2025 Tensor Club</span>
+                </div>
+              </motion.div>
             </div>
-          </div>
-
-          {/* Stats */}
-          <div className="flex items-center space-x-6 text-sm">
-            <div className="flex items-center space-x-2">
-              <motion.div 
-                className="w-2 h-2 bg-cyan-400 rounded-full"
-                animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-              <span className="text-slate-400 font-mono">70+ Members</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <motion.div 
-                className="w-2 h-2 bg-purple-400 rounded-full"
-                animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 2.5, repeat: Infinity }}
-              />
-              <span className="text-slate-400 font-mono">15+ Projects</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <motion.div 
-                className="w-2 h-2 bg-pink-400 rounded-full"
-                animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              />
-              <span className="text-slate-400 font-mono">Always Active</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Copyright */}
-      <div className="border-t border-slate-800 bg-slate-950/60 relative z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col sm:flex-row justify-between items-center text-slate-500 text-sm">
-          <div> © {new Date().getFullYear()} Tensor Club • All rights reserved</div>
-          <div className="font-mono flex items-center space-x-2">
-            <motion.div 
-              className="w-2 h-2 bg-green-500 rounded-full"
-              animate={{ opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            />
-            <span>Online</span>
-            <span>•</span>
-            <span>v1.0.0</span>
-          </div>
-        </div>
-      </div>
-    </footer>
+          </motion.footer>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 

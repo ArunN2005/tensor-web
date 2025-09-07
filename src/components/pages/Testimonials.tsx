@@ -10,7 +10,13 @@ interface Testimonial {
   avatarUrl?: string;
 }
 
-function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
+function TestimonialCard({
+  testimonial,
+  index,
+}: {
+  testimonial: Testimonial;
+  index?: number;
+}) {
   const { name, position, quote, avatarUrl } = testimonial;
 
   // Fallback initials logic
@@ -22,7 +28,13 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
     .slice(0, 2);
 
   return (
-    <div className="bg-[hsla(var(--background),0.5)] p-6 rounded-lg border border-[hsla(var(--border),0.3)] hover:border-[hsla(var(--electric-cyan),0.3)] transition-colors duration-300">
+    <div
+      className="bg-[hsla(var(--background),0.5)] p-6 rounded-lg border border-[hsla(var(--border),0.3)] hover:border-[hsla(var(--electric-cyan),0.3)] hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out opacity-0 translate-y-10 group-hover:opacity-100 group-hover:translate-y-0"
+      style={{
+        transitionDuration: "500ms",
+        transitionDelay: index !== undefined ? `${index * 150}ms` : "0ms",
+      }}
+    >
       <div className="flex items-start gap-4">
         {/* Avatar or fallback */}
         {avatarUrl ? (
@@ -31,24 +43,36 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
               src={avatarUrl}
               alt={name}
               fill
-              className="object-cover"
+              className="object-cover hover:scale-110 transition-transform duration-300"
             />
           </div>
         ) : (
-          <div className="w-12 h-12 rounded-full bg-[hsla(var(--digital-purple),0.5)] flex items-center justify-center text-white font-bold text-lg" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+          <div
+            className="w-12 h-12 rounded-full bg-[hsla(var(--digital-purple),0.5)] flex items-center justify-center text-white font-bold text-lg hover:scale-110 transition-transform duration-300"
+            style={{ fontFamily: "var(--font-space-grotesk)" }}
+          >
             {initials}
           </div>
         )}
         <div className="flex flex-col">
-          <h4 className="text-lg font-semibold" style={{ fontFamily: 'var(--font-unbounded)' }}>
+          <h4
+            className="text-lg font-semibold hover:text-[hsla(var(--electric-cyan),1)] transition-colors duration-300"
+            style={{ fontFamily: "var(--font-unbounded)" }}
+          >
             {name}
           </h4>
-          <p className="text-sm text-[hsl(var(--muted-foreground))]" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+          <p
+            className="text-sm text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] transition-colors duration-300"
+            style={{ fontFamily: "var(--font-space-grotesk)" }}
+          >
             {position}
           </p>
         </div>
       </div>
-      <p className="mt-4 text-[hsl(var(--foreground))] opacity-90" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+      <p
+        className="mt-4 text-[hsl(var(--foreground))] opacity-90 hover:opacity-100 transition-opacity duration-300"
+        style={{ fontFamily: "var(--font-space-grotesk)" }}
+      >
         {quote}
       </p>
     </div>
@@ -90,14 +114,21 @@ export default function Testimonials() {
   return (
     <section className="relative py-24 overflow-hidden bg-[hsla(var(--background),1)]">
       <div className="container mx-auto px-6 lg:px-8">
-        <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center" style={{ fontFamily: 'var(--font-unbounded)' }}>
+        <h2
+          className="text-4xl md:text-5xl font-bold mb-12 text-center"
+          style={{ fontFamily: "var(--font-unbounded)" }}
+        >
           <span className="gradient-text">Testimonials</span>
         </h2>
         {/* TODO: Implement carousel logic here, e.g., using Swiper or react-slick for sliding functionality */}
         {/* For now, rendering as a static grid; in future, wrap in carousel container and handle navigation */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {testimonials.map((testimonial) => (
-            <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 group">
+          {testimonials.map((testimonial, index) => (
+            <TestimonialCard
+              key={testimonial.id}
+              testimonial={testimonial}
+              index={index}
+            />
           ))}
         </div>
       </div>
