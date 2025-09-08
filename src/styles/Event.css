@@ -1,0 +1,79 @@
+/* Event.css */
+@keyframes slideRight {
+  0% { transform: translateX(-100%); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+
+.motion-button {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.motion-button:hover .overlay-corner {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.button-overlay {
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 0.4em;
+}
+
+.overlay-corner {
+  position: absolute;
+  width: 0.75em;
+  height: 0.75em;
+  border-top: 2px solid hsla(var(--electric-cyan), 1);
+  border-left: 2px solid hsla(var(--electric-cyan), 1);
+  top: 0;
+  left: 0;
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.top-right {
+  border-top: 2px solid hsla(var(--electric-cyan), 1);
+  border-right: 2px solid hsla(var(--electric-cyan), 1);
+  border-left: none;
+  top: 0;
+  right: 0;
+  left: auto;
+}
+
+.bottom-left {
+  border-bottom: 2px solid hsla(var(--electric-cyan), 1);
+  border-left: 2px solid hsla(var(--electric-cyan), 1);
+  border-top: none;
+  bottom: 0;
+  left: 0;
+  top: auto;
+}
+
+.bottom-right {
+  border-bottom: 2px solid hsla(var(--electric-cyan), 1);
+  border-right: 2px solid hsla(var(--electric-cyan), 1);
+  border-top: none;
+  border-left: none;
+  bottom: 0;
+  right: 0;
+  top: auto;
+  left: auto;
+}
+
+.motion-button:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+.tooltip {
+  visibility: hidden;
+}
+
+.holdma {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}

@@ -160,25 +160,42 @@ export default function ProjectsPage() {
   }
 
   return (
-    <section className="py-20 bg-gradient-to-b from-background to-background/50">
-      <div className="container mx-auto px-4">
+    <section className="py-20 bg-[hsl(var(--background))] relative overflow-hidden">
+      {/* Background elements */}
+      <div className="absolute inset-0 z-0">
+        {/* Gradient orbs */}
+        <div className="absolute top-1/4 left-1/4 w-[40vw] h-[40vw] rounded-full bg-[hsla(var(--electric-cyan),0.05)] blur-[120px] transform -translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 right-1/4 w-[25vw] h-[25vw] rounded-full bg-[hsla(var(--digital-purple),0.05)] blur-[80px]"></div>
+        
+        {/* Subtle grid pattern overlay */}
+        <div className="absolute inset-0 opacity-5 pointer-events-none">
+          <div className="w-full h-full bg-[url('/grid-pattern.svg')] bg-repeat bg-center"></div>
+        </div>
+
+        {/* Code symbols */}
+        <div className="absolute top-[15%] left-[10%] text-[hsla(var(--electric-cyan),0.2)] text-4xl opacity-40" style={{ fontFamily: 'var(--font-geist-mono)' }}>{`{ }`}</div>
+        <div className="absolute bottom-[25%] right-[12%] text-[hsla(var(--digital-purple),0.2)] text-3xl opacity-40" style={{ fontFamily: 'var(--font-geist-mono)' }}>{`</>`}</div>
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <h1
             ref={titleRef}
-            className="text-4xl md:text-5xl font-bold text-foreground mb-4 font-sans"
+            className="text-4xl md:text-5xl font-bold mb-4"
+            style={{ fontFamily: 'var(--font-unbounded)' }}
           >
-            {isExpanded ? "All Projects" : "Featured Projects"}
+            <span className="text-white">{isExpanded ? "All" : "Featured"}</span>{' '}
+            <span className="gradient-text relative inline-block">
+              Projects
+              <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-[hsla(var(--electric-cyan),0.7)] to-[hsla(var(--magenta),0.7)]"></span>
+            </span>
           </h1>
-          <div className="w-20 h-1 bg-primary mx-auto mb-6"></div>
-          {/* <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p 
+            className="text-lg text-[hsl(var(--foreground))] opacity-80 max-w-2xl mx-auto"
+            style={{ fontFamily: 'var(--font-space-grotesk)' }}
+          >
             {isExpanded
-              ? `Browse our complete collection of ${projectsData.length} innovative projects across various technologies and domains.`
-              : "Explore our most innovative projects that showcase cutting-edge technology and creative problem-solving."}
-          </p> */}
-
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            {isExpanded
-              ? ``
+              ? `Browse our complete collection of innovative projects across various technologies and domains.`
               : "Explore our most innovative projects that showcase cutting-edge technology and creative problem-solving."}
           </p>
         </div>
@@ -191,10 +208,11 @@ export default function ProjectsPage() {
             <div className="text-center mt-12">
               <Button
                 onClick={handleViewAll}
-                className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors shadow-lg hover:shadow-primary/25"
+                className="px-6 py-4 bg-[hsla(var(--electric-cyan),1)] text-black rounded-lg font-bold hover:bg-[hsla(var(--electric-cyan),0.9)] transition-all duration-300 shadow-[0_0_15px_hsla(var(--electric-cyan),0.3)] hover:shadow-[0_0_20px_hsla(var(--electric-cyan),0.5)] hover:scale-105 transform"
+                style={{ fontFamily: 'var(--font-space-grotesk)' }}
               >
                 <ChevronDown className="mr-2 h-4 w-4" />
-                View All Projects {/*({projectsData.length}) */}
+                View All Projects
               </Button>
             </div>
           </>
@@ -220,11 +238,11 @@ export default function ProjectsPage() {
             <div className="text-center mt-12" ref={filtersRef}>
               <Button
                 onClick={handleCollapse}
-                variant="outline"
-                className="px-6 py-3 rounded-lg font-medium hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-colors bg-transparent"
+                className="px-6 py-3 bg-[hsla(var(--background),0.5)] hover:bg-[hsla(var(--electric-cyan),0.1)] border border-[hsla(var(--electric-cyan),0.3)] text-[hsl(var(--electric-cyan))] rounded-lg font-semibold transition-all duration-300 backdrop-blur-sm hover:border-[hsla(var(--electric-cyan),0.6)] hover:scale-105 transform"
+                style={{ fontFamily: 'var(--font-space-grotesk)' }}
               >
                 <ChevronUp className="mr-2 h-4 w-4" />
-                Show Less
+                Show Featured Projects
               </Button>
             </div>
           </>

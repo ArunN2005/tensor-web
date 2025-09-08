@@ -15,20 +15,20 @@ function Logo({ isOverlay = false }: { isOverlay?: boolean }) {
     >
       <div className="relative">
         <div
-          className={`relative rounded-lg bg-gradient-to-br from-purple-500/10 via-transparent to-teal-500/10 border border-white/5 backdrop-blur-sm transition-all duration-500 group-hover:border-purple-400/30 group-hover:shadow-[0_0_20px_rgba(147,51,234,0.2)] ${
-            isOverlay ? 'w-12 h-12' : 'w-10 h-10'
+          className={`relative rounded-lg bg-gradient-to-br from-[hsla(var(--electric-cyan),0.1)] via-transparent to-[hsla(var(--digital-purple),0.1)] border border-white/5 backdrop-blur-sm transition-all duration-500 group-hover:border-[hsla(var(--electric-cyan),0.3)] group-hover:shadow-[0_0_20px_rgba(0,255,255,0.2)] ${
+            isOverlay ? 'w-14 h-14' : 'w-12 h-12'
           }`}
         >
           <div className="absolute inset-0.5 bg-slate-950/60 rounded-md flex items-center justify-center">
             <Image
               src="/Tensor_Logo_White.png"
               alt="Tensor Logo"
-              width={isOverlay ? 28 : 24}
-              height={isOverlay ? 28 : 24}
+              width={isOverlay ? 34 : 30}
+              height={isOverlay ? 34 : 30}
               className="relative z-10 transition-all duration-500 group-hover:brightness-110"
             />
             {isHovered && (
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-400/20 to-transparent animate-pulse" />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[hsla(var(--electric-cyan),0.2)] to-transparent animate-pulse" />
             )}
           </div>
         </div>
@@ -36,7 +36,7 @@ function Logo({ isOverlay = false }: { isOverlay?: boolean }) {
 
       <div className="flex flex-col">
         <span
-          className={`font-semibold text-white tracking-tight group-hover:text-purple-300 transition-all duration-300 ${
+          className={`font-semibold text-white tracking-tight group-hover:text-[hsla(var(--electric-cyan),1)] transition-all duration-300 ${
             isOverlay ? 'text-xl' : 'text-lg'
           }`}
           style={{ fontFamily: 'var(--font-unbounded)' }}
@@ -44,16 +44,16 @@ function Logo({ isOverlay = false }: { isOverlay?: boolean }) {
           Tensor Club
         </span>
         <div className="flex items-center gap-1.5">
-          <div className="w-0.5 h-0.5 bg-purple-400/60 rounded-full" />
+          <div className="w-0.5 h-0.5 bg-[hsla(var(--electric-cyan),0.6)] rounded-full" />
           <span
-            className={`text-purple-300 font-mono uppercase tracking-widest ${
+            className={`text-[hsla(var(--electric-cyan),0.8)] font-mono uppercase tracking-widest ${
               isOverlay ? 'text-[10px]' : 'text-[9px]'
             }`}
           >
             Build Future
           </span>
 
-          <div className="w-0.5 h-0.5 bg-purple-400/60 rounded-full" />
+          <div className="w-0.5 h-0.5 bg-[hsla(var(--electric-cyan),0.6)] rounded-full" />
         </div>
       </div>
     </div>
@@ -131,8 +131,8 @@ function FullPageNavigation({
               
               className={`relative w-full py-4 px-6 transition-all duration-300 overflow-hidden rounded-xl border text-left block group ${
                 isActive 
-                  ? 'text-cyan-400 font-semibold border-cyan-400/40 bg-gradient-to-r from-blue-500/10 via-purple-500/5 to-cyan-500/10 shadow-lg' 
-                  : 'text-white hover:text-cyan-300 border-transparent hover:border-cyan-300/40 hover:bg-gradient-to-r hover:from-white/5 hover:via-purple-500/10 hover:to-cyan-500/10'
+                  ? 'text-[hsla(var(--electric-cyan),1)] font-semibold border-[hsla(var(--electric-cyan),0.4)] bg-gradient-to-r from-blue-500/10 via-purple-500/5 to-cyan-500/10 shadow-lg' 
+                  : 'text-white hover:text-[hsla(var(--electric-cyan),1)] border-transparent hover:border-[hsla(var(--electric-cyan),0.4)] hover:bg-gradient-to-r hover:from-white/5 hover:via-purple-500/10 hover:to-cyan-500/10'
               }`}
 
 
@@ -142,10 +142,10 @@ function FullPageNavigation({
               {/* Enhanced Active/Hover Indicator */}
               <div className={`absolute left-0 top-1/2 -translate-y-1/2 transition-all duration-300 ${
                 isActive 
-                  ? 'w-1 h-8 bg-gradient-to-b from-blue-400 via-purple-400 to-cyan-400 opacity-100 scale-100 rounded-r-full' 
+                  ? 'w-1 h-8 bg-gradient-to-b from-[hsla(var(--electric-cyan),0.8)] via-[hsla(var(--digital-purple),0.8)] to-[hsla(var(--electric-cyan),0.8)] opacity-100 scale-100 rounded-r-full' 
                   : isHovered
-                  ? 'w-0.5 h-6 bg-gradient-to-b from-purple-400 to-cyan-400 opacity-70 scale-100 rounded-r-full'
-                  : 'w-0.5 h-4 bg-purple-400 opacity-0 scale-0 rounded-r-full'
+                  ? 'w-0.5 h-6 bg-gradient-to-b from-[hsla(var(--digital-purple),0.8)] to-[hsla(var(--electric-cyan),0.8)] opacity-70 scale-100 rounded-r-full'
+                  : 'w-0.5 h-4 bg-[hsla(var(--digital-purple),0.8)] opacity-0 scale-0 rounded-r-full'
               }`} />
               
               {/* Content */}
@@ -153,19 +153,19 @@ function FullPageNavigation({
                 <div className="flex items-center gap-4">
                   <div className={`text-lg transition-all duration-300 ${
                     isHovered 
-                      ? 'text-cyan-400 scale-125 rotate-12' 
+                      ? 'text-[hsla(var(--electric-cyan),1)] scale-125 rotate-12' 
                       : isActive 
-                      ? 'text-cyan-400 scale-110' 
+                      ? 'text-[hsla(var(--electric-cyan),1)] scale-110' 
                       : 'text-slate-400'
                   }`}>
                     {item.icon}
                   </div>
 
                   <div>
-                    <span className="font-semibold tracking-wide text-base block" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+                    <span className="font-semibold tracking-wide text-base block" style={{ fontFamily: 'var(--font-unbounded)' }}>
                       {item.text}
                     </span>
-                    <span className="text-xs text-slate-400 font-mono tracking-wider">
+                    <span className="text-xs text-slate-400 tracking-wider" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
                       {item.description}
                     </span>
 
@@ -176,7 +176,7 @@ function FullPageNavigation({
                 <div className={`transition-all duration-300 ${
                   isHovered ? 'translate-x-0 opacity-100' : 'translate-x-2 opacity-0'
                 }`}>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[hsla(var(--electric-cyan),1)]">
                     <path d="M9 18l6-6-6-6"/>
                   </svg>
                 </div>
@@ -185,15 +185,15 @@ function FullPageNavigation({
               {/* Enhanced Hover Effect */}
               {isHovered && (
                 <>
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/10 to-transparent" 
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[hsla(var(--electric-cyan),0.1)] to-transparent" 
                        style={{ animation: 'slideRight 0.8s ease-out' }} />
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-400/5 to-transparent opacity-50" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[hsla(var(--digital-purple),0.05)] to-transparent opacity-50" />
                 </>
               )}
               
               {/* Glassmorphism effect for active state */}
               {isActive && (
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/10 to-cyan-500/5 backdrop-blur-sm" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[hsla(var(--electric-cyan),0.05)] via-[hsla(var(--digital-purple),0.1)] to-[hsla(var(--electric-cyan),0.05)] backdrop-blur-sm" />
               )}
             </button>
           </div>
@@ -368,12 +368,12 @@ export default function Navbar() {
         }
         @keyframes neonGlow {
           0%, 100% { 
-            box-shadow: 0 0 12px ${scrolled ? 'rgba(59, 130, 246, 0.7)' : 'rgba(147, 51, 234, 0.7)'}, 0 0 24px ${scrolled ? 'rgba(59, 130, 246, 0.4)' : 'rgba(147, 51, 234, 0.4)'};
-            background: linear-gradient(90deg, transparent, ${scrolled ? 'rgba(59, 130, 246, 0.8)' : 'rgba(147, 51, 234, 0.8)'}, transparent);
+            box-shadow: 0 0 12px ${scrolled ? 'rgba(0, 255, 255, 0.7)' : 'rgba(0, 255, 255, 0.7)'}, 0 0 24px ${scrolled ? 'rgba(0, 255, 255, 0.4)' : 'rgba(0, 255, 255, 0.4)'};
+            background: linear-gradient(90deg, transparent, ${scrolled ? 'rgba(0, 255, 255, 0.8)' : 'rgba(0, 255, 255, 0.8)'}, transparent);
           }
           50% { 
-            box-shadow: 0 0 16px ${scrolled ? 'rgba(59, 130, 246, 0.9)' : 'rgba(147, 51, 234, 0.9)'}, 0 0 32px ${scrolled ? 'rgba(59, 130, 246, 0.6)' : 'rgba(147, 51, 234, 0.6)'}, 0 0 48px ${scrolled ? 'rgba(59, 130, 246, 0.4)' : 'rgba(147, 51, 234, 0.4)'};
-            background: linear-gradient(90deg, transparent, ${scrolled ? 'rgba(59, 130, 246, 1)' : 'rgba(147, 51, 234, 1)'}, transparent);
+            box-shadow: 0 0 16px ${scrolled ? 'rgba(0, 255, 255, 0.9)' : 'rgba(0, 255, 255, 0.9)'}, 0 0 32px ${scrolled ? 'rgba(0, 255, 255, 0.6)' : 'rgba(0, 255, 255, 0.6)'}, 0 0 48px ${scrolled ? 'rgba(0, 255, 255, 0.4)' : 'rgba(0, 255, 255, 0.4)'};
+            background: linear-gradient(90deg, transparent, ${scrolled ? 'rgba(0, 255, 255, 1)' : 'rgba(0, 255, 255, 1)'}, transparent);
           }
         }
         @keyframes float {
@@ -427,8 +427,8 @@ export default function Navbar() {
         }}
         style={{
           background: scrolled 
-            ? 'linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.9), transparent)'
-            : 'linear-gradient(90deg, transparent, rgba(147, 51, 234, 0.9), transparent)',
+            ? 'linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.9), transparent)'
+            : 'linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.9), transparent)',
         }}
       />
 
@@ -442,9 +442,9 @@ export default function Navbar() {
   }`}
         style={{
           background: `
-            radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 80% 80%, rgba(147, 51, 234, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.05) 0%, transparent 70%),
+            radial-gradient(circle at 20% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(128, 0, 255, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 50% 0%, rgba(255, 0, 255, 0.05) 0%, transparent 70%),
             linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(2,6,23,0.98) 100%)
           `,
         }}
@@ -463,10 +463,10 @@ export default function Navbar() {
                 left: `${10 + i * 15}%`,
                 top: `${15 + i * 12}%`,
                 background: i % 3 === 0 
-                  ? 'linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.08))'
+                  ? 'linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(128, 0, 255, 0.08))'
                   : i % 3 === 1
-                  ? 'linear-gradient(135deg, rgba(147, 51, 234, 0.1), rgba(6, 182, 212, 0.08))'
-                  : 'linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.08))',
+                  ? 'linear-gradient(135deg, rgba(128, 0, 255, 0.1), rgba(255, 0, 255, 0.08))'
+                  : 'linear-gradient(135deg, rgba(255, 0, 255, 0.1), rgba(0, 255, 255, 0.08))',
                 animationDelay: `${i * 0.8}s`,
                 animationDuration: `${4 + i * 0.5}s`,
               }}
@@ -478,8 +478,8 @@ export default function Navbar() {
             className="absolute inset-0 opacity-[0.03]"
             style={{ 
               backgroundImage: `
-                linear-gradient(rgba(59, 130, 246, 0.3) 1px, transparent 1px), 
-                linear-gradient(90deg, rgba(147, 51, 234, 0.3) 1px, transparent 1px)
+                linear-gradient(rgba(0, 255, 255, 0.3) 1px, transparent 1px), 
+                linear-gradient(90deg, rgba(128, 0, 255, 0.3) 1px, transparent 1px)
               `,
               backgroundSize: '80px 80px'
             }} 
@@ -487,8 +487,8 @@ export default function Navbar() {
           
           {/* Subtle animated lines */}
           <div className="absolute inset-0">
-            <div className="absolute top-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent" />
-            <div className="absolute bottom-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/20 to-transparent" />
+            <div className="absolute top-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[hsla(var(--electric-cyan),0.2)] to-transparent" />
+            <div className="absolute bottom-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[hsla(var(--digital-purple),0.2)] to-transparent" />
           </div>
         </div>
 
@@ -521,13 +521,13 @@ export default function Navbar() {
                   handleOpenModal();
                   handleCloseMenu();
                 }}
-                className="px-4 py-2 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-cyan-500/10 border border-blue-400/20 rounded-lg text-blue-300 hover:text-white font-mono text-xs tracking-wider transition-all duration-300 hover:border-blue-400/40 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] group relative overflow-hidden"
+                className="px-4 py-2 bg-gradient-to-r from-[hsla(var(--electric-cyan),0.1)] via-[hsla(var(--digital-purple),0.1)] to-[hsla(var(--electric-cyan),0.1)] border border-[hsla(var(--electric-cyan),0.2)] rounded-lg text-[hsla(var(--electric-cyan),1)] hover:text-white font-mono text-xs tracking-wider transition-all duration-300 hover:border-[hsla(var(--electric-cyan),0.4)] hover:shadow-[0_0_20px_rgba(0,255,255,0.3)] group relative overflow-hidden"
               >
                 <span className="relative z-10 flex items-center gap-2">
                   <span>Join Community</span>
                   <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                 </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 to-purple-400/10 opacity-0 group-hover:opacity-100 transition-all duration-300 shimmer-effect" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[hsla(var(--electric-cyan),0.1)] to-[hsla(var(--digital-purple),0.1)] opacity-0 group-hover:opacity-100 transition-all duration-300 shimmer-effect" />
               </button>
             </div>
           </div>

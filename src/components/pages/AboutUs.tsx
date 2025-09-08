@@ -159,8 +159,22 @@ export default function AboutUs() {
               Our Core Objectives
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {/* Objective cards, as in your current code... */}
-              {/* ... */}
+              <div className="p-5 rounded-lg border border-[hsla(var(--border),0.2)] bg-[hsla(var(--background),0.6)] hover:bg-[hsla(var(--background),0.8)] transition-colors">
+                <h4 className="font-semibold mb-2" style={{ fontFamily: 'var(--font-unbounded)' }}>Learn by Building</h4>
+                <p className="text-sm text-[hsl(var(--foreground))] opacity-85" style={{ fontFamily: 'var(--font-space-grotesk)' }}>Hands‑on projects, code labs, and sprints that turn ideas into working AI applications.</p>
+              </div>
+              <div className="p-5 rounded-lg border border-[hsla(var(--border),0.2)] bg-[hsla(var(--background),0.6)] hover:bg-[hsla(var(--background),0.8)] transition-colors">
+                <h4 className="font-semibold mb-2" style={{ fontFamily: 'var(--font-unbounded)' }}>Grow Together</h4>
+                <p className="text-sm text-[hsl(var(--foreground))] opacity-85" style={{ fontFamily: 'var(--font-space-grotesk)' }}>Peer learning, mentorship, and a supportive community across domains and skill levels.</p>
+              </div>
+              <div className="p-5 rounded-lg border border-[hsla(var(--border),0.2)] bg-[hsla(var(--background),0.6)] hover:bg-[hsla(var(--background),0.8)] transition-colors">
+                <h4 className="font-semibold mb-2" style={{ fontFamily: 'var(--font-unbounded)' }}>Ship Impact</h4>
+                <p className="text-sm text-[hsl(var(--foreground))] opacity-85" style={{ fontFamily: 'var(--font-space-grotesk)' }}>Solve real problems through research, open‑source, and campus initiatives.</p>
+              </div>
+              <div className="p-5 rounded-lg border border-[hsla(var(--border),0.2)] bg-[hsla(var(--background),0.6)] hover:bg-[hsla(var(--background),0.8)] transition-colors">
+                <h4 className="font-semibold mb-2" style={{ fontFamily: 'var(--font-unbounded)' }}>Share and Inspire</h4>
+                <p className="text-sm text-[hsl(var(--foreground))] opacity-85" style={{ fontFamily: 'var(--font-space-grotesk)' }}>Talks, workshops, and showcases that spread knowledge and celebrate the community.</p>
+              </div>
             </div>
             
             <div className="text-center mt-8">

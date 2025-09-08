@@ -219,14 +219,15 @@ export default function Hero() {
       {/* Content */}
       <div className="relative z-10 max-w-5xl mx-auto text-center mt-8 md:mt-16">
         {/* Logo animation */}
-        <div className="mb-4 transform scale-75 sm:scale-100 opacity-80">
-          <div className={`mx-auto w-20 h-20 relative ${isLoaded ? 'animate-logo-reveal' : ''}`}>
+        <div className="mb-6 transform scale-75 sm:scale-100">
+          <div className={`mx-auto w-64 relative ${isLoaded ? 'animate-logo-reveal' : ''}`}>
             <Image 
-              src="/Tensor_Logo_White.png" 
+              src="/tensor-horizontal-modified.png" 
               alt="Tensor Logo" 
-              width={150} 
-              height={150}
-              className="object-contain"
+              width={320}
+              height={80}
+              className="object-contain mix-blend-screen opacity-85 drop-shadow-lg"
+              priority
             />
           </div>
         </div>
@@ -298,7 +299,7 @@ export default function Hero() {
           className="flex flex-col sm:flex-row items-center justify-center gap-5"
         >
           <Link 
-            href="/#projects" 
+            href="/projects" 
             className="bg-[hsla(var(--electric-cyan),1)] hover:bg-[hsla(var(--electric-cyan),0.9)] text-white font-bold px-8 py-4 rounded-lg transition-all duration-300 shadow-glow hover:scale-105 transform"
             style={{ fontFamily: 'var(--font-space-grotesk)', fontWeight: 700 }}
           >

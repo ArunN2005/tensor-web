@@ -84,12 +84,12 @@ export default function ProjectsComingSoon() {
 
   return (
     <div className="container mx-auto px-4 py-20 flex flex-col items-center justify-center min-h-[70vh]">
-      <div className="relative bg-black border border-[hsl(var(--electric-cyan))] rounded-lg overflow-hidden w-full max-w-3xl shadow-[0_0_25px_rgba(0,255,255,0.3)]">
+      <div className="relative bg-[hsla(var(--background),0.9)] border border-[hsl(var(--electric-cyan))] rounded-lg overflow-hidden w-full max-w-3xl shadow-[0_0_25px_rgba(0,255,255,0.3)]">
         <div
           ref={scanRef}
           className="absolute top-0 left-0 w-full h-[15%] bg-gradient-to-b from-[hsla(var(--electric-cyan),0.2)] to-transparent"
         ></div>
-        <div className="p-6 font-mono text-[hsl(var(--electric-cyan))] text-sm space-y-2">
+        <div className="p-6 font-mono text-[hsl(var(--electric-cyan))] text-sm space-y-2" style={{ fontFamily: 'var(--font-geist-mono)' }}>
           <p ref={addLineRef}>{">> AI SYSTEM ONLINE"}</p>
           <p ref={addLineRef}>{">> Loading projects repository..."}</p>
           <p ref={addLineRef}>{">> Scanning innovation logs..."}</p>
@@ -113,11 +113,15 @@ export default function ProjectsComingSoon() {
       </div>
       <h1
         ref={titleRef}
-        className="text-3xl md:text-4xl font-bold text-white mt-8 text-center"
+        className="text-3xl md:text-4xl font-bold mt-8 text-center gradient-text"
+        style={{ fontFamily: 'var(--font-unbounded)' }}
       >
         Projects Coming Soon
       </h1>
-      <p className="text-[hsl(var(--muted-foreground))] mt-3 max-w-lg text-center">
+      <p 
+        className="text-[hsl(var(--muted-foreground))] mt-3 max-w-lg text-center"
+        style={{ fontFamily: 'var(--font-space-grotesk)' }}
+      >
         Our AI is curating groundbreaking projects to showcase here. Stay tuned
         for an inspiring collection of innovation!
       </p>

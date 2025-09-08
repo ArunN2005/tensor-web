@@ -8,10 +8,10 @@ export default function MinimalHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const primaryLinks = [
-    { text: 'Gift Vouchers', href: '/vouchers' },
-    { text: 'Group Dining', href: '/dining' },
-    { text: 'Book a Table', href: '/booking' },
-    { text: 'Contact', href: '/contact' }
+    { text: 'Home', href: '/' },
+    { text: 'Team', href: '/team' },
+    { text: 'Projects', href: '/projects' },
+    { text: 'Blog', href: '/blog' }
   ];
 
   return (

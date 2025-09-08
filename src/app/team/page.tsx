@@ -7,6 +7,29 @@ import { FaInstagram, FaLinkedin, FaGithub, FaArrowLeft, FaArrowRight } from "re
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Simple pseudo-random number generator with seed (same as Hero component)
+const seededRandom = (min: number, max: number, seed: number) => {
+  const x = Math.sin(seed) * 10000;
+  const result = (x - Math.floor(x)) * (max - min) + min;
+  return result;
+};
+
+// Generate particles for background
+const generateParticles = (count: number, seed: number = 789) => {
+  return Array.from({ length: count }, (_, i) => {
+    const size = seededRandom(1, 3, seed + i * 0.1);
+    const top = seededRandom(0, 100, seed + i * 0.2);
+    const left = seededRandom(0, 100, seed + i * 0.3);
+    const color = i % 3 === 0 
+      ? 'hsla(var(--electric-cyan), 0.6)' 
+      : i % 3 === 1 
+        ? 'hsla(var(--digital-purple), 0.6)' 
+        : 'hsla(var(--magenta), 0.6)';
+        
+    return { size, top, left, color, id: i };
+  });
+};
+
 const members = [
 	{
 		name: "Premjith",
@@ -70,6 +93,18 @@ const members = [
 		}
 	},
 	{
+		name: "Chanjhana Elango",
+		designation: "Tech Head",
+		year: "3rd Year AIE",
+		image: "https://sj67hjofte.ufs.sh/f/7JfC7VrndVSMe0MLka53zLGrZFsBCRU5avqSVPYi9EXmTtND",
+		category: ["core"],
+		socials: {
+			instagram: "https://www.instagram.com/chanjhana_/?next=%2F",
+			linkedin: "https://www.linkedin.com/in/chanjhana",
+			github: "https://github.com/chanjhana"
+		}
+	},
+	{	
 		name: "Preetham Reddy",
 		designation: "Research & Development Head",
 		year: "3rd Year AIE",
@@ -85,7 +120,7 @@ const members = [
 		name: "Keerthivasan S V",
 		designation: "Web Dev Lead",
 		year: "3rd Year AIE",
-		image: "https://sj67hjofte.ufs.sh/f/7JfC7VrndVSMg5PvV9bu7L5kgxMzcNX9ZHPEyTF2fBn8I3qJ",
+		image: "https://media.licdn.com/dms/image/v2/D5603AQF1bBmX3MQhEw/profile-displayphoto-scale_400_400/B56ZiUlBrfHUAk-/0/1754839392810?e=1759968000&v=beta&t=u95GxjVUvkddYTQcd4kI4wiXBAHu0SsHNJhmVJfrO2Y",
 		category: ["core", "webdev"],
 		socials: {
 			instagram: "https://www.instagram.com/keerrrthiv/",
@@ -666,6 +701,31 @@ export default function TeamPage() {
 	const headingRef = useRef<HTMLHeadingElement | null>(null);
 	const containerRef = useRef<HTMLDivElement | null>(null);
 	const nameRefs = useRef<(HTMLHeadingElement | null)[]>([]);
+	const [isLoaded, setIsLoaded] = useState(false);
+	const [particles, setParticles] = useState<Array<{size: number, top: number, left: number, color: string, id: number}>>([]);
+	
+	// CSS for gradient animation
+	useEffect(() => {
+		// Add the keyframes animation if it doesn't exist
+		if (!document.querySelector('#gradient-animation-style')) {
+			const styleElement = document.createElement('style');
+			styleElement.id = 'gradient-animation-style';
+			styleElement.textContent = `
+				@keyframes gradient-shift {
+					0% {
+						background-position: 0% 50%;
+					}
+					50% {
+						background-position: 100% 50%;
+					}
+					100% {
+						background-position: 0% 50%;
+					}
+				}
+			`;
+			document.head.appendChild(styleElement);
+		}
+	}, []);
 
 	// Ensure only one button is visible in mobile view, even on reload
 	useEffect(() => {
@@ -675,6 +735,12 @@ export default function TeamPage() {
 		handleResize();
 		window.addEventListener("resize", handleResize);
 		return () => window.removeEventListener("resize", handleResize);
+	}, []);
+
+	// Generate particles on client-side
+	useEffect(() => {
+		setIsLoaded(true);
+		setParticles(generateParticles(25));
 	}, []);
 
 	const filteredMembers =
@@ -689,6 +755,41 @@ export default function TeamPage() {
 			{ opacity: 0, y: -40 },
 			{ opacity: 1, y: 0, duration: 1, ease: "power3.out" }
 		);
+
+		// Add subtle floating animation to particles
+		setTimeout(() => {
+			const particleElements = document.querySelectorAll('.team-particle');
+			particleElements.forEach((particle, i) => {
+				const delay = i * 0.05;
+				gsap.fromTo(
+					particle,
+					{ 
+						opacity: 0,
+						y: seededRandom(-10, 10, 456 + i),
+						x: seededRandom(-10, 10, 789 + i)
+					},
+					{ 
+						opacity: 0.7,
+						y: 0,
+						x: 0,
+						duration: 1.5,
+						delay: delay,
+						ease: "power2.out"
+					}
+				);
+				
+				// Add continuous floating movement
+				gsap.to(particle, {
+					y: `+=${seededRandom(-15, 15, 101 + i)}`,
+					x: `+=${seededRandom(-15, 15, 202 + i)}`,
+					duration: 3 + seededRandom(0, 5, 303 + i),
+					delay: delay,
+					ease: "sine.inOut",
+					repeat: -1,
+					yoyo: true
+				});
+			});
+		}, 100);
 	}, []);
 
 	// Smooth card animations on scroll (desktop only)
@@ -729,10 +830,41 @@ export default function TeamPage() {
 	const handlePrevSection = () => {
 		const newIndex = (currentCategoryIndex - 1 + categories.length) % categories.length;
 		setFilter(categories[newIndex].key);
+		
+		// Add a small animation effect for feedback
+		if (isMobile) {
+			gsap.to(".mobile-category-indicator", {
+				x: -10, 
+				duration: 0.2,
+				onComplete: () => {
+					gsap.to(".mobile-category-indicator", {
+						x: 0,
+						duration: 0.3,
+						ease: "back.out"
+					});
+				}
+			});
+		}
 	};
+	
 	const handleNextSection = () => {
 		const newIndex = (currentCategoryIndex + 1) % categories.length;
 		setFilter(categories[newIndex].key);
+		
+		// Add a small animation effect for feedback
+		if (isMobile) {
+			gsap.to(".mobile-category-indicator", {
+				x: 10, 
+				duration: 0.2,
+				onComplete: () => {
+					gsap.to(".mobile-category-indicator", {
+						x: 0,
+						duration: 0.3,
+						ease: "back.out"
+					});
+				}
+			});
+		}
 	};
 
 	const handlePrev = () => {
@@ -753,65 +885,161 @@ export default function TeamPage() {
 	};
 
 	return (
-		<div className="min-h-screen bg-black-900 text-white p-6">
+		<div className="min-h-screen bg-[hsl(var(--background))] text-white py-16 px-6 relative overflow-hidden">
+			{/* Background elements */}
+			<div className="absolute inset-0 z-0">
+				{/* Gradient orbs */}
+				<div className="absolute top-1/4 left-1/4 w-[40vw] h-[40vw] rounded-full bg-[hsla(var(--electric-cyan),0.05)] blur-[120px] transform -translate-x-1/2 -translate-y-1/2"></div>
+				<div className="absolute bottom-1/4 right-1/4 w-[35vw] h-[35vw] rounded-full bg-[hsla(var(--digital-purple),0.05)] blur-[100px]"></div>
+				<div className="absolute top-3/4 left-3/4 w-[20vw] h-[20vw] rounded-full bg-[hsla(var(--magenta),0.05)] blur-[80px]"></div>
+				
+				{/* Subtle grid pattern overlay */}
+				<div className="absolute inset-0 opacity-5 pointer-events-none">
+					<div className="w-full h-full bg-[url('/grid-pattern.svg')] bg-repeat bg-center"></div>
+				</div>
+			</div>
+			
+			{/* Particles animation - only rendered on client side */}
+			{isLoaded && particles.map(particle => (
+				<div 
+					key={particle.id} 
+					className="team-particle absolute rounded-full z-1 opacity-0"
+					style={{ 
+						width: `${particle.size}px`, 
+						height: `${particle.size}px`, 
+						top: `${particle.top}%`, 
+						left: `${particle.left}%`,
+						backgroundColor: particle.color,
+						boxShadow: `0 0 ${particle.size * 2}px ${particle.color}`
+					}}
+				></div>
+			))}
+
 			<h1
 				ref={headingRef}
-				className="text-4xl md:text-5xl font-bold text-center gradient-text mb-8"
+				className="text-4xl md:text-5xl font-bold text-center mb-4 relative z-10"
+				style={{ fontFamily: 'var(--font-unbounded)' }}
 			>
-				Meet Our Team
+				<span className="text-white">Meet Our</span>{' '}
+				<span className="gradient-text relative inline-block">
+					Team
+					<span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-[hsla(var(--electric-cyan),0.7)] to-[hsla(var(--magenta),0.7)]"></span>
+				</span>
 			</h1>
+			
+			<p className="text-lg text-center text-[hsl(var(--foreground))] opacity-80 max-w-2xl mx-auto mb-12 relative z-10" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+				The brilliant minds behind <span className="text-[hsla(var(--electric-cyan),1)] font-semibold">Tensor</span>, collaborating to push the boundaries of AI engineering.
+			</p>
+
+			{/* Circuit pattern element */}
+			<div className="absolute top-40 left-1/2 transform -translate-x-1/2 w-[50%] h-[2px] bg-[hsla(var(--electric-cyan),0.15)] z-0">
+				<div className="absolute top-0 left-1/4 w-[2px] h-12 bg-[hsla(var(--electric-cyan),0.15)]"></div>
+				<div className="absolute top-0 left-2/4 w-[2px] h-8 bg-[hsla(var(--electric-cyan),0.15)]"></div>
+				<div className="absolute top-0 left-3/4 w-[2px] h-16 bg-[hsla(var(--electric-cyan),0.15)]"></div>
+			</div>
 
 			{/* Filter Buttons */}
-			<div className="flex flex-wrap justify-center items-center gap-3 mb-8">
+			<div className="flex flex-wrap justify-center items-center gap-3 mb-12 relative z-10">
 				{isMobile && (
 					<button
 						onClick={handlePrevSection}
-						className="px-2 py-2 rounded-full bg-gray-800 hover:bg-gray-700 text-xl flex items-center"
+						className="px-3 py-3 rounded-full text-xl flex items-center transition-all duration-300 text-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
+						style={{
+							backgroundImage: 'linear-gradient(135deg, hsla(var(--electric-cyan),0.8), hsla(var(--digital-purple),0.8))',
+						}}
 					>
 						<FaArrowLeft />
 					</button>
 				)}
 				{isMobile ? (
-					<button
-						className={`px-4 py-2 rounded-lg border transition-all duration-300 bg-cyan-500 text-white`}
-						style={{ minWidth: "140px" }}
-					>
-						{categories[currentCategoryIndex].label}
-					</button>
-				) : (
-					categories.map((cat) => (
+					<div className="flex flex-col items-center gap-2">
 						<button
-							key={cat.key}
-							onClick={() => setFilter(cat.key)}
-							className={`px-4 py-2 rounded-lg border transition-all duration-300 ${
-								filter === cat.key
-									? "bg-cyan-500 text-white"
-									: "bg-gray-800 hover:bg-gray-700"
-							}`}
+							className="mobile-category-indicator px-6 py-2.5 rounded-lg border-none transition-all duration-300 font-semibold shadow-[0_0_15px_rgba(0,0,0,0.15)] text-white"
+							style={{ 
+								minWidth: "160px", 
+								fontFamily: 'var(--font-space-grotesk)', 
+								fontSize: "1rem",
+								backgroundImage: `linear-gradient(135deg, hsla(var(--electric-cyan),1), hsla(var(--digital-purple),1))`,
+								backgroundSize: '200% 200%',
+								animation: 'gradient-shift 3s ease infinite alternate'
+							}}
 						>
-							{cat.label}
+							{categories[currentCategoryIndex].label}
 						</button>
-					))
+						<div className="text-xs text-[hsla(var(--muted-foreground),1)]" style={{ fontFamily: 'var(--font-geist-mono)' }}>
+							Tap arrows to change category
+						</div>
+					</div>
+				) : (
+					// Explicit mapping with solid hex-based gradients to avoid any CSS variable rendering issues
+					(() => {
+						const categoryGradients: Record<string,string> = {
+							all: 'linear-gradient(135deg,#06b6d4,#2563eb)',
+							staff: 'linear-gradient(135deg,#8b5cf6,#6366f1)',
+							core: 'linear-gradient(135deg,#06b6d4,#8b5cf6)',
+							webdev: 'linear-gradient(135deg,#0ea5e9,#06b6d4)',
+							pr: 'linear-gradient(135deg,#8b5cf6,#db2777)',
+							research: 'linear-gradient(135deg,#06b6d4,#0d9488)',
+							media: 'linear-gradient(135deg,#db2777,#f97316)',
+							logistics: 'linear-gradient(135deg,#0d9488,#22c55e)'
+						};
+
+						return categories.map(cat => {
+							const isActive = filter === cat.key;
+							const gradient = categoryGradients[cat.key] || categoryGradients.all;
+							return (
+								<button
+									key={cat.key}
+									onClick={() => setFilter(cat.key)}
+									className={`relative px-5 py-2 rounded-lg transition-all duration-300 overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[hsla(var(--electric-cyan),0.6)] ${
+										isActive ? 'scale-105 shadow-[0_0_18px_rgba(0,0,0,0.35)]' : 'hover:scale-105 shadow-[0_0_6px_rgba(0,0,0,0.15)]'
+									}`}
+									style={{
+										fontFamily: 'var(--font-space-grotesk)',
+										fontWeight: 600,
+										background: gradient,
+										backgroundSize: '220% 220%',
+										backgroundPosition: isActive ? '80% 50%' : '20% 50%',
+										animation: 'gradient-shift 4s ease-in-out infinite',
+										color: '#fff',
+										border: '1px solid rgba(255,255,255,0.08)'
+									}}
+								>
+									<span className="relative z-10">
+										{cat.label}
+									</span>
+									{/* subtle overlay for inactive for depth */}
+									{!isActive && (
+										<span className="absolute inset-0 bg-black/10" />
+									)}
+								</button>
+							);
+						});
+					})()
 				)}
 				{isMobile && (
 					<button
 						onClick={handleNextSection}
-						className="px-2 py-2 rounded-full bg-gray-800 hover:bg-gray-700 text-xl flex items-center"
+						className="px-3 py-3 rounded-full text-xl flex items-center transition-all duration-300 text-white shadow-[0_0_10px_rgba(0,0,0,0.1)]"
+						style={{
+							backgroundImage: 'linear-gradient(135deg, hsla(var(--digital-purple),0.8), hsla(var(--electric-cyan),0.8))',
+						}}
 					>
 						<FaArrowRight />
 					</button>
 				)}
 			</div>
+
 			{/* Members Grid (centered for all resolutions) */}
 			<div
 				ref={containerRef}
-				className={`flex flex-wrap justify-center items-center gap-6 mx-auto`}
+				className="flex flex-wrap justify-center items-center gap-6 mx-auto relative z-10"
 				style={{ maxWidth: "1200px" }}
 			>
 				{filteredMembers.map((member, index) => (
 					<div
 						key={index}
-						className="team-card bg-gray-900 rounded-lg shadow-lg overflow-hidden flex flex-col items-center text-center p-5 hover:scale-105 transition-transform duration-300 relative group"
+						className="team-card bg-[hsla(var(--card),0.9)] backdrop-blur rounded-lg shadow-lg overflow-hidden flex flex-col items-center text-center p-5 hover:scale-105 transition-transform duration-300 relative group border border-[hsla(var(--border),0.6)]"
 						style={{
 							width: "260px",
 							minWidth: "260px",
@@ -826,7 +1054,7 @@ export default function TeamPage() {
 						<img
 							src={member.image}
 							alt={member.name}
-							className="object-cover rounded-full border-4 border-cyan-500"
+							className="object-cover rounded-full border-4 border-[hsla(var(--electric-cyan),0.7)]"
 							style={{
 								width: "136px",
 								height: "136px",
@@ -841,13 +1069,14 @@ export default function TeamPage() {
 							<h2
 								className="text-lg font-bold"
 								ref={el => { nameRefs.current[index] = el; }}
+								style={{ fontFamily: 'var(--font-unbounded)' }}
 							>
 								{member.name}
 							</h2>
 							{/* Fade out designation/year on hover */}
 							<div className="transition-opacity duration-300 group-hover:opacity-0">
-								<p className="text-cyan-400 text-base">{member.designation}</p>
-								<p className="text-gray-400 text-sm">{member.year}</p>
+								<p className="text-[hsla(var(--electric-cyan),1)] text-base" style={{ fontFamily: 'var(--font-space-grotesk)' }}>{member.designation}</p>
+								<p className="text-gray-400 text-sm" style={{ fontFamily: 'var(--font-geist-mono)' }}>{member.year}</p>
 							</div>
 						</div>
 						{/* Social Icons fixed at bottom */}
@@ -859,24 +1088,28 @@ export default function TeamPage() {
 							}}
 						>
 							{member.socials?.instagram && (
-								<a href={member.socials.instagram} target="_blank" rel="noopener noreferrer">
-									<FaInstagram className="text-pink-500 text-2xl hover:scale-110 transition-transform" />
+								<a href={member.socials.instagram} target="_blank" rel="noopener noreferrer" className="transform hover:scale-110 transition-transform">
+									<FaInstagram className="text-[hsla(var(--magenta),0.9)] text-2xl hover:text-[hsla(var(--magenta),1)] hover:shadow-[0_0_8px_hsla(var(--magenta),0.8)]" />
 								</a>
 							)}
 							{member.socials?.linkedin && (
-								<a href={member.socials.linkedin} target="_blank" rel="noopener noreferrer">
-									<FaLinkedin className="text-blue-400 text-2xl hover:scale-110 transition-transform" />
+								<a href={member.socials.linkedin} target="_blank" rel="noopener noreferrer" className="transform hover:scale-110 transition-transform">
+									<FaLinkedin className="text-[hsla(var(--electric-cyan),0.9)] text-2xl hover:text-[hsla(var(--electric-cyan),1)] hover:shadow-[0_0_8px_hsla(var(--electric-cyan),0.8)]" />
 								</a>
 							)}
 							{member.socials?.github && (
-								<a href={member.socials.github} target="_blank" rel="noopener noreferrer">
-									<FaGithub className="text-gray-300 text-2xl hover:scale-110 transition-transform" />
+								<a href={member.socials.github} target="_blank" rel="noopener noreferrer" className="transform hover:scale-110 transition-transform">
+									<FaGithub className="text-[hsla(var(--digital-purple),0.9)] text-2xl hover:text-[hsla(var(--digital-purple),1)] hover:shadow-[0_0_8px_hsla(var(--digital-purple),0.8)]" />
 								</a>
 							)}
 						</div>
 					</div>
 				))}
 			</div>
+			
+			{/* Code symbols */}
+			<div className="absolute top-[15%] left-[10%] text-[hsla(var(--electric-cyan),0.2)] text-4xl opacity-40" style={{ fontFamily: 'var(--font-geist-mono)' }}>{`{ }`}</div>
+			<div className="absolute bottom-[25%] right-[12%] text-[hsla(var(--digital-purple),0.2)] text-3xl opacity-40" style={{ fontFamily: 'var(--font-geist-mono)' }}>{`</>`}</div>
 		</div>
 	);
 }

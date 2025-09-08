@@ -80,10 +80,10 @@ const Footer = () => {
 
   const quickLinks = [
     { name: 'About Us', href: '/#about' },
-    { name: 'Projects', href: '/#projects' },
-    { name: 'Events', href: '/#events' },
-    { name: 'Blog', href: '/#blog' },
-    { name: 'Leaderboard', href: '/#leaderboard' },
+    { name: 'Projects', href: '/projects' },
+    { name: 'Events', href: '/events' },
+    { name: 'Blog', href: '/blog' },
+    { name: 'Leaderboard', href: '/leaderboard' },
   ];
 
   return (

@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import Link from "next/link";
@@ -13,6 +13,8 @@ interface Promotion {
   ctaText?: string;
   ctaLink?: string;
   imageUrl?: string;
+  // Optional event date for countdown chip
+  eventDate?: string; // ISO string e.g., '2025-09-08T16:45:00+05:30'
 }
 
 interface PromotionBannerProps {
@@ -21,28 +23,57 @@ interface PromotionBannerProps {
 
 function PromotionBanner({ promotion }: PromotionBannerProps) {
   const bannerRef = useRef<HTMLDivElement>(null);
+  const [countdown, setCountdown] = useState<string | null>(null);
 
   useEffect(() => {
     const banner = bannerRef.current;
     if (!banner) return;
 
+    // Soft scale+fade entrance with slight blur for polish
     gsap.fromTo(
       banner,
-      { opacity: 0, y: 30 },
+      { opacity: 0, y: 24, scale: 0.98, filter: 'blur(6px)' },
       {
         opacity: 1,
         y: 0,
-        duration: 0.8,
-        ease: "power2.out",
+        scale: 1,
+        filter: 'blur(0px)',
+        duration: 0.9,
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: banner,
-          start: "top 85%",
-          end: "bottom 15%",
-          toggleActions: "play none none reverse",
+          start: 'top 85%',
+          end: 'bottom 15%',
+          toggleActions: 'play none none reverse',
         },
       }
     );
   }, []);
+
+  // Live countdown for upcoming events
+  useEffect(() => {
+    if (!promotion.eventDate) {
+      setCountdown(null);
+      return;
+    }
+    const target = new Date(promotion.eventDate).getTime();
+    if (Number.isNaN(target)) {
+      setCountdown(null);
+      return;
+    }
+    const update = () => {
+      const now = Date.now();
+      const diff = Math.max(0, target - now);
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const m = Math.floor((diff / (1000 * 60)) % 60);
+      const s = Math.floor((diff / 1000) % 60);
+      setCountdown(`${d}d ${h}h ${m}m ${s}s`);
+    };
+    update();
+    const id = setInterval(update, 1000);
+    return () => clearInterval(id);
+  }, [promotion.eventDate]);
 
   return (
     <div
@@ -62,6 +93,12 @@ function PromotionBanner({ promotion }: PromotionBannerProps) {
           >
             {promotion.title}
           </h3>
+          {countdown && (
+            <div className="inline-flex items-center gap-2 px-3 py-1 mb-3 rounded-full border border-[hsla(var(--electric-cyan),0.4)] bg-[hsla(var(--background),0.6)] text-[hsla(var(--electric-cyan),1)] text-xs md:text-sm" style={{ fontFamily: 'var(--font-geist-mono)' }}>
+              <span className="w-2 h-2 rounded-full bg-[hsla(var(--electric-cyan),1)] animate-pulse"></span>
+              Starts in {countdown}
+            </div>
+          )}
           <p 
             className="text-lg md:text-xl text-[hsl(var(--foreground))] opacity-90 mb-6"
             style={{ fontFamily: 'var(--font-space-grotesk)' }}
@@ -90,14 +127,23 @@ function PromotionBanner({ promotion }: PromotionBannerProps) {
         {promotion.imageUrl && (
           <div className="order-1 md:order-2">
             <div className="relative overflow-hidden rounded-lg cyber-border p-1">
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg">
+              <div className="relative aspect-[904/1280] w-full overflow-hidden rounded-lg bg-[hsla(var(--background),0.7)]">
+                {/* Blurred ambient background from the same image */}
+                <div 
+                  aria-hidden
+                  className="absolute inset-0 bg-center bg-cover blur-2xl scale-110 opacity-35"
+                  style={{ backgroundImage: `url(${promotion.imageUrl})` }}
+                />
                 <Image 
                   src={promotion.imageUrl}
                   alt={promotion.title}
                   fill
-                  className="object-cover filter hover:scale-105 transition-all duration-500"
+                  className="object-contain transition-all duration-500"
                   sizes="(max-width: 768px) 100vw, 50vw"
+                  priority
                 />
+                {/* Inner shadow for depth */}
+                <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_40px_rgba(0,0,0,0.25)]"></div>
               </div>
             </div>
             
@@ -127,12 +173,13 @@ export default function Promotions({ promotions }: PromotionsProps) {
 
     gsap.fromTo(
       title,
-      { opacity: 0, y: -30 },
+      { opacity: 0, y: -20, filter: 'blur(4px)' },
       {
         opacity: 1,
         y: 0,
-        duration: 0.8,
-        ease: "power2.out",
+        filter: 'blur(0px)',
+        duration: 0.9,
+        ease: "power3.out",
         scrollTrigger: {
           trigger: section,
           start: "top 80%",
@@ -156,13 +203,13 @@ export default function Promotions({ promotions }: PromotionsProps) {
             className="text-4xl md:text-5xl font-bold mb-4"
             style={{ fontFamily: 'var(--font-unbounded)' }}
           >
-            Latest <span className="gradient-text">Promotions</span>
+            Upcoming <span className="gradient-text">Highlight</span>
           </h2>
           <p 
             className="text-lg md:text-xl text-[hsl(var(--muted-foreground))] max-w-2xl mx-auto"
             style={{ fontFamily: 'var(--font-space-grotesk)' }}
           >
-            Discover exciting opportunities, events, and announcements from Tensor Club
+            Don’t miss our next big moment. Here’s what’s happening at Tensor.
           </p>
         </div>
 
@@ -186,7 +233,7 @@ export default function Promotions({ promotions }: PromotionsProps) {
               className="text-lg text-[hsl(var(--muted-foreground))] mb-6 text-center max-w-2xl mx-auto"
               style={{ fontFamily: 'var(--font-space-grotesk)' }}
             >
-              Never miss out on our latest events, workshops, and opportunities. Join our community today!
+              Never miss out on events, workshops, and opportunities. Join our community today!
             </p>
             <div className="flex justify-center">
               <Link 
