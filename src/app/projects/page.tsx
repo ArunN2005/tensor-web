@@ -11,8 +11,8 @@ import {
   type Project,
 } from "@/app/data/projects";
 import FeaturedProjectsView from "@/components/pages/FeaturedProjectsView";
-import AllProjectsView from "@/components/pages/AllProjectsView";
-
+// import AllProjectsView from "@/components/pages/AllProjectsView";  
+import ProjectsComingSoon from "@/app/projects/comingSoonPage";
 
 export default function ProjectsPage() {
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -170,9 +170,15 @@ export default function ProjectsPage() {
             {isExpanded ? "All Projects" : "Featured Projects"}
           </h1>
           <div className="w-20 h-1 bg-primary mx-auto mb-6"></div>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          {/* <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             {isExpanded
               ? `Browse our complete collection of ${projectsData.length} innovative projects across various technologies and domains.`
+              : "Explore our most innovative projects that showcase cutting-edge technology and creative problem-solving."}
+          </p> */}
+
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            {isExpanded
+              ? ``
               : "Explore our most innovative projects that showcase cutting-edge technology and creative problem-solving."}
           </p>
         </div>
@@ -188,7 +194,7 @@ export default function ProjectsPage() {
                 className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors shadow-lg hover:shadow-primary/25"
               >
                 <ChevronDown className="mr-2 h-4 w-4" />
-                View All Projects ({projectsData.length})
+                View All Projects {/*({projectsData.length}) */}
               </Button>
             </div>
           </>
@@ -197,7 +203,7 @@ export default function ProjectsPage() {
         {/* Expanded View */}
         {isExpanded && (
           <>
-            <AllProjectsView
+            {/* <AllProjectsView
               filteredProjects={filteredProjects}
               categories={categories}
               statuses={statuses}
@@ -207,9 +213,11 @@ export default function ProjectsPage() {
               setStatusFilter={setStatusFilter}
               filtersRef={filtersRef}
               expandedSectionRef={expandedSectionRef}
-            />
-
-            <div className="text-center mt-12">
+            /> */}
+            <div ref={expandedSectionRef}>
+              <ProjectsComingSoon /> {/* temporary coming soon page */}
+            </div>
+            <div className="text-center mt-12" ref={filtersRef}>
               <Button
                 onClick={handleCollapse}
                 variant="outline"

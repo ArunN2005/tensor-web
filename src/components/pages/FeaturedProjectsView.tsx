@@ -59,7 +59,7 @@ export default function FeaturedProjectsView({
           className="project-card relative overflow-hidden bg-card/70 backdrop-blur border border-border shadow-md transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-1 hover:border-2 hover:border-primary/50 group"
         >
           {project.featured && (
-            <div className="absolute top-4 right-4 z-10 flex items-center gap-1 text-sm font-semibold text-primary bg-primary/10 px-2.5 py-1 rounded-full border border-primary/20">
+            <div className="absolute top-4 right-4 z-10 rounded-full backdrop-blur-sm flex items-center gap-1 text-sm font-semibold text-primary bg-primary/10 px-2.5 py-1  border border-primary/20">
               <Star className="h-4 w-4" />
               Featured
             </div>
@@ -71,7 +71,7 @@ export default function FeaturedProjectsView({
               src={`/images/projects/${project.imageName}.webp`}
               alt={project.title}
               fill
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              className="object-cover object-[center_10%] transition-transform duration-500 group-hover:scale-105"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.src = "/images/projects/placeholder.webp";

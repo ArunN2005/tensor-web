@@ -109,7 +109,7 @@ export default function AllProjectsView({
               className="expanded-project-card relative overflow-hidden bg-card/70 backdrop-blur border border-border shadow-md transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-1 hover:border-2 hover:border-primary/50 group"
             >
               {project.featured && (
-                <div className="absolute top-3 right-3 z-10 flex items-center gap-1 text-xs font-semibold text-primary bg-primary/10 px-2 py-1 rounded-full border border-primary/20">
+                <div className="absolute top-3 right-3 z-10 rounded-full backdrop-blur-sm flex items-center gap-1 text-xs font-semibold text-primary bg-primary/10 px-2 py-1 rounded-full border border-primary/20">
                   <Star className="h-3 w-3" />
                   Featured
                 </div>
@@ -117,12 +117,12 @@ export default function AllProjectsView({
 
               {project.status && (
                 <div
-                  className={`absolute top-3 left-3 z-10 text-xs font-medium px-2 py-1 rounded-full ${
+                  className={`absolute top-3 left-3 z-10 text-xs font-medium px-2 py-1 rounded-full backdrop-blur-sm ${
                     project.status === "completed"
-                      ? "bg-green-500/10 text-green-500 border border-green-500/20"
+                      ? "bg-green-500/40 text-green-100"
                       : project.status === "in-progress"
-                      ? "bg-yellow-500/10 text-yellow-500 border border-yellow-500/20"
-                      : "bg-blue-500/10 text-blue-500 border border-blue-500/20"
+                      ? "bg-yellow-400/60 text-yellow-100"
+                      : "bg-blue-500/40 text-blue-100"
                   }`}
                 >
                   {project.status.charAt(0).toUpperCase() +
@@ -136,7 +136,7 @@ export default function AllProjectsView({
                   src={`/images/projects/${project.imageName}.webp`}
                   alt={project.title}
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-cover object-[center_10%] transition-transform duration-500 group-hover:scale-105"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.src = "/images/projects/placeholder.webp";
