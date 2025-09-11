@@ -321,6 +321,29 @@ const members = [
 		}
 	},
 	{
+		name: "Sudharsana Saravanan S",
+		designation: "Web Dev",
+		year: "3rd Year CSE",
+		image: "https://image2url.com/images/1757351266918-4241e98e-cc88-4820-8070-6b6ccae4e50f.png",
+		category: ["webdev"],
+		socials: {
+			instagram: "https://www.instagram.com/_.sudharsan___",
+			linkedin: "https://www.linkedin.com/in/sudharsana-saravanan-s-456544299/",
+			github: "https://github.com/SudharsanSaravanan"
+		}
+	},
+	{
+		name: "Swetha C",
+		designation: "Web Dev",
+		year: "3rd Year CSE",
+		image: "https://image2url.com/images/1757352114289-3aa28b33-d4e1-41dc-aeab-a623b8a8aa9d.jpeg",
+		category: ["webdev"],
+		socials: {
+			linkedin: "https://www.linkedin.com/in/swetha-c-011099293/",
+			github: "https://github.com/SWETHACS17"
+		}
+	},
+	{
 		name: "Sri Krishna V",
 		designation: "R & D Core",
 		year: "3rd Year EEE",
@@ -424,13 +447,13 @@ const members = [
 		category: ["logistics"],
 		socials: {
 			instagram: "https://www.instagram.com/naren_offcl_07?igsh=cWFoaXh5ZG5vc2w2",
-			linkedin: "",
+			linkedin: "https://www.linkedin.com/in/narendra-r-3b7625335?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
 			github: "https://github.com/narendrar-133"
 		}
 	},
 	{
 		name: "Nithin Venkat Sharma",
-		designation: "WEB DEV",
+		designation: "Web Dev",
 		year: "2nd Year CSE",
 		image: "https://sj67hjofte.ufs.sh/f/7JfC7VrndVSMVoafvJB5EFZr3IcNJBPpm0LOx8vokyQGaRbA",
 		category: ["webdev"],
@@ -462,6 +485,18 @@ const members = [
 			instagram: "https://www.instagram.com/_sadhu.14?igsh=MTY3Y3oxMHlsMnM2Yw==",
 			linkedin: "",
 			github: "https://github.com/MeeraSRaj"
+		}
+	},
+	{
+		name: "Theerth Krish",
+		designation: "PR",
+		year: "3rd Year AIE",
+		image: "",
+		category: ["pr"],
+		socials: {
+			instagram: "",
+			linkedin: "https://www.linkedin.com/in/theerth-krish",
+			github: "https://github.com/TheerthK"
 		}
 	},
 	{
