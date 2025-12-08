@@ -161,7 +161,7 @@ export default function FeaturedProjectsView({
         {projects.map((project, index) => (
           <Card
             key={project._id || index}
-            className="project-card relative overflow-hidden bg-[hsla(var(--card),0.9)] backdrop-blur border border-[hsla(var(--border),0.6)] shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-[hsla(var(--electric-cyan),0.2)] hover:-translate-y-2 hover:border-[hsla(var(--electric-cyan),0.4)] group"
+            className="project-card relative overflow-hidden bg-[hsla(var(--card),0.9)] backdrop-blur border border-[hsla(var(--border),0.6)] shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-[hsla(var(--electric-cyan),0.2)] hover:-translate-y-2 hover:border-[hsla(var(--electric-cyan),0.4)] group flex flex-col h-full"
           >
             {project.featured && (
               <div className="absolute top-4 right-4 z-10 rounded-full backdrop-blur-sm flex items-center gap-1 text-sm font-semibold text-[hsla(var(--electric-cyan),1)] bg-[hsla(var(--electric-cyan),0.1)] px-2.5 py-1 border border-[hsla(var(--electric-cyan),0.3)]">
@@ -170,7 +170,7 @@ export default function FeaturedProjectsView({
               </div>
             )}
 
-            <div className="relative h-48 w-full overflow-hidden">
+            <div className="relative h-48 w-full overflow-hidden flex-shrink-0">
               <div className="absolute inset-0 bg-gradient-to-t from-[hsla(var(--background),0.9)] to-transparent z-10"></div>
               <Image
                 src={`/images/projects/${project.imageName}.webp`}
@@ -184,24 +184,24 @@ export default function FeaturedProjectsView({
               />
             </div>
 
-            <CardHeader>
+            <CardHeader className="flex-shrink-0">
               <CardTitle 
-                className="text-xl font-bold text-white group-hover:text-[hsla(var(--electric-cyan),1)] transition-colors duration-300"
+                className="text-xl font-bold text-white group-hover:text-[hsla(var(--electric-cyan),1)] transition-colors duration-300 line-clamp-2"
                 style={{ fontFamily: 'var(--font-unbounded)' }}
               >
                 {project.title}
               </CardTitle>
               <CardDescription 
-                className="text-[hsl(var(--muted-foreground))]"
+                className="text-[hsl(var(--muted-foreground))] line-clamp-3 min-h-[4.5rem]"
                 style={{ fontFamily: 'var(--font-space-grotesk)' }}
               >
                 {project.description}
               </CardDescription>
             </CardHeader>
 
-            <CardContent className="pb-4">
+            <CardContent className="pb-4 flex-grow">
               <div className="flex flex-wrap gap-2">
-                {project.tags?.map((tag, tagIndex) => (
+                {project.tags?.slice(0, 4).map((tag, tagIndex) => (
                   <span
                     key={tagIndex}
                     className="inline-flex items-center rounded-full border border-[hsla(var(--electric-cyan),0.3)] px-3 py-1 text-xs font-medium text-[hsla(var(--muted-foreground),0.9)] bg-[hsla(var(--electric-cyan),0.05)] hover:bg-[hsla(var(--electric-cyan),0.1)] hover:text-[hsla(var(--electric-cyan),1)] hover:border-[hsla(var(--electric-cyan),0.5)] transition-colors"
@@ -213,7 +213,7 @@ export default function FeaturedProjectsView({
               </div>
             </CardContent>
 
-            <CardFooter className="flex justify-between pt-0 gap-2">
+            <CardFooter className="flex justify-between pt-0 gap-2 mt-auto flex-shrink-0">
               <Button
                 variant="outline"
                 size="sm"

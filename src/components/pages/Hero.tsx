@@ -350,8 +350,8 @@ export default function Hero() {
           </div>
         </div>
         
-        {/* Small badge */}
-        <div className="absolute top-[5%] right-[8%] px-3 py-1 rounded-full bg-[hsla(var(--background),0.7)] border border-[hsla(var(--electric-cyan),0.3)] text-xs backdrop-blur-md">
+        {/* Small badge - hidden on mobile to avoid overlap */}
+        <div className="hidden sm:block absolute top-[5%] right-[8%] px-3 py-1 rounded-full bg-[hsla(var(--background),0.7)] border border-[hsla(var(--electric-cyan),0.3)] text-xs backdrop-blur-md">
           <span className="text-[hsla(var(--electric-cyan),1)]" style={{ fontFamily: 'var(--font-geist-mono)' }}>Beta v0.1</span>
         </div>
       </div>

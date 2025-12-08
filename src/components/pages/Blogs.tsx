@@ -133,12 +133,12 @@ export default function BlogCards({
   }, []);
 
   return (
-    <div className="relative py-8 px-6 overflow-hidden">
+    <div className="relative py-8 px-6 overflow-hidden bg-[hsl(var(--background))]">
       {/* Background elements */}
       <div className="absolute inset-0 z-0">
         {/* Gradient orbs */}
-        <div className="absolute top-1/4 right-1/4 w-[35vw] h-[35vw] rounded-full bg-[hsla(var(--digital-purple),0.05)] blur-[100px] transform -translate-x-1/2 -translate-y-1/2"></div>
-        <div className="absolute bottom-0 left-1/4 w-[25vw] h-[25vw] rounded-full bg-[hsla(var(--electric-cyan),0.05)] blur-[80px]"></div>
+        <div className="absolute top-1/4 right-1/4 w-[35vw] h-[35vw] rounded-full bg-[hsla(var(--digital-purple),0.03)] blur-[100px] transform -translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 left-1/4 w-[25vw] h-[25vw] rounded-full bg-[hsla(var(--electric-cyan),0.03)] blur-[80px]"></div>
         
         {/* Subtle grid pattern overlay */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">

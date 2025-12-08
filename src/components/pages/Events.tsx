@@ -26,17 +26,17 @@ export default function Events() {
   const [events, setEvents] = useState<Event[]>([
     {
       id: 1,
-      title: "Induction 2025",
-      description: "The induction ceremony of the Tensor club is a formal event for the official inauguration and induction of the club for the students of Amrita School of AI. The ceremony will serve as an opportunity for the office bearers to introduce their vision and various aspects of the club. The event is expected to be around 90-120 mins in duration, and will host interactive sessions with the Dean - School of AI, Alumnus — School of AI, Display of student projects, interactive informal sessions and a gratitude ceremony.",
+      title: "Agentic AI",
+      description: "Dive into the world of Agentic AI - autonomous systems that can perceive, reason, and act to achieve complex goals. Join us for an exciting session exploring cutting-edge AI agents, their applications, and hands-on demonstrations. Learn how these intelligent systems are revolutionizing industries and shaping the future of artificial intelligence.",
       date: {
-        day: "8th",
-        month: "September",
+        day: "TBA",
+        month: "Coming Soon",
         year: "2025"
       },
-      time: "4:45 PM",
-      location: "Amriteshwari Hall",
+      time: "TBA",
+      location: "TBA",
       status: "upcoming",
-      image: ["/images/upcoming events/induction 2025.jpg"],
+      image: ["/images/upcoming events/agenticai.png"],
       registration: "open"
     },
     {
@@ -336,7 +336,10 @@ export default function Events() {
   return (
     <section 
       id="events" 
-      className="relative min-h-screen flex flex-col justify-center py-16 px-4 md:px-8 overflow-hidden bg-[hsl(var(--background))]"
+      className="relative min-h-screen flex flex-col justify-center py-16 px-4 md:px-8 overflow-hidden"
+      style={{
+        background: "linear-gradient(135deg, hsl(var(--background)) 0%, hsla(234, 25%, 8%, 1) 50%, hsla(var(--background)) 100%)"
+      }}
     >
       {/* Background elements */}
       <div className="absolute inset-0 z-0">

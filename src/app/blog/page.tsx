@@ -103,9 +103,15 @@ export default function BlogPage() {
   }, []);
 
   return (
-    <div className="relative w-full mb-16 font-sans">
+    <div className="relative w-full min-h-screen mb-16 font-sans bg-[hsl(var(--background))]">
+      {/* Background gradient elements */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute top-1/4 left-1/4 w-[40vw] h-[40vw] rounded-full bg-[hsla(var(--electric-cyan),0.03)] blur-[120px] transform -translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-[35vw] h-[35vw] rounded-full bg-[hsla(var(--digital-purple),0.03)] blur-[100px]"></div>
+      </div>
+      
       {/* Page Header */}
-      <div className="text-center mb-14 pt-24 px-4">
+      <div className="text-center mb-14 pt-24 px-4 relative z-10">
         <h1
           ref={titleRef}
           className="text-4xl md:text-6xl font-extrabold text-white mb-5 tracking-tight leading-tight"
@@ -114,7 +120,7 @@ export default function BlogPage() {
           <span className="text-white">Latest</span> <span className="gradient-text">Articles</span>
         </h1>
         <div className="w-24 h-1.5 bg-gradient-to-r from-[hsl(var(--electric-cyan))] to-[hsl(var(--magenta))] mx-auto rounded-full"></div>
-        <p className="mt-6 text-[hsl(var(--muted-foreground))] max-w-3xl mx-auto font-light tracking-wide">
+        <p className="mt-6 text-[hsl(var(--muted-foreground))] max-w-3xl mx-auto font-light tracking-wide" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
           Explore our latest articles, tutorials, and insights on technology, programming, and innovation.
         </p>
       </div>

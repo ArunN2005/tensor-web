@@ -75,9 +75,11 @@ export default function AboutUs() {
       }
     );
 
-    // Initial hidden state for Our Story items
+    // Initial hidden state for Our Story items (only on desktop)
     const storyItems = story.querySelectorAll(".story-anim");
-    gsap.set(storyItems, { opacity: 0, y: 30 });
+    if (window.innerWidth >= 768) {
+      gsap.set(storyItems, { opacity: 0, y: 30 });
+    }
   }, []);
 
   // Hover handlers for Our Story
@@ -197,16 +199,16 @@ export default function AboutUs() {
         </div>
       </section>
       
-      {/* Our Story Section: Hover to trigger GSAP fade-in animation */}
+      {/* Our Story Section: Always visible on mobile, hover animation on desktop */}
       <section
         ref={storyRef}
         onMouseEnter={handleStoryMouseEnter}
         onMouseLeave={handleStoryMouseLeave}
-        className="relative py-20 bg-[hsla(var(--background),0.7)] cursor-pointer"
+        className="relative py-20 bg-[hsla(var(--background),0.7)] cursor-pointer md:cursor-default"
       >
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
-            <h3 className="story-anim text-3xl md:text-4xl font-bold mb-6" style={{
+            <h3 className="story-anim md:opacity-0 text-3xl md:text-4xl font-bold mb-6" style={{
               fontFamily: 'var(--font-unbounded)', 
               background: 'linear-gradient(90deg,#fff 20%,#20eaff 45%,#a259f7 70%)',
               WebkitBackgroundClip: 'text',
@@ -215,13 +217,13 @@ export default function AboutUs() {
             }}>
               Our Story
             </h3>
-            <p className="story-anim text-lg mb-6 text-[hsl(var(--foreground))] opacity-90" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+            <p className="story-anim md:opacity-0 text-lg mb-6 text-[hsl(var(--foreground))] opacity-90" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
               Tensor Club was founded by a group of passionate AI enthusiasts who wanted to create a community where students could learn, collaborate, and innovate together.
             </p>
-            <p className="story-anim text-lg text-[hsl(var(--foreground))] opacity-80" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+            <p className="story-anim md:opacity-0 text-lg text-[hsl(var(--foreground))] opacity-80" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
               Starting with just a handful of members, we&apos;ve grown into a vibrant community of researchers, developers, and AI enthusiasts all working together to push the boundaries of what&apos;s possible with artificial intelligence.
             </p>
-            <p className="story-anim text-lg mt-6 text-[hsl(var(--foreground))] opacity-80" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+            <p className="story-anim md:opacity-0 text-lg mt-6 text-[hsl(var(--foreground))] opacity-80" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
               Join us as we continue to explore the endless possibilities of AI and make a positive impact on the world through technology.
             </p>
           </div>

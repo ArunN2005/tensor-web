@@ -1,5 +1,7 @@
 'use client';
 import { useState, useRef, useEffect, useCallback } from 'react';
+import dynamic from 'next/dynamic';
+const StaggeredMenu = dynamic(() => import('./StaggeredMenu'), { ssr: false });
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
@@ -337,7 +339,7 @@ export default function Navbar() {
     if (modal) modal.classList.add('hidden');
   };
 
-  // Close menu on escape key
+  // Close menu on escape key and toggle body class for footer visibility
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -348,13 +350,18 @@ export default function Navbar() {
     if (menuOpen) {
       document.addEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'hidden';
+      // Add class for footer to hide
+      document.body.classList.add('menu-open');
     } else {
       document.body.style.overflow = 'unset';
+      // Remove class for footer
+      document.body.classList.remove('menu-open');
     }
     
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'unset';
+      document.body.classList.remove('menu-open');
     };
   }, [menuOpen]);
 
@@ -420,11 +427,7 @@ export default function Navbar() {
 
       {/* Enhanced Neon Trigger Line with Scroll Color Change */}
       <div 
-        className="fixed top-0 left-0 w-full h-1 neon-trigger cursor-pointer z-50 transition-all duration-500 hover:h-2"
-        onMouseEnter={() => {
-          setMenuOpen(true);
-          setShowIndicator(false);
-        }}
+        className="fixed top-0 left-0 w-full h-2 neon-trigger z-50 transition-all duration-500"
         style={{
           background: scrolled 
             ? 'linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.9), transparent)'
@@ -432,111 +435,58 @@ export default function Navbar() {
         }}
       />
 
-      {/* Enhanced Overlay Menu */}
-      <div
-         ref={overlayRef}
-  className={`fixed inset-0 z-50 transition-all duration-700 ease-out ${
-    menuOpen 
-      ? 'opacity-100 visible backdrop-blur-2xl pointer-events-auto' 
-      : 'opacity-0 invisible pointer-events-none'
-  }`}
-        style={{
-          background: `
-            radial-gradient(circle at 20% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 80% 80%, rgba(128, 0, 255, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 50% 0%, rgba(255, 0, 255, 0.05) 0%, transparent 70%),
-            linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(2,6,23,0.98) 100%)
-          `,
-        }}
-        onClick={handleOverlayClick}
+      {/* Floating Menu Button - visible on all screens */}
+      <button
+        className="fixed top-4 right-4 md:top-6 md:right-6 z-[100] bg-[hsla(var(--background),0.95)] border border-[hsla(var(--electric-cyan),0.3)] shadow-lg rounded-full px-4 py-2 md:px-6 md:py-3 text-white font-bold text-sm md:text-lg flex items-center gap-2 hover:bg-[hsla(var(--electric-cyan),0.1)] transition-all duration-300"
+        style={{backdropFilter: 'blur(8px)'}}
+        onClick={() => setMenuOpen(true)}
+        aria-label="Open menu"
       >
-        {/* Enhanced Background Effects */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Animated floating elements */}
-          {Array.from({ length: 6 }, (_, i) => (
-            <div
-              key={i}
-              className={`absolute rounded-full blur-xl ${i % 2 === 0 ? 'float-orb' : 'pulse-orb'}`}
-              style={{
-                width: `${80 + i * 20}px`,
-                height: `${80 + i * 20}px`,
-                left: `${10 + i * 15}%`,
-                top: `${15 + i * 12}%`,
-                background: i % 3 === 0 
-                  ? 'linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(128, 0, 255, 0.08))'
-                  : i % 3 === 1
-                  ? 'linear-gradient(135deg, rgba(128, 0, 255, 0.1), rgba(255, 0, 255, 0.08))'
-                  : 'linear-gradient(135deg, rgba(255, 0, 255, 0.1), rgba(0, 255, 255, 0.08))',
-                animationDelay: `${i * 0.8}s`,
-                animationDuration: `${4 + i * 0.5}s`,
-              }}
-            />
-          ))}
-          
-          {/* Enhanced grid overlay */}
-          <div 
-            className="absolute inset-0 opacity-[0.03]"
-            style={{ 
-              backgroundImage: `
-                linear-gradient(rgba(0, 255, 255, 0.3) 1px, transparent 1px), 
-                linear-gradient(90deg, rgba(128, 0, 255, 0.3) 1px, transparent 1px)
-              `,
-              backgroundSize: '80px 80px'
-            }} 
+        <svg width="20" height="20" className="md:w-[22px] md:h-[22px]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+        <span className="hidden sm:inline">Menu</span>
+      </button>
+
+      {/* Simplified overlay/backdrop (no heavy decorative layers) */}
+      <div
+        ref={overlayRef}
+        className={`fixed inset-0 z-40 transition-all duration-300 ease-out ${
+          menuOpen ? 'opacity-100 visible pointer-events-auto' : 'opacity-0 invisible pointer-events-none'
+        }`}
+        style={{ background: 'rgba(2,6,23,0.75)' }}
+        onClick={handleOverlayClick}
+      />
+
+      {/* StaggeredMenu rendered as sibling so overlay only acts as backdrop */}
+      <div className="fixed inset-0 pointer-events-none z-50">
+        <div className="pointer-events-auto">
+          <StaggeredMenu
+            position="right"
+            items={[
+              { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
+              { label: 'Team', ariaLabel: 'Our creators', link: '/team' },
+              { label: 'Projects', ariaLabel: 'AI innovations', link: '/projects' },
+              { label: 'Events', ariaLabel: 'Upcoming activities', link: '/events' },
+              { label: 'Blog', ariaLabel: 'Latest insights', link: '/blog' },
+              { label: 'Leaderboard', ariaLabel: 'Top performers', link: '/leaderboard' },
+            ]}
+            socialItems={[
+              { label: 'Twitter', link: 'https://twitter.com' },
+              { label: 'GitHub', link: 'https://github.com' },
+              { label: 'LinkedIn', link: 'https://linkedin.com' },
+            ]}
+            displaySocials={true}
+            displayItemNumbering={true}
+            menuButtonColor="#fff"
+            openMenuButtonColor="#fff"
+            changeMenuColorOnOpen={true}
+            colors={['#B19EEF', '#5227FF']}
+            logoUrl="/Tensor_Logo_White.png"
+            accentColor="#5227FF"
+            isFixed={false}
+            open={menuOpen}
+            onOpenChange={(v) => setMenuOpen(v)}
+            onMenuClose={handleCloseMenu}
           />
-          
-          {/* Subtle animated lines */}
-          <div className="absolute inset-0">
-            <div className="absolute top-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[hsla(var(--electric-cyan),0.2)] to-transparent" />
-            <div className="absolute bottom-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[hsla(var(--digital-purple),0.2)] to-transparent" />
-          </div>
-        </div>
-
-        {/* Content Container */}
-        <div className="relative z-10 h-full flex flex-col justify-between p-6 md:p-10 pointer-events-none">
-          {/* Header */}
-          <div className="flex items-center justify-between pointer-events-auto">
-            <div 
-              className="transition-all duration-500 ease-out shimmer-effect"
-              style={{
-                transform: `translateY(${menuOpen ? '0' : '-20px'}) scale(${menuOpen ? '1' : '0.9'})`,
-                opacity: menuOpen ? '1' : '0',
-              }}
-            >
-              <Logo isOverlay={true} />
-            </div>
-            
-            {/* Community button */}
-            <div 
-              className="transition-all duration-600 ease-out"
-              style={{
-                transform: `translateY(${menuOpen ? '0' : '-10px'})`,
-                opacity: menuOpen ? '1' : '0',
-                transitionDelay: '0.3s',
-              }}
-            >
-              <button 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleOpenModal();
-                  handleCloseMenu();
-                }}
-                className="px-4 py-2 bg-gradient-to-r from-[hsla(var(--electric-cyan),0.1)] via-[hsla(var(--digital-purple),0.1)] to-[hsla(var(--electric-cyan),0.1)] border border-[hsla(var(--electric-cyan),0.2)] rounded-lg text-[hsla(var(--electric-cyan),1)] hover:text-white font-mono text-xs tracking-wider transition-all duration-300 hover:border-[hsla(var(--electric-cyan),0.4)] hover:shadow-[0_0_20px_rgba(0,255,255,0.3)] group relative overflow-hidden"
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  <span>Join Community</span>
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-[hsla(var(--electric-cyan),0.1)] to-[hsla(var(--digital-purple),0.1)] opacity-0 group-hover:opacity-100 transition-all duration-300 shimmer-effect" />
-              </button>
-            </div>
-          </div>
-
-
-          {/* Navigation Center */}
-          <div className="flex-1 flex items-center justify-center pointer-events-auto">
-            <FullPageNavigation onClick={handleCloseMenu} isOpen={menuOpen} />
-          </div>
         </div>
       </div>
 

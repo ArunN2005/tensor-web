@@ -757,6 +757,36 @@ export default function TeamPage() {
 						background-position: 0% 50%;
 					}
 				}
+				@keyframes scan-line {
+					0% {
+						transform: translateY(-100%);
+						opacity: 0;
+					}
+					50% {
+						opacity: 1;
+					}
+					100% {
+						transform: translateY(42000%);
+						opacity: 0;
+					}
+				}
+				@keyframes spin-slow {
+					from {
+						transform: rotate(0deg);
+					}
+					to {
+						transform: rotate(360deg);
+					}
+				}
+				.animate-scan-line {
+					animation: scan-line 3s ease-in-out infinite;
+				}
+				.animate-spin-slow {
+					animation: spin-slow 8s linear infinite;
+				}
+				.perspective-1000 {
+					perspective: 1000px;
+				}
 			`;
 			document.head.appendChild(styleElement);
 		}
@@ -1006,47 +1036,72 @@ export default function TeamPage() {
 						</div>
 					</div>
 				) : (
-					// Explicit mapping with solid hex-based gradients to avoid any CSS variable rendering issues
+					// Unified category styling with consistent cyan/purple theme
 					(() => {
-						const categoryGradients: Record<string,string> = {
-							all: 'linear-gradient(135deg,#06b6d4,#2563eb)',
-							staff: 'linear-gradient(135deg,#8b5cf6,#6366f1)',
-							core: 'linear-gradient(135deg,#06b6d4,#8b5cf6)',
-							webdev: 'linear-gradient(135deg,#0ea5e9,#06b6d4)',
-							pr: 'linear-gradient(135deg,#8b5cf6,#db2777)',
-							research: 'linear-gradient(135deg,#06b6d4,#0d9488)',
-							media: 'linear-gradient(135deg,#db2777,#f97316)',
-							logistics: 'linear-gradient(135deg,#0d9488,#22c55e)'
+						const categoryStyles: Record<string, { bg: string; border: string; active: string }> = {
+							all: { 
+								bg: 'linear-gradient(135deg, hsla(var(--electric-cyan),0.15), hsla(var(--digital-purple),0.15))',
+								border: 'hsla(var(--electric-cyan),0.3)',
+								active: 'linear-gradient(135deg, hsla(var(--electric-cyan),0.9), hsla(var(--digital-purple),0.9))'
+							},
+							staff: { 
+								bg: 'linear-gradient(135deg, hsla(var(--digital-purple),0.15), hsla(var(--magenta),0.15))',
+								border: 'hsla(var(--digital-purple),0.3)',
+								active: 'linear-gradient(135deg, hsla(var(--digital-purple),0.9), hsla(var(--magenta),0.9))'
+							},
+							core: { 
+								bg: 'linear-gradient(135deg, hsla(var(--electric-cyan),0.15), hsla(var(--digital-purple),0.15))',
+								border: 'hsla(var(--electric-cyan),0.3)',
+								active: 'linear-gradient(135deg, hsla(var(--electric-cyan),0.9), hsla(var(--digital-purple),0.9))'
+							},
+							webdev: { 
+								bg: 'linear-gradient(135deg, hsla(var(--electric-cyan),0.15), hsla(180,100%,40%,0.15))',
+								border: 'hsla(var(--electric-cyan),0.3)',
+								active: 'linear-gradient(135deg, hsla(var(--electric-cyan),0.9), hsla(180,100%,40%,0.9))'
+							},
+							pr: { 
+								bg: 'linear-gradient(135deg, hsla(var(--digital-purple),0.15), hsla(var(--magenta),0.15))',
+								border: 'hsla(var(--digital-purple),0.3)',
+								active: 'linear-gradient(135deg, hsla(var(--digital-purple),0.9), hsla(var(--magenta),0.9))'
+							},
+							research: { 
+								bg: 'linear-gradient(135deg, hsla(var(--electric-cyan),0.15), hsla(160,100%,40%,0.15))',
+								border: 'hsla(var(--electric-cyan),0.3)',
+								active: 'linear-gradient(135deg, hsla(var(--electric-cyan),0.9), hsla(160,100%,40%,0.9))'
+							},
+							media: { 
+								bg: 'linear-gradient(135deg, hsla(var(--magenta),0.15), hsla(var(--digital-purple),0.15))',
+								border: 'hsla(var(--magenta),0.3)',
+								active: 'linear-gradient(135deg, hsla(var(--magenta),0.9), hsla(var(--digital-purple),0.9))'
+							},
+							logistics: { 
+								bg: 'linear-gradient(135deg, hsla(160,100%,40%,0.15), hsla(var(--electric-cyan),0.15))',
+								border: 'hsla(160,100%,40%,0.3)',
+								active: 'linear-gradient(135deg, hsla(160,100%,40%,0.9), hsla(var(--electric-cyan),0.9))'
+							}
 						};
 
 						return categories.map(cat => {
 							const isActive = filter === cat.key;
-							const gradient = categoryGradients[cat.key] || categoryGradients.all;
+							const style = categoryStyles[cat.key] || categoryStyles.all;
 							return (
 								<button
 									key={cat.key}
 									onClick={() => setFilter(cat.key)}
-									className={`relative px-5 py-2 rounded-lg transition-all duration-300 overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[hsla(var(--electric-cyan),0.6)] ${
-										isActive ? 'scale-105 shadow-[0_0_18px_rgba(0,0,0,0.35)]' : 'hover:scale-105 shadow-[0_0_6px_rgba(0,0,0,0.15)]'
+									className={`relative px-5 py-2.5 rounded-lg transition-all duration-300 overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[hsla(var(--electric-cyan),0.6)] ${
+										isActive ? 'scale-105 shadow-[0_0_20px_rgba(0,255,255,0.3)]' : 'hover:scale-105 shadow-[0_0_6px_rgba(0,0,0,0.15)]'
 									}`}
 									style={{
 										fontFamily: 'var(--font-space-grotesk)',
 										fontWeight: 600,
-										background: gradient,
-										backgroundSize: '220% 220%',
-										backgroundPosition: isActive ? '80% 50%' : '20% 50%',
-										animation: 'gradient-shift 4s ease-in-out infinite',
+										background: isActive ? style.active : style.bg,
 										color: '#fff',
-										border: '1px solid rgba(255,255,255,0.08)'
+										border: `1px solid ${isActive ? 'rgba(255,255,255,0.3)' : style.border}`
 									}}
 								>
 									<span className="relative z-10">
 										{cat.label}
 									</span>
-									{/* subtle overlay for inactive for depth */}
-									{!isActive && (
-										<span className="absolute inset-0 bg-black/10" />
-									)}
 								</button>
 							);
 						});
@@ -1068,75 +1123,149 @@ export default function TeamPage() {
 			{/* Members Grid (centered for all resolutions) */}
 			<div
 				ref={containerRef}
-				className="flex flex-wrap justify-center items-center gap-6 mx-auto relative z-10"
-				style={{ maxWidth: "1200px" }}
+				className="flex flex-wrap justify-center items-center gap-8 mx-auto relative z-10"
+				style={{ maxWidth: "1400px" }}
 			>
 				{filteredMembers.map((member, index) => (
 					<div
 						key={index}
-						className="team-card bg-[hsla(var(--card),0.9)] backdrop-blur rounded-lg shadow-lg overflow-hidden flex flex-col items-center text-center p-5 hover:scale-105 transition-transform duration-300 relative group border border-[hsla(var(--border),0.6)]"
+						className="team-card group relative cursor-pointer perspective-1000"
 						style={{
-							width: "260px",
-							minWidth: "260px",
-							maxWidth: "260px",
-							height: "340px",
-							minHeight: "340px",
-							maxHeight: "340px",
-							willChange: "transform, opacity",
-							position: "relative"
+							width: "300px",
+							height: "420px",
+							willChange: "transform",
 						}}
 					>
-						<img
-							src={member.image}
-							alt={member.name}
-							className="object-cover rounded-full border-4 border-[hsla(var(--electric-cyan),0.7)]"
-							style={{
-								width: "136px",
-								height: "136px",
-								objectFit: "cover",
-								borderRadius: "9999px"
-							}}
-						/>
-						{/* Fixed spacing between image and name */}
-						<div style={{ height: "24px" }} />
-						<div className="relative w-full flex flex-col items-center justify-center">
-							{/* Always show name */}
-							<h2
-								className="text-lg font-bold"
-								ref={el => { nameRefs.current[index] = el; }}
-								style={{ fontFamily: 'var(--font-unbounded)' }}
-							>
-								{member.name}
-							</h2>
-							{/* Fade out designation/year on hover */}
-							<div className="transition-opacity duration-300 group-hover:opacity-0">
-								<p className="text-[hsla(var(--electric-cyan),1)] text-base" style={{ fontFamily: 'var(--font-space-grotesk)' }}>{member.designation}</p>
-								<p className="text-gray-400 text-sm" style={{ fontFamily: 'var(--font-geist-mono)' }}>{member.year}</p>
+						{/* Main card container with 3D transform */}
+						<div className="relative w-full h-full transition-all duration-700 ease-out group-hover:scale-[1.02] group-hover:-translate-y-2">
+							
+							{/* Outer glow ring on hover */}
+							<div className="absolute -inset-[3px] rounded-3xl bg-gradient-to-r from-[hsla(var(--electric-cyan),0.8)] via-[hsla(var(--digital-purple),0.8)] to-[hsla(var(--magenta),0.8)] opacity-0 group-hover:opacity-100 blur-sm transition-all duration-500 animate-pulse"></div>
+							
+							{/* Background glow effect */}
+							<div className="absolute -inset-4 bg-gradient-to-br from-[hsla(var(--electric-cyan),0.2)] via-transparent to-[hsla(var(--digital-purple),0.2)] rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+							
+							{/* Card body */}
+							<div className="relative w-full h-full rounded-3xl overflow-hidden bg-gradient-to-br from-[hsla(var(--card),0.9)] via-[hsla(var(--background),0.95)] to-[hsla(var(--card),0.85)] border border-[hsla(var(--foreground),0.08)] group-hover:border-[hsla(var(--electric-cyan),0.4)] transition-all duration-500 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.3)] group-hover:shadow-[0_25px_60px_-15px_hsla(var(--electric-cyan),0.3)]">
+								
+								{/* Animated mesh gradient background */}
+								<div className="absolute inset-0 opacity-30 group-hover:opacity-50 transition-opacity duration-500">
+									<div className="absolute top-0 right-0 w-40 h-40 bg-[hsla(var(--electric-cyan),0.15)] rounded-full blur-3xl transform translate-x-10 -translate-y-10 group-hover:translate-x-5 group-hover:-translate-y-5 transition-transform duration-700"></div>
+									<div className="absolute bottom-0 left-0 w-32 h-32 bg-[hsla(var(--digital-purple),0.15)] rounded-full blur-3xl transform -translate-x-10 translate-y-10 group-hover:-translate-x-5 group-hover:translate-y-5 transition-transform duration-700"></div>
+									<div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-[hsla(var(--magenta),0.1)] rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+								</div>
+								
+								{/* Scan line effect on hover */}
+								<div className="absolute inset-0 overflow-hidden opacity-0 group-hover:opacity-100 pointer-events-none">
+									<div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[hsla(var(--electric-cyan),0.6)] to-transparent animate-scan-line"></div>
+								</div>
+								
+								{/* Top section with image - ALWAYS VISIBLE */}
+								<div className="relative pt-8 pb-4 flex flex-col items-center">
+									{/* Hexagonal frame effect */}
+									<div className="relative">
+										{/* Rotating ring animation on hover */}
+										<div className="absolute -inset-4 rounded-full border-2 border-dashed border-[hsla(var(--electric-cyan),0.3)] opacity-0 group-hover:opacity-100 group-hover:animate-spin-slow transition-opacity duration-500"></div>
+										
+										{/* Glowing backdrop */}
+										<div className="absolute -inset-3 rounded-full bg-gradient-to-br from-[hsla(var(--electric-cyan),0.4)] via-[hsla(var(--digital-purple),0.4)] to-[hsla(var(--magenta),0.4)] blur-xl opacity-0 group-hover:opacity-80 transition-all duration-500"></div>
+										
+										{/* Image container */}
+										<div className="relative w-[140px] h-[140px] rounded-full p-[3px] bg-gradient-to-br from-[hsla(var(--electric-cyan),0.5)] via-[hsla(var(--digital-purple),0.3)] to-[hsla(var(--magenta),0.5)] group-hover:from-[hsla(var(--electric-cyan),1)] group-hover:via-[hsla(var(--digital-purple),1)] group-hover:to-[hsla(var(--magenta),1)] transition-all duration-500">
+											<div className="w-full h-full rounded-full overflow-hidden bg-[hsla(var(--background),1)]">
+												{member.image && member.image.toString().trim() ? (
+													<img
+														src={member.image}
+														alt={member.name}
+														className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-110"
+													/>
+												) : (
+													<div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[hsla(var(--card),1)] to-[hsla(var(--background),1)]">
+														<span className="text-3xl">👤</span>
+													</div>
+												)}
+											</div>
+										</div>
+										
+										{/* Status indicator */}
+										<div className="absolute bottom-2 right-2 w-5 h-5 rounded-full bg-emerald-500 border-[3px] border-[hsla(var(--background),1)] shadow-lg shadow-emerald-500/50 transform scale-0 group-hover:scale-100 transition-transform duration-300 delay-200"></div>
+									</div>
+								</div>
+								
+								{/* Content section - NAME ALWAYS VISIBLE */}
+								<div className="relative px-6 text-center">
+									{/* Name - ALWAYS VISIBLE and prominent */}
+									<h2
+										ref={el => { nameRefs.current[index] = el; }}
+										className="text-xl font-bold mb-2 transition-all duration-300 bg-gradient-to-r from-white via-white to-white group-hover:from-[hsla(var(--electric-cyan),1)] group-hover:via-white group-hover:to-[hsla(var(--digital-purple),1)] bg-clip-text text-transparent bg-[length:200%_100%] bg-[position:0%_0%] group-hover:bg-[position:100%_0%]"
+										style={{ fontFamily: 'var(--font-unbounded)' }}
+									>
+										{member.name}
+									</h2>
+									
+									{/* Designation badge */}
+									<div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-[hsla(var(--electric-cyan),0.15)] to-[hsla(var(--digital-purple),0.15)] border border-[hsla(var(--electric-cyan),0.2)] group-hover:border-[hsla(var(--electric-cyan),0.5)] group-hover:from-[hsla(var(--electric-cyan),0.25)] group-hover:to-[hsla(var(--digital-purple),0.25)] transition-all duration-300 mb-2">
+										<span className="w-2 h-2 rounded-full bg-[hsla(var(--electric-cyan),0.8)] group-hover:animate-pulse"></span>
+										<span className="text-sm font-medium text-[hsla(var(--electric-cyan),0.9)] group-hover:text-[hsla(var(--electric-cyan),1)]" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+											{member.designation}
+										</span>
+									</div>
+									
+									{/* Year tag */}
+									<p className="text-xs text-[hsla(var(--foreground),0.5)] group-hover:text-[hsla(var(--foreground),0.7)] transition-colors duration-300" style={{ fontFamily: 'var(--font-geist-mono)' }}>
+										{member.year}
+									</p>
+								</div>
+								
+								{/* Social links section - slides up on hover */}
+								<div className="absolute bottom-0 left-0 right-0 p-6">
+									{/* Divider line */}
+									<div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[hsla(var(--foreground),0.1)] to-transparent mb-4 group-hover:via-[hsla(var(--electric-cyan),0.4)] transition-all duration-500"></div>
+									
+									{/* Social icons */}
+									<div className="flex items-center justify-center gap-3 transform translate-y-2 opacity-60 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+										{member.socials?.instagram && (
+											<a 
+												href={member.socials.instagram} 
+												target="_blank" 
+												rel="noopener noreferrer" 
+												className="relative p-3 rounded-2xl bg-[hsla(var(--background),0.5)] border border-[hsla(var(--foreground),0.1)] hover:border-[hsla(var(--magenta),0.6)] hover:bg-[hsla(var(--magenta),0.15)] transition-all duration-300 group/icon overflow-hidden"
+											>
+												<div className="absolute inset-0 bg-gradient-to-br from-[hsla(var(--magenta),0.3)] to-transparent opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+												<FaInstagram className="relative text-lg text-[hsla(var(--foreground),0.6)] group-hover/icon:text-[hsla(var(--magenta),1)] transition-colors duration-300" />
+											</a>
+										)}
+										{member.socials?.linkedin && (
+											<a 
+												href={member.socials.linkedin} 
+												target="_blank" 
+												rel="noopener noreferrer" 
+												className="relative p-3 rounded-2xl bg-[hsla(var(--background),0.5)] border border-[hsla(var(--foreground),0.1)] hover:border-[hsla(var(--electric-cyan),0.6)] hover:bg-[hsla(var(--electric-cyan),0.15)] transition-all duration-300 group/icon overflow-hidden"
+											>
+												<div className="absolute inset-0 bg-gradient-to-br from-[hsla(var(--electric-cyan),0.3)] to-transparent opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+												<FaLinkedin className="relative text-lg text-[hsla(var(--foreground),0.6)] group-hover/icon:text-[hsla(var(--electric-cyan),1)] transition-colors duration-300" />
+											</a>
+										)}
+										{member.socials?.github && (
+											<a 
+												href={member.socials.github} 
+												target="_blank" 
+												rel="noopener noreferrer" 
+												className="relative p-3 rounded-2xl bg-[hsla(var(--background),0.5)] border border-[hsla(var(--foreground),0.1)] hover:border-[hsla(var(--digital-purple),0.6)] hover:bg-[hsla(var(--digital-purple),0.15)] transition-all duration-300 group/icon overflow-hidden"
+											>
+												<div className="absolute inset-0 bg-gradient-to-br from-[hsla(var(--digital-purple),0.3)] to-transparent opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+												<FaGithub className="relative text-lg text-[hsla(var(--foreground),0.6)] group-hover/icon:text-[hsla(var(--digital-purple),1)] transition-colors duration-300" />
+											</a>
+										)}
+									</div>
+								</div>
+								
+								{/* Corner decorations */}
+								<div className="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-[hsla(var(--electric-cyan),0.2)] rounded-tl-lg opacity-50 group-hover:opacity-100 group-hover:border-[hsla(var(--electric-cyan),0.6)] transition-all duration-300"></div>
+								<div className="absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 border-[hsla(var(--digital-purple),0.2)] rounded-tr-lg opacity-50 group-hover:opacity-100 group-hover:border-[hsla(var(--digital-purple),0.6)] transition-all duration-300"></div>
+								<div className="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-[hsla(var(--digital-purple),0.2)] rounded-bl-lg opacity-50 group-hover:opacity-100 group-hover:border-[hsla(var(--digital-purple),0.6)] transition-all duration-300"></div>
+								<div className="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-[hsla(var(--electric-cyan),0.2)] rounded-br-lg opacity-50 group-hover:opacity-100 group-hover:border-[hsla(var(--electric-cyan),0.6)] transition-all duration-300"></div>
 							</div>
-						</div>
-						{/* Social Icons fixed at bottom */}
-						<div
-							className="absolute left-0 right-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-							style={{
-								bottom: "32px",
-								position: "absolute"
-							}}
-						>
-							{member.socials?.instagram && (
-								<a href={member.socials.instagram} target="_blank" rel="noopener noreferrer" className="transform hover:scale-110 transition-transform">
-									<FaInstagram className="text-[hsla(var(--magenta),0.9)] text-2xl hover:text-[hsla(var(--magenta),1)] hover:shadow-[0_0_8px_hsla(var(--magenta),0.8)]" />
-								</a>
-							)}
-							{member.socials?.linkedin && (
-								<a href={member.socials.linkedin} target="_blank" rel="noopener noreferrer" className="transform hover:scale-110 transition-transform">
-									<FaLinkedin className="text-[hsla(var(--electric-cyan),0.9)] text-2xl hover:text-[hsla(var(--electric-cyan),1)] hover:shadow-[0_0_8px_hsla(var(--electric-cyan),0.8)]" />
-								</a>
-							)}
-							{member.socials?.github && (
-								<a href={member.socials.github} target="_blank" rel="noopener noreferrer" className="transform hover:scale-110 transition-transform">
-									<FaGithub className="text-[hsla(var(--digital-purple),0.9)] text-2xl hover:text-[hsla(var(--digital-purple),1)] hover:shadow-[0_0_8px_hsla(var(--digital-purple),0.8)]" />
-								</a>
-							)}
 						</div>
 					</div>
 				))}

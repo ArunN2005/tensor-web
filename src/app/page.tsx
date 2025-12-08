@@ -6,9 +6,9 @@ import Promotions from "@/components/pages/Promotions";
 import Image from "next/image";
 
 export default function HomePage() {
-  // Countdown for marquee (Induction 2025)
+  // Countdown for marquee (Agentic AI)
   const [marqueeCountdown, setMarqueeCountdown] = useState<string>("");
-  const eventISO = "2025-09-08T16:45:00+05:30";
+  const eventISO = "2025-12-31T23:59:59+05:30";
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -47,22 +47,27 @@ export default function HomePage() {
       >
         <Hero />
       </div>
-      {/* Induction 2025 marquee hero */}
+      {/* Agentic AI marquee hero */}
       <section className="relative py-12 bg-[hsla(var(--background),1)] overflow-hidden">
         <div className="container mx-auto px-6 lg:px-8">
           <div className="relative rounded-xl border border-[hsla(var(--border),0.2)] bg-[hsla(var(--card),0.5)] backdrop-blur-sm p-6 md:p-8 flex flex-col md:flex-row items-center gap-6">
             <div className="flex-1 text-center md:text-left">
               <h3 className="text-2xl md:text-3xl font-bold mb-2" style={{ fontFamily: 'var(--font-unbounded)' }}>
-                <span className="gradient-text">Induction 2025</span>
+                <span className="gradient-text">Agentic AI</span>
               </h3>
               {marqueeCountdown && (
                 <div className="inline-flex items-center gap-2 px-3 py-1 mb-3 rounded-full border border-[hsla(var(--electric-cyan),0.4)] bg-[hsla(var(--background),0.6)] text-[hsla(var(--electric-cyan),1)] text-xs md:text-sm" style={{ fontFamily: 'var(--font-geist-mono)' }}>
                   <span className="w-2 h-2 rounded-full bg-[hsla(var(--electric-cyan),1)] animate-pulse"></span>
-                  Starts in {marqueeCountdown}
+                  Coming Soon
                 </div>
               )}
               <p className="text-[hsl(var(--foreground))] opacity-85 mb-3" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
-                September 8th, 2025 • 4:45 PM • Amriteshwari Hall
+                   • Date & Time December 9, 4:30PM-6:30PM 
+                
+              </p>
+               <p className="text-[hsl(var(--foreground))] opacity-85 mb-3" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+                   • Location Sandeepani Hall (AB2)
+                
               </p>
               <div className="flex flex-wrap gap-3 justify-center md:justify-start">
                 <a href="/events" className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[hsla(var(--electric-cyan),0.9)] hover:bg-[hsla(var(--electric-cyan),1)] text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
@@ -76,9 +81,9 @@ export default function HomePage() {
                 <div 
                   aria-hidden 
                   className="absolute inset-0 bg-center bg-cover blur-2xl scale-110 opacity-35"
-                  style={{ backgroundImage: "url('/images/upcoming events/induction 2025.jpg')" }}
+                  style={{ backgroundImage: "url('/images/upcoming events/agenticai.png')" }}
                 />
-                <Image src="/images/upcoming events/induction 2025.jpg" alt="Induction 2025" fill className="object-contain" sizes="(max-width: 768px) 80vw, 20vw" priority />
+                <Image src="/images/upcoming events/agenticai.png" alt="Agentic AI" fill className="object-contain" sizes="(max-width: 768px) 80vw, 20vw" priority />
                 {/* Inner shadow for depth */}
                 <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_40px_rgba(0,0,0,0.25)]"></div>
               </div>
@@ -92,12 +97,12 @@ export default function HomePage() {
       <AboutUs />
       <Promotions promotions={[
         {
-          title: "Induction 2025",
-          subtitle: "Join us for the official induction of Tensor Club — vision, projects, and an inspiring kickoff to the year.",
+          title: "Agentic AI",
+          subtitle: "Explore the cutting-edge world of autonomous AI systems that can perceive, reason, and act independently.",
           ctaText: "View Event Details",
           ctaLink: "/events",
-          imageUrl: "/images/upcoming events/induction 2025.jpg",
-          eventDate: "2025-09-08T16:45:00+05:30"
+          imageUrl: "/images/upcoming events/agenticai.png",
+          eventDate: "2025-12-31T23:59:59+05:30"
         }
       ]} />
     </>
