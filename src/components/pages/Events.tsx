@@ -29,12 +29,12 @@ export default function Events() {
       title: "Agentic AI",
       description: "Dive into the world of Agentic AI - autonomous systems that can perceive, reason, and act to achieve complex goals. Join us for an exciting session exploring cutting-edge AI agents, their applications, and hands-on demonstrations. Learn how these intelligent systems are revolutionizing industries and shaping the future of artificial intelligence.",
       date: {
-        day: "TBA",
-        month: "Coming Soon",
+        day: "9",
+        month: "December",
         year: "2025"
       },
-      time: "TBA",
-      location: "TBA",
+      time: "4:00PM - 6:00PM",
+      location: "Sandeepani Hall (AB2)",
       status: "upcoming",
       image: ["/images/upcoming events/agenticai.png"],
       registration: "open"
