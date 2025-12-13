@@ -375,6 +375,7 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 						width={110}
 						height={24}
 					/>
+					
 				</div>
 				<button
 					ref={toggleBtnRef}

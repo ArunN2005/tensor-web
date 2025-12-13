@@ -19,14 +19,17 @@ export default function MinimalHeader() {
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Left-aligned logo */}
-          <Link href="/" className="flex items-center">
+          <Link href="/" className="flex items-center gap-3">
             <Image 
               src="/Tensor_Logo_White.png" 
               alt="Tensor Logo" 
-              width={32} 
-              height={32} 
+              width={56} 
+              height={56} 
               className="rounded-md"
             />
+            <span className="text-xl font-bold text-white" style={{ fontFamily: 'var(--font-unbounded)' }}>
+              Tensor Club
+            </span>
           </Link>
 
           {/* Centered primary links - hidden on mobile */}

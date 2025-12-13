@@ -151,7 +151,7 @@ const Footer = () => {
       <AnimatePresence>
         {isHovered && !menuOpen && (
           <motion.footer 
-            className="fixed bottom-0 left-0 w-full z-[9999] bg-gradient-to-t from-[hsl(var(--background))] via-[hsla(var(--card),0.95)] to-[hsla(var(--card),0.9)] backdrop-blur-md border-t border-[hsla(var(--border),0.5)] max-h-[50vh] sm:max-h-[60vh] overflow-y-auto"
+            className="fixed bottom-0 left-0 w-full z-[9999] bg-gradient-to-t from-[hsl(var(--background))] via-[hsla(var(--card),0.95)] to-[hsla(var(--card),0.9)] backdrop-blur-md border-t border-[hsla(var(--border),0.5)] max-h-[35vh] sm:max-h-[40vh] overflow-y-auto"
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             exit={{ y: "100%" }}

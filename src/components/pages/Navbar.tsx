@@ -18,15 +18,15 @@ function Logo({ isOverlay = false }: { isOverlay?: boolean }) {
       <div className="relative">
         <div
           className={`relative rounded-lg bg-gradient-to-br from-[hsla(var(--electric-cyan),0.1)] via-transparent to-[hsla(var(--digital-purple),0.1)] border border-white/5 backdrop-blur-sm transition-all duration-500 group-hover:border-[hsla(var(--electric-cyan),0.3)] group-hover:shadow-[0_0_20px_rgba(0,255,255,0.2)] ${
-            isOverlay ? 'w-14 h-14' : 'w-12 h-12'
+            isOverlay ? 'w-16 h-16' : 'w-16 h-16'
           }`}
         >
           <div className="absolute inset-0.5 bg-slate-950/60 rounded-md flex items-center justify-center">
             <Image
               src="/Tensor_Logo_White.png"
               alt="Tensor Logo"
-              width={isOverlay ? 34 : 30}
-              height={isOverlay ? 34 : 30}
+              width={isOverlay ? 42 : 42}
+              height={isOverlay ? 42 : 42}
               className="relative z-10 transition-all duration-500 group-hover:brightness-110"
             />
             {isHovered && (
@@ -39,7 +39,7 @@ function Logo({ isOverlay = false }: { isOverlay?: boolean }) {
       <div className="flex flex-col">
         <span
           className={`font-semibold text-white tracking-tight group-hover:text-[hsla(var(--electric-cyan),1)] transition-all duration-300 ${
-            isOverlay ? 'text-xl' : 'text-lg'
+            isOverlay ? 'text-2xl' : 'text-xl'
           }`}
           style={{ fontFamily: 'var(--font-unbounded)' }}
         >
@@ -434,17 +434,6 @@ export default function Navbar() {
             : 'linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.9), transparent)',
         }}
       />
-
-      {/* Floating Menu Button - visible on all screens */}
-      <button
-        className="fixed top-4 right-4 md:top-6 md:right-6 z-[100] bg-[hsla(var(--background),0.95)] border border-[hsla(var(--electric-cyan),0.3)] shadow-lg rounded-full px-4 py-2 md:px-6 md:py-3 text-white font-bold text-sm md:text-lg flex items-center gap-2 hover:bg-[hsla(var(--electric-cyan),0.1)] transition-all duration-300"
-        style={{backdropFilter: 'blur(8px)'}}
-        onClick={() => setMenuOpen(true)}
-        aria-label="Open menu"
-      >
-        <svg width="20" height="20" className="md:w-[22px] md:h-[22px]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
-        <span className="hidden sm:inline">Menu</span>
-      </button>
 
       {/* Simplified overlay/backdrop (no heavy decorative layers) */}
       <div

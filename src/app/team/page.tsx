@@ -1228,8 +1228,9 @@ export default function TeamPage() {
 											<a 
 												href={member.socials.instagram} 
 												target="_blank" 
-												rel="noopener noreferrer" 
-												className="relative p-3 rounded-2xl bg-[hsla(var(--background),0.5)] border border-[hsla(var(--foreground),0.1)] hover:border-[hsla(var(--magenta),0.6)] hover:bg-[hsla(var(--magenta),0.15)] transition-all duration-300 group/icon overflow-hidden"
+												rel="noopener noreferrer"
+												onClick={(e) => e.stopPropagation()}
+												className="relative p-3 rounded-2xl bg-[hsla(var(--background),0.5)] border border-[hsla(var(--foreground),0.1)] hover:border-[hsla(var(--magenta),0.6)] hover:bg-[hsla(var(--magenta),0.15)] transition-all duration-300 group/icon overflow-hidden z-20"
 											>
 												<div className="absolute inset-0 bg-gradient-to-br from-[hsla(var(--magenta),0.3)] to-transparent opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
 												<FaInstagram className="relative text-lg text-[hsla(var(--foreground),0.6)] group-hover/icon:text-[hsla(var(--magenta),1)] transition-colors duration-300" />
@@ -1239,8 +1240,9 @@ export default function TeamPage() {
 											<a 
 												href={member.socials.linkedin} 
 												target="_blank" 
-												rel="noopener noreferrer" 
-												className="relative p-3 rounded-2xl bg-[hsla(var(--background),0.5)] border border-[hsla(var(--foreground),0.1)] hover:border-[hsla(var(--electric-cyan),0.6)] hover:bg-[hsla(var(--electric-cyan),0.15)] transition-all duration-300 group/icon overflow-hidden"
+												rel="noopener noreferrer"
+												onClick={(e) => e.stopPropagation()}
+												className="relative p-3 rounded-2xl bg-[hsla(var(--background),0.5)] border border-[hsla(var(--foreground),0.1)] hover:border-[hsla(var(--electric-cyan),0.6)] hover:bg-[hsla(var(--electric-cyan),0.15)] transition-all duration-300 group/icon overflow-hidden z-20"
 											>
 												<div className="absolute inset-0 bg-gradient-to-br from-[hsla(var(--electric-cyan),0.3)] to-transparent opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
 												<FaLinkedin className="relative text-lg text-[hsla(var(--foreground),0.6)] group-hover/icon:text-[hsla(var(--electric-cyan),1)] transition-colors duration-300" />
@@ -1250,8 +1252,9 @@ export default function TeamPage() {
 											<a 
 												href={member.socials.github} 
 												target="_blank" 
-												rel="noopener noreferrer" 
-												className="relative p-3 rounded-2xl bg-[hsla(var(--background),0.5)] border border-[hsla(var(--foreground),0.1)] hover:border-[hsla(var(--digital-purple),0.6)] hover:bg-[hsla(var(--digital-purple),0.15)] transition-all duration-300 group/icon overflow-hidden"
+												rel="noopener noreferrer"
+												onClick={(e) => e.stopPropagation()}
+												className="relative p-3 rounded-2xl bg-[hsla(var(--background),0.5)] border border-[hsla(var(--foreground),0.1)] hover:border-[hsla(var(--digital-purple),0.6)] hover:bg-[hsla(var(--digital-purple),0.15)] transition-all duration-300 group/icon overflow-hidden z-20"
 											>
 												<div className="absolute inset-0 bg-gradient-to-br from-[hsla(var(--digital-purple),0.3)] to-transparent opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
 												<FaGithub className="relative text-lg text-[hsla(var(--foreground),0.6)] group-hover/icon:text-[hsla(var(--digital-purple),1)] transition-colors duration-300" />

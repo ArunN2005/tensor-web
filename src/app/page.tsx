@@ -8,7 +8,7 @@ import Image from "next/image";
 export default function HomePage() {
   // Countdown for marquee (Agentic AI)
   const [marqueeCountdown, setMarqueeCountdown] = useState<string>("");
-  const eventISO = "2025-12-31T23:59:59+05:30";
+  const eventISO = "2025-12-09T16:30:00+05:30";
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -58,16 +58,11 @@ export default function HomePage() {
               {marqueeCountdown && (
                 <div className="inline-flex items-center gap-2 px-3 py-1 mb-3 rounded-full border border-[hsla(var(--electric-cyan),0.4)] bg-[hsla(var(--background),0.6)] text-[hsla(var(--electric-cyan),1)] text-xs md:text-sm" style={{ fontFamily: 'var(--font-geist-mono)' }}>
                   <span className="w-2 h-2 rounded-full bg-[hsla(var(--electric-cyan),1)] animate-pulse"></span>
-                  Coming Soon
+                  Starts in {marqueeCountdown}
                 </div>
               )}
               <p className="text-[hsl(var(--foreground))] opacity-85 mb-3" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
-                   • Date & Time December 9, 4:30PM-6:30PM 
-                
-              </p>
-               <p className="text-[hsl(var(--foreground))] opacity-85 mb-3" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
-                   • Location Sandeepani Hall (AB2)
-                
+                December 9th, 2025 • 4:30 PM - 6:30 PM • Sandeepani Hall (AB2)
               </p>
               <div className="flex flex-wrap gap-3 justify-center md:justify-start">
                 <a href="/events" className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[hsla(var(--electric-cyan),0.9)] hover:bg-[hsla(var(--electric-cyan),1)] text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
@@ -102,7 +97,7 @@ export default function HomePage() {
           ctaText: "View Event Details",
           ctaLink: "/events",
           imageUrl: "/images/upcoming events/agenticai.png",
-          eventDate: "2025-12-31T23:59:59+05:30"
+          eventDate: "2025-12-09T16:30:00+05:30"
         }
       ]} />
     </>
