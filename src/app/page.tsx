@@ -26,6 +26,10 @@ export default function HomePage() {
     const target = new Date(eventISO).getTime();
     const update = () => {
       const diff = Math.max(0, target - Date.now());
+      if (diff === 0) {
+        setMarqueeCountdown("");
+        return;
+      }
       const d = Math.floor(diff / (1000 * 60 * 60 * 24));
       const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
       const m = Math.floor((diff / (1000 * 60)) % 60);

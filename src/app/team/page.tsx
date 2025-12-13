@@ -715,6 +715,18 @@ const members = [
 			github: "https://github.com/sailesh78910"
 		}
 	},
+	{
+		name: "Arun N",
+		designation: "Web Dev",
+		year: "3rd Year CSE",
+		image: "https://sj67hjofte.ufs.sh/f/7JfC7VrndVSM2PqB7bvarxBmlstRjKeL8qIwWV3kUZ2CJHpS",
+		category: ["webdev"],
+		socials: {
+			instagram: "https://www.instagram.com/arun.__.n/",
+			linkedin: "https://www.linkedin.com/in/arunn05/",
+			github: "https://github.com/ArunN2005"
+		}
+	},
 
 ];
 
@@ -860,28 +872,43 @@ export default function TeamPage() {
 	// Smooth card animations on scroll (desktop only)
 	useEffect(() => {
 		if (!isMobile && containerRef.current) {
+			// Kill all previous scroll triggers
 			ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-			gsap.set(".team-card", { opacity: 0, y: 40, transform: "translateZ(0)" });
-			ScrollTrigger.batch(".team-card", {
-				start: "top 85%",
-				onEnter: (batch) => {
-					gsap.to(batch, {
-						opacity: 1,
-						y: 0,
-						stagger: 0.15,
-						duration: 0.8,
-						ease: "power3.out"
+			
+			// Small delay to ensure DOM is updated with filtered members
+			setTimeout(() => {
+				const cards = document.querySelectorAll(".team-card");
+				if (cards.length > 0) {
+					gsap.set(cards, { opacity: 0, y: 40, transform: "translateZ(0)" });
+					ScrollTrigger.batch(".team-card", {
+						start: "top 85%",
+						onEnter: (batch) => {
+							gsap.to(batch, {
+								opacity: 1,
+								y: 0,
+								stagger: 0.15,
+								duration: 0.8,
+								ease: "power3.out"
+							});
+						},
+						onLeaveBack: (batch) => {
+							gsap.to(batch, {
+								opacity: 0,
+								y: 40,
+								duration: 0.5,
+								ease: "power2.inOut"
+							});
+						}
 					});
-				},
-				onLeaveBack: (batch) => {
-					gsap.to(batch, {
-						opacity: 0,
-						y: 40,
-						duration: 0.5,
-						ease: "power2.inOut"
-					});
+					ScrollTrigger.refresh();
 				}
-			});
+			}, 50);
+		}
+		
+		// Show cards immediately on mobile
+		if (isMobile) {
+			const cards = document.querySelectorAll(".team-card");
+			gsap.set(cards, { opacity: 1, y: 0 });
 		}
 	}, [filteredMembers, isMobile]);
 
@@ -1128,7 +1155,7 @@ export default function TeamPage() {
 			>
 				{filteredMembers.map((member, index) => (
 					<div
-						key={index}
+						key={`${member.name}-${member.designation}-${index}`}
 						className="team-card group relative cursor-pointer perspective-1000"
 						style={{
 							width: "300px",
