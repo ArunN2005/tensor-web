@@ -6,9 +6,9 @@ import Promotions from "@/components/pages/Promotions";
 import Image from "next/image";
 
 export default function HomePage() {
-  // Countdown for marquee (Agentic AI)
+  // Countdown for marquee (AI-Verse Hackathon)
   const [marqueeCountdown, setMarqueeCountdown] = useState<string>("");
-  const eventISO = "2025-12-09T16:30:00+05:30";
+  const eventISO = "2025-12-30T23:59:00+05:30";
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -51,26 +51,35 @@ export default function HomePage() {
       >
         <Hero />
       </div>
-      {/* Agentic AI marquee hero */}
+      {/* AI-Verse Hackathon marquee hero */}
       <section className="relative py-12 bg-[hsla(var(--background),1)] overflow-hidden">
         <div className="container mx-auto px-6 lg:px-8">
           <div className="relative rounded-xl border border-[hsla(var(--border),0.2)] bg-[hsla(var(--card),0.5)] backdrop-blur-sm p-6 md:p-8 flex flex-col md:flex-row items-center gap-6">
             <div className="flex-1 text-center md:text-left">
               <h3 className="text-2xl md:text-3xl font-bold mb-2" style={{ fontFamily: 'var(--font-unbounded)' }}>
-                <span className="gradient-text">Agentic AI</span>
+                <span className="gradient-text">AI-Verse Hackathon | ANOKHA 2026</span>
               </h3>
               {marqueeCountdown && (
                 <div className="inline-flex items-center gap-2 px-3 py-1 mb-3 rounded-full border border-[hsla(var(--electric-cyan),0.4)] bg-[hsla(var(--background),0.6)] text-[hsla(var(--electric-cyan),1)] text-xs md:text-sm" style={{ fontFamily: 'var(--font-geist-mono)' }}>
                   <span className="w-2 h-2 rounded-full bg-[hsla(var(--electric-cyan),1)] animate-pulse"></span>
-                  Starts in {marqueeCountdown}
+                  Deadline in {marqueeCountdown}
                 </div>
               )}
               <p className="text-[hsl(var(--foreground))] opacity-85 mb-3" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
-                December 9th, 2025 • 4:30 PM - 6:30 PM • Sandeepani Hall (AB2)
+                • Online: Dec 22-30, 2025 
+              </p>
+              <p className="text-[hsl(var(--foreground))] opacity-85 mb-3" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+                • Finale: Jan 8, 2026 @ Amrita Coimbatore
+              </p>
+              <p className="text-[hsl(var(--foreground))] opacity-85 mb-3" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+                • ₹3L Prize Pool
               </p>
               <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                <a href="/events" className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[hsla(var(--electric-cyan),0.9)] hover:bg-[hsla(var(--electric-cyan),1)] text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
-                  View Event Details
+                <a href="https://anokha.amrita.edu/hackathon" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-[hsl(var(--electric-cyan))] to-[hsl(var(--magenta))] text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/50" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+                  Register Now
+                </a>
+                <a href="/events" className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-transparent border border-[hsla(var(--electric-cyan),0.5)] hover:bg-[hsla(var(--electric-cyan),0.1)] text-[hsla(var(--electric-cyan),1)] font-semibold rounded-lg transition-all duration-300 hover:scale-105" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+                  View Details
                 </a>
               </div>
             </div>
@@ -80,9 +89,9 @@ export default function HomePage() {
                 <div 
                   aria-hidden 
                   className="absolute inset-0 bg-center bg-cover blur-2xl scale-110 opacity-35"
-                  style={{ backgroundImage: "url('/images/upcoming events/agenticai.png')" }}
+                  style={{ backgroundImage: "url('/images/aiversenew.jpeg')" }}
                 />
-                <Image src="/images/upcoming events/agenticai.png" alt="Agentic AI" fill className="object-contain" sizes="(max-width: 768px) 80vw, 20vw" priority />
+                <Image src="/images/aiversenew.jpeg" alt="AI-Verse Hackathon" fill className="object-contain" sizes="(max-width: 768px) 80vw, 20vw" priority />
                 {/* Inner shadow for depth */}
                 <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_40px_rgba(0,0,0,0.25)]"></div>
               </div>
@@ -96,12 +105,12 @@ export default function HomePage() {
       <AboutUs />
       <Promotions promotions={[
         {
-          title: "Agentic AI",
-          subtitle: "Explore the cutting-edge world of autonomous AI systems that can perceive, reason, and act independently.",
-          ctaText: "View Event Details",
-          ctaLink: "/events",
-          imageUrl: "/images/upcoming events/agenticai.png",
-          eventDate: "2025-12-09T16:30:00+05:30"
+          title: "AI-Verse Hackathon | ANOKHA 2026",
+          subtitle: "Premier National-Level Hackathon with ₹3L Prize Pool. Tracks: Generative AI, Agentic AI, AIoT. Online: Dec 22-30, Finale: Jan 8, 2026.",
+          ctaText: "Register Now",
+          ctaLink: "https://anokha.amrita.edu/hackathon",
+          imageUrl: "/images/aiversenew.jpeg",
+          eventDate: "2025-12-30T23:59:00+05:30"
         }
       ]} />
     </>

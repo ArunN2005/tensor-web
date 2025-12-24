@@ -26,6 +26,21 @@ export default function Events() {
   const [events, setEvents] = useState<Event[]>([
     {
       id: 1,
+      title: "AI-Verse Hackathon | ANOKHA 2026",
+      description: "Premier Hackathon of the National-Level Tech Fest\n\nOrganized by:\n    Amrita School of AI in collaboration with Tensor-AI Club, IETE-SF & Intel IoT Club\n\nCompetition Tracks:\n    • Generative AI\n    • Agentic AI\n    • AIoT (AI + IoT)\n\nPrize Pool: ₹3 Lakhs Total\nPer Track Prizes:\n    1st Place: ₹50,000\n    2nd Place: ₹30,000\n    3rd Place: ₹20,000\n\nRewards:\n    • Goodies for all finalists\n    • E-certificates for all participants\n\nEvent Timeline:\n    • Online Phase: December 22–30, 2025\n    • Grand Finale: January 8, 2026\n    • Venue: Amrita Vishwa Vidyapeetham, Coimbatore Campus\n\nTeam Details:\n    • Team Size: 2–4 members\n    • Registration Fee: ₹590 per team (including GST)\n    • Deadline: December 30, 2025 at 11:59 PM\n\nJudging Panel:\n    Esteemed industry experts and leading Amrita faculty mentors\n\nEligibility:\n    • Open to students from any college or university\n    • Inter-college teams are allowed\n    • Both beginners and experienced developers welcome\n\nDon't miss ANOKHA-2026's flagship hackathon — Build. Compete. Win!\n\nContact:\n    tensorclub@cb.amrita.edu | ietesf@cb.amrita.edu | inteliotclub@cb.amrita.edu\n\nProblem Statements:\n    https://tinyurl.com/aiverse-hack",
+      date: {
+        day: "22-30",
+        month: "December",
+        year: "2025"
+      },
+      time: "Online Phase",
+      location: "Grand Finale: Jan 8, 2026 @ Amrita Coimbatore",
+      status: "upcoming",
+      image: ["/images/aiversenew.jpeg"],
+      registration: "https://anokha.amrita.edu/hackathon"
+    },
+    {
+      id: 2,
       title: "Agentic AI",
       description: "Dive into the world of Agentic AI - autonomous systems that can perceive, reason, and act to achieve complex goals. Join us for an exciting session exploring cutting-edge AI agents, their applications, and hands-on demonstrations. Learn how these intelligent systems are revolutionizing industries and shaping the future of artificial intelligence.",
       date: {
@@ -35,12 +50,11 @@ export default function Events() {
       },
       time: "4:00PM - 6:00PM",
       location: "Sandeepani Hall (AB2)",
-      status: "upcoming",
-      image: ["/images/upcoming events/agenticai.png"],
-      registration: "open"
+      status: "past",
+      image: ["/images/upcoming events/agenticai.png"]
     },
     {
-      id: 2,
+      id: 3,
       title: "Induction 2024",
       description: "The induction ceremony marked the beginning of the Tensor Club journey for the new academic year. Students were introduced to the club's mission, activities, and leadership team. The event featured inspiring talks, project showcases, and networking opportunities.",
       date: {
@@ -54,7 +68,7 @@ export default function Events() {
       image: ["/images/past events/induction 2024.jpg"]
     },
     {
-      id: 3,
+      id: 4,
       title: "AI Prompting Workshop",
       description: "A comprehensive workshop on AI prompting techniques, focusing on effective prompt design for AI models. The workshop equipped participants with foundational and advanced skills in designing effective prompts for AI models, fostering an understanding of how inputs shape outputs and enhancing their ability to leverage generative AI tools. Topics included introduction to AI basics, interactive prompt activities, core concepts of prompting, interactive demos, advanced prompting techniques, and AI tools.",
       date: {
@@ -68,7 +82,7 @@ export default function Events() {
       image: ["/images/past events/prompting workshop.png"]
     },
     {
-      id: 4,
+      id: 5,
       title: "AI/ML Penetration Testing Workshop",
       description: "With the increasing adoption of AI/ML in various sectors, the security of these systems has become a crucial concern. This workshop introduced participants to penetration testing techniques specifically for and by AI/ML models, helping them understand vulnerabilities, attacks, and best security practices. The workshop was handled by Mr Tarun Harisudha, Associate Security Consultant, VAPT, NxxT, Coimbatore.",
       date: {
@@ -82,7 +96,7 @@ export default function Events() {
       image: ["/images/past events/pentesting workshop.png"]
     },
     {
-      id: 5,
+      id: 6,
       title: "AI Advent Calendar",
       description: "The AI Advent Calendar event brought together students to explore a new AI topic or tool each day leading up to the winter break. Participants learned about the latest AI advancements, participated in daily challenges, and built a comprehensive understanding of various AI domains.",
       date: {
@@ -408,10 +422,76 @@ export default function Events() {
           </div>
           
           <div ref={descriptionRef} className="mb-8">
-            <p className="text-[hsl(var(--foreground))] opacity-80" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
-              {isMobile && !showFullDescription
+            <div className="text-[hsl(var(--foreground))] opacity-80" style={{ fontFamily: 'var(--font-space-grotesk)', whiteSpace: 'pre-line' }}>
+              {(isMobile && !showFullDescription
                 ? `${currentEvent.description.substring(0, 150)}...`
-                : currentEvent.description}
+                : currentEvent.description
+              ).split('\n').map((line, index) => {
+                // Check if line contains email addresses
+                const emailRegex = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g;
+                // Check if line contains URLs
+                const urlRegex = /(https?:\/\/[^\s]+)/g;
+                
+                let parts: (string | JSX.Element)[] = [line];
+                
+                // Replace emails with mailto links
+                if (emailRegex.test(line)) {
+                  const newParts: (string | JSX.Element)[] = [];
+                  let lastIndex = 0;
+                  line.replace(emailRegex, (match, email, offset) => {
+                    newParts.push(line.substring(lastIndex, offset));
+                    newParts.push(
+                      <a 
+                        key={`email-${index}-${offset}`}
+                        href={`mailto:${email}`} 
+                        className="text-[hsla(var(--electric-cyan),1)] hover:underline"
+                      >
+                        {email}
+                      </a>
+                    );
+                    lastIndex = offset + match.length;
+                    return match;
+                  });
+                  newParts.push(line.substring(lastIndex));
+                  parts = newParts;
+                }
+                
+                // Replace URLs with clickable links
+                const finalParts: (string | JSX.Element)[] = [];
+                parts.forEach((part, partIndex) => {
+                  if (typeof part === 'string' && urlRegex.test(part)) {
+                    let lastIndex = 0;
+                    part.replace(urlRegex, (match, url, offset) => {
+                      finalParts.push(part.substring(lastIndex, offset));
+                      finalParts.push(
+                        <a 
+                          key={`url-${index}-${partIndex}-${offset}`}
+                          href={url} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-[hsla(var(--electric-cyan),1)] hover:underline"
+                        >
+                          {url}
+                        </a>
+                      );
+                      lastIndex = offset + match.length;
+                      return match;
+                    });
+                    finalParts.push(part.substring(lastIndex));
+                  } else {
+                    finalParts.push(part);
+                  }
+                });
+                
+                // Make headings bold (lines with headers)
+                const isBoldLine = /^(Organized by:|Competition Tracks:|Prize Pool:|Rewards:|Event Timeline:|Team Details:|Judging Panel:|Eligibility:|Contact:|Problem Statements:)/.test(line);
+                
+                return (
+                  <div key={index} className={isBoldLine ? 'font-bold' : ''}>
+                    {finalParts.length > 0 ? finalParts : line}
+                  </div>
+                );
+              })}
               
               {isMobile && (
                 <button 
@@ -421,7 +501,7 @@ export default function Events() {
                   {showFullDescription ? "Read less" : "Read more"}
                 </button>
               )}
-            </p>
+            </div>
           </div>
           
           {currentEvent.status === "upcoming" && currentEvent.registration === "open" && (
