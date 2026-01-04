@@ -132,7 +132,7 @@ const members = [
 		name: "Vimal Harihar SK",
 		designation: "Web Dev Lead",
 		year: "3rd Year CSE",
-		image: "https://i.ibb.co/pj9WYnPq/Whats-App-Image-2026-01-04-at-9-39-58-PM.jpg",
+		image: "https://i.ibb.co/nN6bvVNJ/vimalhsk.jpg",
 		category: ["core", "webdev"],
 		socials: {
 			instagram: "https://www.instagram.com/_.vimal1917.___/?hl=en",
