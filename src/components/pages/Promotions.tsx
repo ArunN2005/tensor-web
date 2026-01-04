@@ -100,7 +100,7 @@ function PromotionBanner({ promotion }: PromotionBannerProps) {
           {countdown && (
             <div className="inline-flex items-center gap-2 px-3 py-1 mb-3 rounded-full border border-[hsla(var(--electric-cyan),0.4)] bg-[hsla(var(--background),0.6)] text-[hsla(var(--electric-cyan),1)] text-xs md:text-sm" style={{ fontFamily: 'var(--font-geist-mono)' }}>
               <span className="w-2 h-2 rounded-full bg-[hsla(var(--electric-cyan),1)] animate-pulse"></span>
-              Starts in {countdown}
+              Grand Finale in {countdown}
             </div>
           )}
           <p 

@@ -120,7 +120,7 @@ const members = [
 		name: "Keerthivasan S V",
 		designation: "Web Dev Lead",
 		year: "3rd Year AIE",
-		image: "https://media.licdn.com/dms/image/v2/D5603AQF1bBmX3MQhEw/profile-displayphoto-scale_400_400/B56ZiUlBrfHUAk-/0/1754839392810?e=1759968000&v=beta&t=u95GxjVUvkddYTQcd4kI4wiXBAHu0SsHNJhmVJfrO2Y",
+		image: "",
 		category: ["core", "webdev"],
 		socials: {
 			instagram: "https://www.instagram.com/keerrrthiv/",
@@ -321,16 +321,18 @@ const members = [
 		}
 	},
 	{
-		name: "Ashwin K",
+
+		name: "Arun N",
 		designation: "Web Dev",
-		year: "3rd Year CYS",
-		image: "https://sj67hjofte.ufs.sh/f/7JfC7VrndVSMuN1fXCVsFk6wmhzrGDfJVgMpxyYN9KHQCWiu",
+		year: "3rd Year CSE",
+		image: "https://i.ibb.co/vvd5gYDH/mahpic.jpg",
 		category: ["webdev"],
 		socials: {
-			instagram: "https://www.instagram.com/ashey._.7?igsh=MWU5cHl2YTVnNG44ZA==",
-			linkedin: "https://www.linkedin.com/in/ashwin-k-243701288?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-			github: "https://github.com/Ashwin-1411"
+			instagram: "https://www.instagram.com/arun.__.n/",
+			linkedin: "https://www.linkedin.com/in/arunn05/",
+			github: "https://github.com/ArunN2005"
 		}
+		
 	},
 	{
 		name: "Sudharsana Saravanan S",
@@ -464,15 +466,16 @@ const members = [
 		}
 	},
 	{
-		name: "Nithin Venkat Sharma",
+
+		name: "Ashwin K",
 		designation: "Web Dev",
-		year: "2nd Year CSE",
-		image: "https://sj67hjofte.ufs.sh/f/7JfC7VrndVSMVoafvJB5EFZr3IcNJBPpm0LOx8vokyQGaRbA",
+		year: "3rd Year CYS",
+		image: "https://sj67hjofte.ufs.sh/f/7JfC7VrndVSMuN1fXCVsFk6wmhzrGDfJVgMpxyYN9KHQCWiu",
 		category: ["webdev"],
 		socials: {
-			instagram: "https://www.instagram.com/nithin_pm_006?igsh=Zm83bmx6bWRpbXRu",
-			linkedin: "",
-			github: "https://github.com/Nithin0306"
+			instagram: "https://www.instagram.com/ashey._.7?igsh=MWU5cHl2YTVnNG44ZA==",
+			linkedin: "https://www.linkedin.com/in/ashwin-k-243701288?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+			github: "https://github.com/Ashwin-1411"
 		}
 	},
 	{
@@ -728,15 +731,15 @@ const members = [
 		}
 	},
 	{
-		name: "Arun N",
+		name: "Nithin Venkat Sharma",
 		designation: "Web Dev",
-		year: "3rd Year CSE",
-		image: "https://i.ibb.co/vvd5gYDH/mahpic.jpg",
+		year: "2nd Year CSE",
+		image: "https://sj67hjofte.ufs.sh/f/7JfC7VrndVSMVoafvJB5EFZr3IcNJBPpm0LOx8vokyQGaRbA",
 		category: ["webdev"],
 		socials: {
-			instagram: "https://www.instagram.com/arun.__.n/",
-			linkedin: "https://www.linkedin.com/in/arunn05/",
-			github: "https://github.com/ArunN2005"
+			instagram: "https://www.instagram.com/nithin_pm_006?igsh=Zm83bmx6bWRpbXRu",
+			linkedin: "",
+			github: "https://github.com/Nithin0306"
 		}
 	},
 
