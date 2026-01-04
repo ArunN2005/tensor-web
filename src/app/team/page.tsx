@@ -731,7 +731,7 @@ const members = [
 		name: "Arun N",
 		designation: "Web Dev",
 		year: "3rd Year CSE",
-		image: "https://sj67hjofte.ufs.sh/f/7JfC7VrndVSM2PqB7bvarxBmlstRjKeL8qIwWV3kUZ2CJHpS",
+		image: "https://i.ibb.co/vvd5gYDH/mahpic.jpg",
 		category: ["webdev"],
 		socials: {
 			instagram: "https://www.instagram.com/arun.__.n/",
