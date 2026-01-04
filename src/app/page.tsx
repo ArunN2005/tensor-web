@@ -6,9 +6,9 @@ import Promotions from "@/components/pages/Promotions";
 import Image from "next/image";
 
 export default function HomePage() {
-  // Countdown for marquee (AI-Verse Hackathon)
+  // Countdown for marquee (AI-Verse Hackathon Grand Finale)
   const [marqueeCountdown, setMarqueeCountdown] = useState<string>("");
-  const eventISO = "2025-12-30T23:59:00+05:30";
+  const finaleISO = "2026-01-08T09:00:00+05:30"; // Grand Finale: Jan 8, 2026 at 9 AM IST
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -23,7 +23,7 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    const target = new Date(eventISO).getTime();
+    const target = new Date(finaleISO).getTime();
     const update = () => {
       const diff = Math.max(0, target - Date.now());
       if (diff === 0) {
@@ -60,16 +60,16 @@ export default function HomePage() {
                 <span className="gradient-text">AI-Verse Hackathon | ANOKHA 2026</span>
               </h3>
               {marqueeCountdown && (
-                <div className="inline-flex items-center gap-2 px-3 py-1 mb-3 rounded-full border border-[hsla(var(--electric-cyan),0.4)] bg-[hsla(var(--background),0.6)] text-[hsla(var(--electric-cyan),1)] text-xs md:text-sm" style={{ fontFamily: 'var(--font-geist-mono)' }}>
-                  <span className="w-2 h-2 rounded-full bg-[hsla(var(--electric-cyan),1)] animate-pulse"></span>
-                  Deadline in {marqueeCountdown}
+                <div className="inline-flex items-center gap-2 px-4 py-2 mb-3 rounded-full border-2 border-[hsla(var(--electric-cyan),0.6)] bg-[hsla(var(--background),0.8)] text-[hsla(var(--electric-cyan),1)] text-sm md:text-base font-bold shadow-lg shadow-[hsla(var(--electric-cyan),0.3)]" style={{ fontFamily: 'var(--font-geist-mono)' }}>
+                  <span className="w-2.5 h-2.5 rounded-full bg-[hsla(var(--electric-cyan),1)] animate-pulse"></span>
+                  Grand Finale in {marqueeCountdown}
                 </div>
               )}
               <p className="text-[hsl(var(--foreground))] opacity-85 mb-3" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
                 • Online: Dec 22-30, 2025 
               </p>
-              <p className="text-[hsl(var(--foreground))] opacity-85 mb-3" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
-                • Finale: Jan 8, 2026 @ Amrita Coimbatore
+              <p className="text-[hsl(var(--foreground))] opacity-85 mb-3 font-semibold text-[hsla(var(--electric-cyan),1)]" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+                • Grand Finale: Jan 8, 2026 @ 9:00 AM | Amrita Coimbatore
               </p>
               <p className="text-[hsl(var(--foreground))] opacity-85 mb-3" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
                 • ₹3L Prize Pool
@@ -106,11 +106,11 @@ export default function HomePage() {
       <Promotions promotions={[
         {
           title: "AI-Verse Hackathon | ANOKHA 2026",
-          subtitle: "Premier National-Level Hackathon with ₹3L Prize Pool. Tracks: Generative AI, Agentic AI, AIoT. Online: Dec 22-30, Finale: Jan 8, 2026.",
+          subtitle: "Premier National-Level Hackathon with ₹3L Prize Pool. Tracks: Generative AI, Agentic AI, AIoT. Grand Finale: Jan 8, 2026 @ 9:00 AM.",
           ctaText: "Register Now",
           ctaLink: "https://anokha.amrita.edu/hackathon",
           imageUrl: "/images/aiversenew.jpeg",
-          eventDate: "2025-12-30T23:59:00+05:30"
+          eventDate: "2026-01-08T09:00:00+05:30"
         }
       ]} />
     </>

@@ -129,6 +129,18 @@ const members = [
 		}
 	},
 	{
+		name: "Vimal Harihar SK",
+		designation: "Web Dev Lead",
+		year: "3rd Year CSE",
+		image: "https://i.ibb.co/pj9WYnPq/Whats-App-Image-2026-01-04-at-9-39-58-PM.jpg",
+		category: ["core", "webdev"],
+		socials: {
+			instagram: "https://www.instagram.com/_.vimal1917.___/?hl=en",
+			linkedin: "https://www.linkedin.com/in/vimal-harihar-s-k-27979a255/",
+			github: "https://github.com/Goldmauler"
+		}
+	},
+	{
 		name: "Vishal Suresh",
 		designation: "PR Head",
 		year: "3rd Year AIE",
